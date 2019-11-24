@@ -1,0 +1,1 @@
+C:\Users\Henrique\Desktop\mindunlocker\backend\MindUnlocker.Tests\obj\Debug\MindUnlocker.Tests.csprojAssemblyReference.cache

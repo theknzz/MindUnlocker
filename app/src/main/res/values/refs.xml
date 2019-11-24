@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <drawable name="game_cell_stroke">@android:color/background_light</drawable>
-</resources>
