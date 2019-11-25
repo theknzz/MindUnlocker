@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -71,7 +70,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="00"
                             android:textSize="12sp" />
 
@@ -81,7 +79,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="01"
                             android:textSize="12sp" />
 
@@ -91,7 +88,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="02"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -108,7 +104,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="10"
                             android:textSize="12sp" />
 
@@ -118,7 +113,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="11"
                             android:textSize="12sp" />
 
@@ -128,7 +122,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="12"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -145,7 +138,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="20"
                             android:textSize="12sp" />
 
@@ -155,7 +147,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="21"
                             android:textSize="12sp" />
 
@@ -165,7 +156,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="22"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -190,7 +180,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="03"
                             android:textSize="12sp" />
 
@@ -200,7 +189,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="04"
                             android:textSize="12sp" />
 
@@ -210,7 +198,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="05"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -227,7 +214,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="13"
                             android:textSize="12sp" />
 
@@ -237,7 +223,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="14"
                             android:textSize="12sp" />
 
@@ -247,7 +232,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="15"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -264,7 +248,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="23"
                             android:textSize="12sp" />
 
@@ -274,7 +257,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="24"
                             android:textSize="12sp" />
 
@@ -284,7 +266,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="25"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -309,7 +290,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="06"
                             android:textSize="12sp" />
 
@@ -318,7 +298,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="08"
                             android:textSize="12sp" />
 
@@ -328,7 +307,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="08"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -345,7 +323,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="16"
                             android:textSize="12sp" />
 
@@ -355,7 +332,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="17"
                             android:textSize="12sp" />
 
@@ -365,7 +341,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="18"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -382,7 +357,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="26"
                             android:textSize="12sp" />
 
@@ -392,7 +366,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="27"
                             android:textSize="12sp" />
 
@@ -402,7 +375,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="28"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -437,7 +409,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="30"
                             android:textSize="12sp" />
 
@@ -447,7 +418,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="31"
                             android:textSize="12sp" />
 
@@ -459,7 +429,7 @@
                             android:layout_weight="1"
                             android:text="32"
                             android:textSize="12sp"
-                            android:onClick="onGameCell" />
+                            />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -474,7 +444,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="40"
                             android:textSize="12sp" />
 
@@ -484,7 +453,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="41"
                             android:textSize="12sp" />
 
@@ -494,7 +462,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="42"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -511,7 +478,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="50"
                             android:textSize="12sp" />
 
@@ -521,7 +487,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="51"
                             android:textSize="12sp" />
 
@@ -531,7 +496,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="52"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -556,7 +520,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="33"
                             android:textSize="12sp" />
 
@@ -566,7 +529,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="34"
                             android:textSize="12sp" />
 
@@ -576,7 +538,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="35"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -593,7 +554,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="43"
                             android:textSize="12sp" />
 
@@ -603,7 +563,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="44"
                             android:textSize="12sp" />
 
@@ -613,7 +572,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="45"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -630,7 +588,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="53"
                             android:textSize="12sp" />
 
@@ -640,7 +597,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="54"
                             android:textSize="12sp" />
 
@@ -650,7 +606,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="55"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -675,7 +630,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="36"
                             android:textSize="12sp" />
 
@@ -685,7 +639,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="37"
                             android:textSize="12sp" />
 
@@ -695,7 +648,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="38"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -712,7 +664,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="46"
                             android:textSize="12sp" />
 
@@ -722,7 +673,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="47"
                             android:textSize="12sp" />
 
@@ -732,7 +682,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="48"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -749,7 +698,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="56"
                             android:textSize="12sp" />
 
@@ -759,7 +707,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="57"
                             android:textSize="12sp" />
 
@@ -769,7 +716,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="58"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -804,7 +750,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="60"
                             android:textSize="12sp" />
 
@@ -814,7 +759,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="61"
                             android:textSize="12sp" />
 
@@ -824,7 +768,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="62"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -841,7 +784,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="70"
                             android:textSize="12sp" />
 
@@ -851,7 +793,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="71"
                             android:textSize="12sp" />
 
@@ -861,7 +802,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="72"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -878,7 +818,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="80"
                             android:textSize="12sp" />
 
@@ -888,7 +827,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="81"
                             android:textSize="12sp" />
 
@@ -898,7 +836,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="82"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -923,7 +860,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="63"
                             android:textSize="12sp" />
 
@@ -933,7 +869,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="64"
                             android:textSize="12sp" />
 
@@ -943,7 +878,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="65"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -960,7 +894,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="73"
                             android:textSize="12sp" />
 
@@ -970,7 +903,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="74"
                             android:textSize="12sp" />
 
@@ -980,7 +912,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="75"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -997,7 +928,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="83"
                             android:textSize="12sp" />
 
@@ -1007,7 +937,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="84"
                             android:textSize="12sp" />
 
@@ -1017,7 +946,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="85"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -1042,7 +970,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="66"
                             android:textSize="12sp" />
 
@@ -1052,7 +979,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="67"
                             android:textSize="12sp" />
 
@@ -1062,7 +988,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="68"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -1079,7 +1004,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="76"
                             android:textSize="12sp" />
 
@@ -1089,7 +1013,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="77"
                             android:textSize="12sp" />
 
@@ -1099,7 +1022,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="78"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -1116,7 +1038,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="86"
                             android:textSize="12sp" />
 
@@ -1126,7 +1047,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="87"
                             android:textSize="12sp" />
 
@@ -1136,7 +1056,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/game_cell_stroke"
-                            android:onClick="onGameCell"
                             android:text="88"
                             android:textSize="12sp" />
                     </LinearLayout>

@@ -1,85 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ccc">
+    android:background="#ccc"
+    android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create an account to access exclusice features such as game history, loading games and watching the leader board."
-        android:padding="40dp"/>
+        android:background="#93C47D"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/user"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/score"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ranking:"
+                    android:textAlignment="textEnd"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/ranking"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/editProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:text="Edit profile"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 
     <!--load game & generate new game-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginHorizontal="10dp">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Load Game"
-            android:layout_margin="5dp"
-            android:textAllCaps="false"
-            android:background="#F6D15F"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Generate New Game"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:textAllCaps="false"
-            android:background="#009E0F"/>
-    </LinearLayout>
-    <!--create customized game-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginHorizontal="10dp">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create Customized Game"
-            android:layout_margin="5dp"
-            android:textColor="#fff"
-            android:textAllCaps="false"
-            android:background="#009E0F"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_marginHorizontal="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:padding="10dp"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="#fff"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Leader board"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:paddingVertical="10dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="You must have an account in order to see the leader board"
-                android:paddingHorizontal="50dp"
-                android:textAlignment="center"
-                android:paddingVertical="20dp"/>
 
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#009E0F"
+            android:layout_gravity="center"
+            android:text="Login"
+            android:textAllCaps="false"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnCreateAcc"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#009E0F"
+            android:layout_gravity="center"
+            android:text="Create Account"
+            android:textAllCaps="false"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnLoadGame"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:background="#F6D15F"
+            android:text="Load Game"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnGenerateGame"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#009E0F"
+            android:layout_gravity="center"
+            android:text="Generate New Game"
+            android:textAllCaps="false"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnCreateGame"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#009E0F"
+            android:layout_gravity="center"
+            android:text="Create Customized Game"
+            android:textAllCaps="false"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnHistory"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="#009E0F"
+            android:layout_gravity="center"
+            android:text="History"
+            android:textAllCaps="false"
+            android:textColor="#fff" />
+
     </LinearLayout>
+
+    <include layout="@layout/leaderboad"/>
 </LinearLayout>
