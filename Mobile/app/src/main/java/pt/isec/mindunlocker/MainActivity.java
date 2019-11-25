@@ -9,13 +9,8 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    private LinearLayout header;
-    private LinearLayout leaderboard;
-    private Button login;
-    private Button register;
-    private Button load;
-    private Button startGame;
-    private Button history;
+    private LinearLayout header, leaderboard;
+    private Button login, register, load, startGame, history;
     private static boolean firstTime = true; //check if first time in main
 
     @Override
@@ -31,9 +26,16 @@ public class MainActivity extends AppCompatActivity {
             hideComponents();
             firstTime = false;
         }else{
-            loginResult();
+            Bundle response = getIntent().getExtras();
+
+            if(response == null) return;
+
+            if(!"login".equals(response.getString("result"))) return;
+
+            loginResult(response);
         }
     }
+
 
     private void getViews(){
         header = findViewById(R.id.header);
@@ -54,18 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setButtonListener(Button button, final Class activity){
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changeActivity(activity);
-            }
-        });
+        button.setOnClickListener(v -> changeActivity(activity));
     }
 
-    private void loginResult(){
-        Bundle response = getIntent().getExtras();
-
-        if(response == null) return;
+    private void loginResult(Bundle response){
 
         boolean temp = response.getBoolean("");
 
