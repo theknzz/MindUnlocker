@@ -8,6 +8,24 @@
     <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#93C47D"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:text="Mind Unlocker"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/headerLogin"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#93C47D"
         android:orientation="horizontal"
@@ -81,7 +99,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/editProfile"
+                        android:id="@+id/btnEditProfile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#fff"
@@ -101,8 +119,8 @@
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:background="#009E0F"
             android:layout_gravity="center"
@@ -112,8 +130,8 @@
 
         <Button
             android:id="@+id/btnCreateAcc"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:background="#009E0F"
             android:layout_gravity="center"
@@ -123,8 +141,8 @@
 
         <Button
             android:id="@+id/btnLoadGame"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:layout_gravity="center"
             android:background="#F6D15F"
@@ -133,8 +151,8 @@
 
         <Button
             android:id="@+id/btnGenerateGame"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:background="#009E0F"
             android:layout_gravity="center"
@@ -144,8 +162,8 @@
 
         <Button
             android:id="@+id/btnCreateGame"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:background="#009E0F"
             android:layout_gravity="center"
@@ -155,12 +173,24 @@
 
         <Button
             android:id="@+id/btnHistory"
-            android:layout_width="500dp"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp"
             android:background="#009E0F"
             android:layout_gravity="center"
             android:text="History"
+            android:textAllCaps="false"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnLogOut"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="#009E0F"
+            android:layout_gravity="center"
+            android:text="Log Out"
+            android:onClick="logOut"
             android:textAllCaps="false"
             android:textColor="#fff" />
 

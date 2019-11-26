@@ -25,10 +25,12 @@ public class LoginActivity extends AppCompatActivity {
         if(usernameInput.isEmpty()){
             username.setError("Username necessário");
             return false;
-        }else if(usernameInput.length() > 15){
+        }
+        else if(usernameInput.length() > 15){
             username.setError("Username tem mais de 15 caracteres");
             return false;
-        }else {
+        }
+        else {
             username.setError(null);
             return true;
         }
@@ -40,7 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         if(passwordInput.isEmpty()){
             password.setError("Password necessária");
             return false;
-        }else {
+        }
+        else {
             password.setError(null);
             return true;
         }
@@ -48,16 +51,17 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View v){
         if(!validateUsername() | !validatePassword()) return;
-        //verificar do servidor/db se existe conta
+        //TODO verificar do servidor/db se existe conta
 
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("result", "login");
-        intent.putExtra("success", true);
-        intent.putExtra("score", "1024");
-        intent.putExtra("ranking", "#1");
+        intent.putExtra("success", true); // apenas para teste, mudar para verificação do servidor/db
+        intent.putExtra("score", "1024"); // mudar para valores reais
+        intent.putExtra("ranking", "#1"); // mudar para valores reais
         intent.putExtra("user", username.getEditText().getText().toString());
 
         startActivity(intent);
+        finish();
     }
 }
