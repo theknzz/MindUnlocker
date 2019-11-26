@@ -95,13 +95,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showComponents(){
-        header.setVisibility(View.VISIBLE);
+        headerLogin.setVisibility(View.VISIBLE);
         leaderboard.setVisibility(View.VISIBLE);
         load.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
         logOut.setVisibility(View.VISIBLE);
 
-        headerLogin.setVisibility(View.GONE);
+        header.setVisibility(View.GONE);
         login.setVisibility(View.GONE);
         register.setVisibility(View.GONE);
     }

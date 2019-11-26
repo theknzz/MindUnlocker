@@ -14,12 +14,12 @@ import java.util.regex.Pattern;
 public class RegisterActivity extends AppCompatActivity {
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
-                    "(?=.*[0-9])" +
-                    "(?=.*[a-z])" +
-                    "(?=.*[A-Z])" +
-                    "(?=.*[@#$%^&+=])" +
-                    "(?=\\S+$)" +
-                    ".{6,}" +
+                    "(?=.*[0-9])" + //pelo menos um numero
+                    "(?=.*[a-z])" + //pelo menos um caracter minusculo
+                    "(?=.*[A-Z])" + //pelo menus um caracter maiusculo
+                    "(?=.*[@#$%^&+=])" + //pelo menos um caracter especial
+                    "(?=\\S+$)" + //sem espaços
+                    ".{6,}" + //pelo menos seis caracteres
                     "$"); //TODO alterar para o padrao definido
     private TextInputLayout username, password, repeat_password, email;
 
