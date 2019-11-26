@@ -5,35 +5,33 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="time: 25 seconds"
-            android:padding="10dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:gravity="top"
-            android:background="#93C47D"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="time: 25 seconds"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:gravity="top"
+        android:background="#93C47D"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="level: EASY"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:gravity="top"
-            android:background="#93C47D"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="level: EASY"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:gravity="top"
+        android:background="#93C47D"/>
     </LinearLayout>
-<<<<<<< HEAD
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -1066,23 +1064,6 @@
             </LinearLayout>
         </LinearLayout>
         </RelativeLayout>
-=======
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0">
-
-        <pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuGridView
-            android:id="@+id/sudokuGridView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="9"
-            android:horizontalSpacing="0dp"
-            android:verticalSpacing="0dp"/>
-    </RelativeLayout>
-
->>>>>>> GameLogic-paris
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -1113,7 +1094,7 @@
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/circle_button"
                         android:contentDescription="01"
-                        android:onClick="onClickListener"
+                        android:onClick="onNumberSelected"
                         android:text="1" />
 
                     <Button
@@ -1123,7 +1104,7 @@
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/circle_button"
                         android:contentDescription="TODO"
-                        android:onClick="onClickListener"
+                        android:onClick="onNumberSelected"
                         android:text="2" />
 
                     <Button
@@ -1133,6 +1114,7 @@
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/circle_button"
                         android:contentDescription="TODO"
+                        android:onClick="onNumberSelected"
                         android:text="3" />
 
                     <Button
