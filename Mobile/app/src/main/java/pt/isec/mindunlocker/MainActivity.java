@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,15 +57,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setButtonListener(Button button, final Class activity){
-        button.setOnClickListener(v -> changeActivity(activity));
+        button.setOnClickListener(v -> changeActivity(activity)); //mudar para java 8 nos modulos se der erro
     }
 
     private void loginResult(Bundle response){
+        boolean temp = response.getBoolean("success");
 
-        boolean temp = response.getBoolean("");
+        if(temp) {
+            TextView user = findViewById(R.id.user);
+            TextView score = findViewById(R.id.score);
+            TextView ranking = findViewById(R.id.ranking);
 
-        if(temp)
+            user.setText(response.getString("user"));
+            score.setText(response.getString("score"));
+            ranking.setText(response.getString("ranking"));
+
             showComponents();
+        }
         else
             hideComponents();
     }
