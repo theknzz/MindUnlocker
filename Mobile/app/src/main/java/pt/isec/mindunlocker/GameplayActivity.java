@@ -3,13 +3,12 @@ package pt.isec.mindunlocker;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-public class GameplayActivity extends AppCompatActivity  implements View.OnClickListener {
+public class GameplayActivity extends AppCompatActivity implements View.OnClickListener {
     private Random rand = new Random();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +86,14 @@ public class GameplayActivity extends AppCompatActivity  implements View.OnClick
                 //Toast.makeText(this,"9",Toast.LENGTH_SHORT).show();
                 GameEngine.getInstance().setNumber(9);
                 break;
-
-            case R.id.giveUpBtn: Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();
+            case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show()*/;
                 //GameEngine.getInstance().setNumber(1);
                 break;
-            case R.id.hintBtn: Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();
+            case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show()*/;
                 showHint();
                 v.invalidate();
                 break;
-            case R.id.eraseBtn: Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();
+            case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show()*/;
                 GameEngine.getInstance().setNumber(0);
                 break;
         }

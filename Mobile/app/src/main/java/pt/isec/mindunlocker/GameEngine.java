@@ -10,9 +10,11 @@ public class GameEngine {
     private int[][] solutionTable = new int[9][9];
     private int[][] gameTable = new int[9][9];
 
-    private int selectedPosX = -1;
-    private int selectedPosY = -1;
+    private int selectedPosX;
+    private int selectedPosY;
+
     public GameEngine() {
+        clearPos();
     }
 
     public static GameEngine getInstance() {
@@ -26,6 +28,11 @@ public class GameEngine {
         for(int i = 0; i < 9; i++)
             for(int j = 0; j < 9; j++)
                  gameTable[i][j] = solutionTable[i][j];
+    }
+
+    private void clearPos() {
+        selectedPosY = selectedPosX = -1;
+
     }
 
     public void createTable(Context context){
@@ -52,7 +59,9 @@ public class GameEngine {
     public void setNumber(int number){
         if(selectedPosX != -1 && selectedPosY != -1){
             table.setItem(selectedPosX,selectedPosY,number);
+            clearPos();
         }
+
         if(table.checkGame()){
 
         }
