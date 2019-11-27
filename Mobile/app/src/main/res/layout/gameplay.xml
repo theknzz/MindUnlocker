@@ -1271,41 +1271,52 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginVertical="10dp">
 
                     <Button
                         android:id="@+id/giveUpBtn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="2dp"
                         android:background="#fa4848"
                         android:onClick="onOption"
-                        android:paddingHorizontal="30dp"
                         android:text="Give up" />
 
                     <Button
                         android:id="@+id/eraseBtn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="2dp"
                         android:background="#edc218"
                         android:drawableLeft="@android:drawable/ic_menu_compass"
                         android:onClick="onOption"
-                        android:paddingHorizontal="30dp"
                         android:text="Erase" />
 
                     <Button
+                        android:id="@+id/pencilBtn"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="2dp"
+                        android:background="#edc218"
+                        android:drawableLeft="@android:drawable/ic_menu_edit"
+                        android:onClick="onOption"
+                        android:text="Pencil" />
+
+                    <Button
                         android:id="@+id/hintBtn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="2dp"
                         android:background="#04ba13"
                         android:drawableStart="@android:drawable/btn_star_big_on"
                         android:onClick="onOption"
-                        android:paddingHorizontal="30dp"
                         android:text="Hint" />
                 </LinearLayout>
             </RelativeLayout>
