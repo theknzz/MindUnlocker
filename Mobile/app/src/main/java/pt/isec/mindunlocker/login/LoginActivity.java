@@ -2,13 +2,16 @@ package pt.isec.mindunlocker.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -21,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private URL url = null;
     private String response = null;
     private EditText etUsername, etPassword;
+    private TextView tvError;
     private String token=null;
 
     @Override
@@ -30,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
         etUsername = findViewById(R.id.username);
         etPassword = findViewById(R.id.password);
+        tvError = findViewById(R.id.tvError);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
@@ -77,10 +82,20 @@ public class LoginActivity extends AppCompatActivity {
                 response = sb.toString();
                 token = captureTokenFromResponse(response);
 
+                // debug
+                tvError.setText("Login done properly!");
+                tvError.setVisibility(View.VISIBLE);
+                tvError.setTextColor(Color.GREEN);
+                // pass the token to the main activity in a intent bundle?
+
                 isr.close();
                 reader.close();
             } catch (IOException e) {
-                Log.e("HTTP GET:", e.toString());
+                if (e instanceof FileNotFoundException) {
+                    tvError.setVisibility(View.VISIBLE);
+                    etUsername.setText("");
+                    etPassword.setText("");
+                }
             }
         }
     }
@@ -89,5 +104,9 @@ public class LoginActivity extends AppCompatActivity {
         String[] arr = response.split(",");
         arr= arr[0].split(":");
         return arr[1];
+    }
+
+    public void onEditText(View view) {
+        tvError.setVisibility(View.INVISIBLE);
     }
 }
