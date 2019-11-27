@@ -119,4 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() { }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c64d861635a4cfef89b4a856391367a567a254ce
