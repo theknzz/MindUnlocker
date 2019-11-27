@@ -121,7 +121,6 @@ public class RegisterActivity extends AppCompatActivity {
         if(!validateUsername() | !validatePassword() | !validateEmail()) return;
         //TODO verificar do servidor/db se existe conta
         if(!onRegister()){
-            Toast.makeText(this, "Username ja existe", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -184,6 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
             reader.close();
         } catch (IOException e) {
             Log.e("HTTP POST:", e.toString());
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             return false;
         }
 
