@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:layout_marginVertical="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:layout_weight="0.2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/selectNr1"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/circle_button"
+                android:contentDescription="01"
+                android:onClick="onClickListener"
+                android:text="1" />
+
+            <Button
+                android:id="@+id/selectNr2"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/circle_button"
+                android:contentDescription="TODO"
+                android:onClick="onClickListener"
+                android:text="2" />
+
+            <Button
+                android:id="@+id/selectNr3"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/circle_button"
+                android:contentDescription="TODO"
+                android:text="3" />
+
+            <Button
+                android:id="@+id/selectNr4"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_button"
+                android:contentDescription="TODO"
+                android:onClick="onNumberSelected"
+                android:text="4" />
+
+            <Button
+                android:id="@+id/selectNr5"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/circle_button"
+                android:contentDescription="TODO"
+                android:onClick="onNumberSelected"
+                android:text="5" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:layout_weight="0.2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/selectNr6"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/circle_button"
+                android:onClick="onNumberSelected"
+                android:text="6" />
+
+            <Button
+                android:id="@+id/selectNr7"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/circle_button"
+                android:onClick="onNumberSelected"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/selectNr8"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/circle_button"
+                android:onClick="onNumberSelected"
+                android:text="8" />
+
+            <Button
+                android:id="@+id/selectNr9"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_button"
+                android:onClick="onNumberSelected"
+                android:text="9" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

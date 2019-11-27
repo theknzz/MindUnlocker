@@ -24,26 +24,26 @@ public class SudokuCell extends BaseSudokuCell {
         drawLines(canvas);
     }
 
-    private void drawNumbers(Canvas canvas){
+    private void drawNumbers(Canvas canvas) {
         nPaint.setColor(Color.BLACK);
         nPaint.setTextSize(60);
         nPaint.setStyle(Paint.Style.FILL);
 
         Rect bounds = new Rect();
-        nPaint.getTextBounds(String.valueOf(getValue()),0,String.valueOf(getValue()).length(),bounds);
+        nPaint.getTextBounds(String.valueOf(getValue()), 0, String.valueOf(getValue()).length(), bounds);
 
-        if(getValue() != 0){
+        if (getValue() != 0) {
             canvas.drawText(String.valueOf(getValue()),
-                    (getWidth() - bounds.width())/2,
+                    (getWidth() - bounds.width()) / 2,
                     (getHeight() + bounds.height()) / 2, nPaint);
         }
     }
 
-    private void drawLines(Canvas canvas){
+    private void drawLines(Canvas canvas) {
         nPaint.setColor(Color.BLACK);
         nPaint.setStrokeWidth(1);
         nPaint.setStyle(Paint.Style.STROKE);
 
-        canvas.drawRect(0,0, getWidth(), getHeight(), nPaint);
+        canvas.drawRect(0, 0, getWidth(), getHeight(), nPaint);
     }
 }

@@ -12,12 +12,13 @@ import java.util.Random;
 public class GameplayActivity extends AppCompatActivity  implements View.OnClickListener {
     private Random rand = new Random();
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.login);
         setContentView(R.layout.gameplay);
 
-        GameEngine.getInstance().createTable(this);
+        GameEngine.getInstance().createTableToPlay(this);
         //printSudoku(solutionTable);
 
         Button btn1 = findViewById(R.id.selectNr1);
@@ -47,6 +48,7 @@ public class GameplayActivity extends AppCompatActivity  implements View.OnClick
         btnHint.setOnClickListener(this);
         btnErase.setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View v) {

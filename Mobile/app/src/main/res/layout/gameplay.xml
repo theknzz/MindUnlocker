@@ -1,217 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="time: 25 seconds"
-            android:padding="10dp"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textAlignment="center"
-            android:gravity="top"
-            android:background="#93C47D"/>
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="level: EASY"
-            android:padding="10dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
+            android:layout_weight="1"
+            android:background="#93C47D"
             android:gravity="top"
-            android:background="#93C47D"/>
+            android:padding="10dp"
+            android:text="time: 25 seconds"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#93C47D"
+            android:gravity="top"
+            android:padding="10dp"
+            android:text="level: EASY"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
+
+    <!-- include table -->
+    <include layout="@layout/table" />
+
+
+    <!-- include number buttons (1 - 9) -->
+    <include layout="@layout/num_buttons" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-        <pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuGridView
-            android:id="@+id/sudokuGridView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="9"
-            android:horizontalSpacing="0dp"
-            android:verticalSpacing="0dp"/>
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.8">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginVertical="10dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/giveUpBtn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_marginVertical="5dp">
+                android:layout_marginHorizontal="2dp"
+                android:background="#fa4848"
+                android:onClick="onOption"
+                android:paddingHorizontal="30dp"
+                android:singleLine="true"
+                android:text="Give up" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_centerInParent="true"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/selectNr1"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="01"
-                        android:onClick="onClickListener"
-                        android:text="1" />
-
-                    <Button
-                        android:id="@+id/selectNr2"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="TODO"
-                        android:onClick="onClickListener"
-                        android:text="2" />
-
-                    <Button
-                        android:id="@+id/selectNr3"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="TODO"
-                        android:text="3" />
-
-                    <Button
-                        android:id="@+id/selectNr4"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="TODO"
-                        android:onClick="onNumberSelected"
-                        android:text="4" />
-
-                    <Button
-                        android:id="@+id/selectNr5"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="TODO"
-                        android:onClick="onNumberSelected"
-                        android:text="5" />
-                </LinearLayout>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/eraseBtn"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:layout_marginVertical="5dp"
-                >
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_centerInParent="true"
-                    android:orientation="horizontal">
+                android:layout_marginHorizontal="2dp"
+                android:background="#edc218"
+                android:drawableLeft="@android:drawable/ic_menu_compass"
+                android:onClick="onOption"
+                android:paddingHorizontal="30dp"
+                android:text="Erase" />
 
-                    <Button
-                        android:id="@+id/selectNr6"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:onClick="onNumberSelected"
-                        android:text="6" />
-
-                    <Button
-                        android:id="@+id/selectNr7"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:onClick="onNumberSelected"
-                        android:text="7" />
-
-                    <Button
-                        android:id="@+id/selectNr8"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:onClick="onNumberSelected"
-                        android:text="8" />
-
-                    <Button
-                        android:id="@+id/selectNr9"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/circle_button"
-                        android:onClick="onNumberSelected"
-                        android:text="9" />
-                </LinearLayout>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginVertical="10dp">
-
-                    <Button
-                        android:id="@+id/giveUpBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="2dp"
-                        android:background="#fa4848"
-                        android:onClick="onOption"
-                        android:paddingHorizontal="30dp"
-                        android:text="Give up" />
-
-                    <Button
-                        android:id="@+id/eraseBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="2dp"
-                        android:background="#edc218"
-                        android:drawableLeft="@android:drawable/ic_menu_compass"
-                        android:onClick="onOption"
-                        android:paddingHorizontal="30dp"
-                        android:text="Erase" />
-
-                    <Button
-                        android:id="@+id/hintBtn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="2dp"
-                        android:background="#04ba13"
-                        android:drawableStart="@android:drawable/btn_star_big_on"
-                        android:onClick="onOption"
-                        android:paddingHorizontal="30dp"
-                        android:text="Hint" />
-                </LinearLayout>
-            </RelativeLayout>
+            <Button
+                android:id="@+id/hintBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="2dp"
+                android:background="#04ba13"
+                android:drawableStart="@android:drawable/btn_star_big_on"
+                android:onClick="onOption"
+                android:paddingHorizontal="30dp"
+                android:text="Hint" />
         </LinearLayout>
-    </LinearLayout>
-
+    </RelativeLayout>
 </LinearLayout>
