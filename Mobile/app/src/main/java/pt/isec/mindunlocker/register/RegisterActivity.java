@@ -8,6 +8,7 @@ import android.os.StrictMode;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
@@ -81,6 +82,10 @@ public class RegisterActivity extends AppCompatActivity {
             password.setError("Password necessária");
             return false;
         }
+        else if(repeated.isEmpty()){
+            repeat_password.setError("Password necessária");
+            return false;
+        }
         else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
             password.setError("Password Inválida");
             return false;
@@ -115,7 +120,10 @@ public class RegisterActivity extends AppCompatActivity {
     public void register(View v){
         if(!validateUsername() | !validatePassword() | !validateEmail()) return;
         //TODO verificar do servidor/db se existe conta
-        onRegister();
+        if(!onRegister()){
+            Toast.makeText(this, "Username ja existe", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -129,13 +137,11 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onRegister() {
+    public boolean onRegister() {
         String tEmail = email.getEditText().getText().toString().trim();
         String tUser = username.getEditText().getText().toString().trim();
         String pw = password.getEditText().getText().toString().trim();
         String rePw = repeat_password.getEditText().getText().toString().trim();
-
-//        if (!isValidateRegistration(email, user,pw,rePw)) return;
 
         try {
             Registration registration = new Registration(tEmail, pw, rePw, tUser);
@@ -178,6 +184,9 @@ public class RegisterActivity extends AppCompatActivity {
             reader.close();
         } catch (IOException e) {
             Log.e("HTTP POST:", e.toString());
+            return false;
         }
+
+        return true;
     }
 }

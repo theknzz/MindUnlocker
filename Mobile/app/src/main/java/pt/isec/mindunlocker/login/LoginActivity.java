@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -48,10 +50,6 @@ public class LoginActivity extends AppCompatActivity {
             eUsername.setError("Username necessário");
             return false;
         }
-        else if(usernameInput.length() > 15){
-            eUsername.setError("Username tem mais de 15 caracteres");
-            return false;
-        }
         else {
             eUsername.setError(null);
             return true;
@@ -74,14 +72,17 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View v){
         if(!validateUsername() | !validatePassword()) return;
         //TODO verificar do servidor/db se existe conta
-        onLogin();
+        if(!onLogin()) {
+            Toast.makeText(this, "Username ou password errados", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("result", "login");
-        intent.putExtra("success", true); // apenas para teste, mudar para verificação do servidor/db
-        intent.putExtra("score", "1024"); // mudar para valores reais
-        intent.putExtra("ranking", "#1"); // mudar para valores reais
+        intent.putExtra("success", true);
+        intent.putExtra("score", "1024");
+        intent.putExtra("ranking", "#1");
         intent.putExtra("user", eUsername.getEditText().getText().toString());
 
         startActivity(intent);
@@ -89,59 +90,61 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void onLogin() {
+    public boolean onLogin() {
         String username = eUsername.getEditText().getText().toString().trim();
         String password = ePassword.getEditText().getText().toString().trim();
 
-        if (username.length()!=0 && password.length()!=0) {
-            try {
+        try {
 //                debug:
 //                username="henrymfdays@gmail.com";
 //                password="Qwerty123!";
-                String parameters = "grant_type=password&username="+username+"&password="+password;
-                url = new URL("https://mindunlocker20191126085502.azurewebsites.net/token");
+            String parameters = "grant_type=password&username="+username+"&password="+password;
+            url = new URL("https://mindunlocker20191126085502.azurewebsites.net/token");
 
-                //create the connection
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoOutput(true);
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            //create the connection
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
-                //set the request method to GET
-                connection.setRequestMethod("GET");
+            //set the request method to GET
+            connection.setRequestMethod("GET");
 
-                //get the output stream from the connection you created
-                OutputStreamWriter request = new OutputStreamWriter(connection.getOutputStream());
+            //get the output stream from the connection you created
+            OutputStreamWriter request = new OutputStreamWriter(connection.getOutputStream());
 
-                //write your data to the ouputstream
-                request.write(parameters);
-                request.flush();
-                request.close();
+            //write your data to the ouputstream
+            request.write(parameters);
+            request.flush();
+            request.close();
 
-                String line = "";
-                //create your inputsream
-                InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-                //read in the data from input stream, this can be done a variety of ways
+            String line = "";
+            //create your inputsream
+            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+            //read in the data from input stream, this can be done a variety of ways
 
-                BufferedReader reader = new BufferedReader(isr);
-                StringBuilder sb = new StringBuilder();
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
 
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line + "\n");
-                }
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
 
-                //get the string version of the response data
-                response = sb.toString();
-                token = captureTokenFromResponse(response);
+            //get the string version of the response data
+            response = sb.toString();
+            token = captureTokenFromResponse(response);
 
-                // debug
-                // pass the token to the main activity in a intent bundle?
+            // debug
+            // pass the token to the main activity in a intent bundle?
 
-                isr.close();
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            isr.close();
+            reader.close();
+        } catch (IOException e) {
+            if (e instanceof FileNotFoundException) {
+                return false;
             }
         }
+
+        return true;
     }
 
     private String captureTokenFromResponse(String response) {
