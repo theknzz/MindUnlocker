@@ -99,7 +99,6 @@
                 android:textColor="@color/colorAccent" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
     </LinearLayout>
 
     <LinearLayout
