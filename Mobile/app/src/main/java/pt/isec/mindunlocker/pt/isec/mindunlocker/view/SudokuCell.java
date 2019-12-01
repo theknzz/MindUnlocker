@@ -10,11 +10,10 @@ import android.graphics.Typeface;
 public class SudokuCell extends BaseSudokuCell {
 
     private Paint nPaint;
-    Context ctx;
 
     public SudokuCell(Context context) {
         super(context);
-        ctx = context;
+
         nPaint = new Paint();
     }
 

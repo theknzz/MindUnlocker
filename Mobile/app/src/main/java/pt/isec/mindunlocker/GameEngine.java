@@ -10,11 +10,9 @@ public class GameEngine {
     private int[][] solutionTable = new int[9][9];
     private int[][] gameTable = new int[9][9];
 
-    private int selectedPosX;
-    private int selectedPosY;
-
+    private int selectedPosX = -1;
+    private int selectedPosY = -1;
     public GameEngine() {
-        clearPos();
     }
 
     public static GameEngine getInstance() {
