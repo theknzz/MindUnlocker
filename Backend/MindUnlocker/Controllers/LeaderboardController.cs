@@ -37,7 +37,13 @@ namespace MindUnlocker.Controllers
                 var totalGames = gamesPlayed.Count();
 
                 //total points:
-                var points = totalHints;
+                var points = 0;
+                //máximo pontos num jogo? 
+                if (gamesPlayed.Count > 0)
+                {
+                    points = gamesPlayed.Max(x => x.Points);
+
+                }
 
                 TopUser top = new TopUser
                 {
@@ -50,13 +56,14 @@ namespace MindUnlocker.Controllers
                     Hints = totalHints,
                     TotalGames = totalGames,
                     Name = user.Name,
+
                     Points = points
                 };
 
                 topUsers.Add(top);
             }
 
-            return topUsers.OrderBy(x=>x.Points).Take(10).ToList();
+            return topUsers.OrderByDescending(x=>x.Points).Take(10).ToList();
         } 
         
         protected override void Dispose(bool disposing)

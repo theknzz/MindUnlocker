@@ -37,7 +37,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0">
+        android:layout_weight="0"
+        android:layout_margin="10dp">
 
         <pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuGridView
             android:id="@+id/sudokuGridView"
