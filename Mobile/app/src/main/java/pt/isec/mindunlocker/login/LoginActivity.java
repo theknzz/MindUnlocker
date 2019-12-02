@@ -20,12 +20,12 @@ import java.net.URL;
 
 import pt.isec.mindunlocker.MainActivity;
 import pt.isec.mindunlocker.R;
+import pt.isec.mindunlocker.Token;
 
 public class LoginActivity extends AppCompatActivity {
     private URL url = null;
     private String response = null;
     private TextInputLayout eUsername, ePassword;
-    private String token=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +91,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public boolean onLogin() {
-        String username = eUsername.getEditText().getText().toString().trim();
-        String password = ePassword.getEditText().getText().toString().trim();
-
         try {
+            String username = eUsername.getEditText().getText().toString().trim();
+            String password = ePassword.getEditText().getText().toString().trim();
+
 //                debug:
 //                username="henrymfdays@gmail.com";
 //                password="Qwerty123!";
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             request.flush();
             request.close();
 
-            String line = "";
+            String line;
             //create your inputsream
             InputStreamReader isr = new InputStreamReader(connection.getInputStream());
             //read in the data from input stream, this can be done a variety of ways
@@ -126,12 +126,12 @@ public class LoginActivity extends AppCompatActivity {
             StringBuilder sb = new StringBuilder();
 
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
 
             //get the string version of the response data
             response = sb.toString();
-            token = captureTokenFromResponse(response);
+            Token.CONTENT = captureTokenFromResponse(response);
 
             // debug
             // pass the token to the main activity in a intent bundle?
