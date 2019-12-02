@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
@@ -28,9 +31,7 @@ public class GameEngine {
     }
 
     private void copieTable() {
-        for (int i = 0; i < 9; i++)
-            for (int j = 0; j < 9; j++)
-                gameTable[i][j] = solutionTable[i][j];
+        gameTable = Arrays.copyOf(solutionTable, 9);
     }
 
     public void createTableToPlay(Context context) {
@@ -88,13 +89,10 @@ public class GameEngine {
     }
 
     public boolean checkGame(int row, int col, int number) {
-        if (checkSudokuCustom(row, col, number, table.getTable())) {
-            return true;
-        }
-        return false;
+        return checkSudokuCustom(row, col, number, table.getTable());
     }
 
-    public boolean checkSudokuCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
+    private boolean checkSudokuCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
         return (checkHorizontalCustom(row, col, number, sudokuTable) && checkVerticalCustom(row, col, number, sudokuTable)
                 && checkRegionsCustom(row, col, number, sudokuTable));
     }

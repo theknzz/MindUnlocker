@@ -97,45 +97,10 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        int num = -1;
-        switch (v.getId()) {
-            case R.id.selectNr1:
-                //Toast.makeText(this,"1",Toast.LENGTH_SHORT).show();
-                num = 1;
-                break;
-            case R.id.selectNr2:
-                //Toast.makeText(this,"2",Toast.LENGTH_SHORT).show();
-                num = 2;
-                break;
-            case R.id.selectNr3:
-                //Toast.makeText(this,"3",Toast.LENGTH_SHORT).show();
-                num = 3;
-                break;
-            case R.id.selectNr4:
-                //Toast.makeText(this,"4",Toast.LENGTH_SHORT).show();
-                num = 4;
-                break;
-            case R.id.selectNr5:
-                //Toast.makeText(this,"5",Toast.LENGTH_SHORT).show();
-                num = 5;
-                break;
-            case R.id.selectNr6:
-                //Toast.makeText(this,"6",Toast.LENGTH_SHORT).show();
-                num = 6;
-                break;
-            case R.id.selectNr7:
-                //Toast.makeText(this,"7",Toast.LENGTH_SHORT).show();
-                num = 7;
-                break;
-            case R.id.selectNr8:
-                //Toast.makeText(this,"8",Toast.LENGTH_SHORT).show();
-                num = 8;
-                break;
-            case R.id.selectNr9:
-                //Toast.makeText(this,"9",Toast.LENGTH_SHORT).show();
-                num = 9;
-                break;
-        }
+        Button b = (Button) v;
+
+        int num = Integer.parseInt(b.getText().toString());
+
         GameEngine.getInstance().setNumberCustom(num, getApplicationContext());
     }
 }
