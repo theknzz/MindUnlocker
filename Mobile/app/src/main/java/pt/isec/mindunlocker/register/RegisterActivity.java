@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 import pt.isec.mindunlocker.MainActivity;
 import pt.isec.mindunlocker.R;
+import pt.isec.mindunlocker.login.LoginActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -119,71 +120,84 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void register(View v){
         if(!validateUsername() | !validatePassword() | !validateEmail()) return;
-        //TODO verificar do servidor/db se existe conta
+
         if(!onRegister()){
             return;
         }
 
 
-        Intent intent = new Intent(this, MainActivity.class);
-
-        intent.putExtra("result", "login");
-        intent.putExtra("success", true); // apenas para teste, mudar para verificação do servidor/db
-        intent.putExtra("score", "1024"); // mudar para valores reais
-        intent.putExtra("ranking", "#1"); // mudar para valores reais
-        intent.putExtra("user", username.getEditText().getText().toString());
+        Intent intent = new Intent(this, LoginActivity.class);
 
         startActivity(intent);
     }
 
     public boolean onRegister() {
-        String tEmail = email.getEditText().getText().toString().trim();
-        String tUser = username.getEditText().getText().toString().trim();
-        String pw = password.getEditText().getText().toString().trim();
-        String rePw = repeat_password.getEditText().getText().toString().trim();
-
         try {
-            Registration registration = new Registration(tEmail, pw, rePw, tUser);
-            String parameters = new Gson().toJson(registration);
+            String tEmail = email.getEditText().getText().toString().trim();
+            String tUser = username.getEditText().getText().toString().trim();
+            String pw = password.getEditText().getText().toString().trim();
+            String rePw = repeat_password.getEditText().getText().toString().trim();
 
+            Registration registration = new Registration(tEmail, pw, rePw, tUser);
+
+            String parameters = new Gson().toJson(registration);
             url = new URL("https://mindunlocker20191126085502.azurewebsites.net/api/Account/Register");
 
             //create the connection
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
-            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Content-Type",
+                    "application/json");
+
+            connection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+            connection.setRequestProperty("Accept","*/*");
 
             //set the request method to POST
             connection.setRequestMethod("POST");
 
             //get the output stream from the connection you created
             OutputStreamWriter request = new OutputStreamWriter(connection.getOutputStream());
+
             //write your data to the ouputstream
             request.write(parameters);
             request.flush();
             request.close();
-
-            String line = "";
+            String line;
 
             //create your inputsream
-            InputStreamReader isr = new InputStreamReader(connection.getInputStream());
+            InputStreamReader isr;
+            int status = connection.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK) {
+                isr = new InputStreamReader(connection.getErrorStream());
+            } else {
+                isr = new InputStreamReader(connection.getInputStream());
+            }
 
             //read in the data from input stream, this can be done a variety of ways
             BufferedReader reader = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
-
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
 
             //get the string version of the response data
             response = sb.toString();
 
+            // if the http result code is 400, something went wrong
+            if (status==400) {
+                String[] arr = response.split(",");
+                response = arr[2].replace("\"", "")
+                        .replace("{", "")
+                        .replace("}", "")
+                        .replace("]", "");
+                throw new Exception(response);
+            }
+
             isr.close();
             reader.close();
-        } catch (IOException e) {
-            Log.e("HTTP POST:", e.toString());
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
         }
 

@@ -114,12 +114,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logOut(View v) {
-        //TODO terminar sessão do utilizador
+        Token.CONTENT = null;
 
         hideComponents();
     }
 
     @Override
     public void onBackPressed() {
+
     }
 }
