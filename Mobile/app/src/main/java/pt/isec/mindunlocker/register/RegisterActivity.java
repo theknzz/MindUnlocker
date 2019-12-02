@@ -2,11 +2,13 @@ package pt.isec.mindunlocker.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -17,6 +19,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import pt.isec.mindunlocker.R;
 import pt.isec.mindunlocker.exceptions.InvalidEmailFormatException;
@@ -26,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private URL url = null;
     private String response = null;
     private EditText etEmail, etUsername, etPassword, etConfirmPassword;
+    private TextView tvError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.username);
         etPassword = findViewById(R.id.password);
         etConfirmPassword = findViewById(R.id.re_password);
+        tvError = findViewById(R.id.tvError);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
@@ -51,42 +56,75 @@ public class RegisterActivity extends AppCompatActivity {
         String pw = etPassword.getText().toString();
         String rePw = etConfirmPassword.getText().toString();
 
-//        if (!isValidateRegistration(email, user,pw,rePw)) return;
+        if (!isValidateRegistration(email, user,pw,rePw)) return;
 
-        email = "test@test.pt";
-        user = "test";
-        pw = "Qwerty123!";
-        rePw = "Qwerty123!";
+        // debug
+//        email = "test@test.pt";
+//        user = "test";
+//        pw = "Qwerty123!";
+//        rePw = "Qwerty123!";
 
         try {
             Registration registration = new Registration(email, pw, rePw, user);
+
             String parameters = new Gson().toJson(registration);
             url = new URL("https://mindunlocker20191126085502.azurewebsites.net/api/Account/Register");
+
             //create the connection
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type",
                     "application/json");
+
+            connection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+            connection.setRequestProperty("Accept","*/*");
+
             //set the request method to POST
             connection.setRequestMethod("POST");
+
             //get the output stream from the connection you created
             OutputStreamWriter request = new OutputStreamWriter(connection.getOutputStream());
+
             //write your data to the ouputstream
             request.write(parameters);
             request.flush();
             request.close();
             String line = "";
+
             //create your inputsream
-            InputStreamReader isr = new InputStreamReader(
-                    connection.getInputStream());
+            InputStreamReader isr;
+            int status = connection.getResponseCode();
+
+            if (status != HttpURLConnection.HTTP_OK) {
+                isr = new InputStreamReader(connection.getErrorStream());
+            } else {
+                isr = new InputStreamReader(connection.getInputStream());
+            }
+
             //read in the data from input stream, this can be done a variety of ways
             BufferedReader reader = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
             while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
             }
+
             //get the string version of the response data
             response = sb.toString();
+
+            // if the http result code is 400, something went wrong
+            if (status==400) {
+                String[] arr = response.split(",");
+                response = arr[2].replace("\"", "")
+                        .replace("{","")
+                        .replace("}","")
+                        .replace("]","");
+
+                tvError.setText(response);
+//                System.out.println("response: " + response);
+            } else {
+                tvError.setTextColor(Color.GREEN);
+                tvError.setText("The account was sucessfully created.");
+            }
 
             isr.close();
             reader.close();
@@ -96,14 +134,18 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean isValidateRegistration(String email, String user, String pw, String rePw) {
+        tvError.setTextColor(Color.RED);
         if (!email.contains("@") || !email.contains(".")) {
             System.err.println("email format invalid");
+            tvError.setText("Email format invalid");
             return false;
         } else if (user.length()<4||user.length()>12) {
             System.err.println("invalid user length");
+            tvError.setText("Invalid user length");
             return false;
         } else if (!pw.equals(rePw)) {
             System.err.println("passwords dont match");
+            tvError.setText("Passwords dont match");
             return false;
         }
         return true;
