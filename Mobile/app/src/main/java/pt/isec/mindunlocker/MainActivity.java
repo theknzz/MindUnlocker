@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         boolean temp = response.getBoolean("success");
 
         if (temp) {
+            //TODO obter da API valores reais apos login
             TextView user = findViewById(R.id.user);
             TextView score = findViewById(R.id.score);
             TextView ranking = findViewById(R.id.ranking);
