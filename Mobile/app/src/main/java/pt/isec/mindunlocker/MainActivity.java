@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import pt.isec.mindunlocker.login.LoginActivity;
+import pt.isec.mindunlocker.register.RegisterActivity;
+
 public class MainActivity extends AppCompatActivity {
     private LinearLayout header, headerLogin;
     private ScrollView leaderboard;
@@ -25,22 +28,22 @@ public class MainActivity extends AppCompatActivity {
 
         setListeners();
 
-        if(firstTime) {
+        if (firstTime) {
             hideComponents();
             firstTime = false;
-        }else{
+        } else {
             Bundle response = getIntent().getExtras();
 
-            if(response == null) return;
+            if (response == null) return;
 
-            if(!"login".equals(response.getString("result"))) return;
+            if (!"login".equals(response.getString("result"))) return;
 
             loginResult(response);
         }
     }
 
 
-    private void getViews(){
+    private void getViews() {
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
         leaderboard = findViewById(R.id.leaderboard);
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         logOut = findViewById(R.id.btnLogOut);
     }
 
-    private void setListeners(){
+    private void setListeners() {
         setButtonListener(login, LoginActivity.class);
         setButtonListener(register, RegisterActivity.class);
         setButtonListener(startGame, GameplayActivity.class);
@@ -60,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setButtonListener(Button button, final Class activity){
+    private void setButtonListener(Button button, final Class activity) {
         button.setOnClickListener(v -> changeActivity(activity)); //mudar para java 8 nos modulos se der erro
     }
 
-    private void loginResult(Bundle response){
+    private void loginResult(Bundle response) {
         boolean temp = response.getBoolean("success");
 
-        if(temp) {
+        if (temp) {
             TextView user = findViewById(R.id.user);
             TextView score = findViewById(R.id.score);
             TextView ranking = findViewById(R.id.ranking);
@@ -77,12 +80,11 @@ public class MainActivity extends AppCompatActivity {
             ranking.setText(response.getString("ranking"));
 
             showComponents();
-        }
-        else
+        } else
             hideComponents();
     }
 
-    private void hideComponents(){
+    private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
         leaderboard.setVisibility(View.GONE);
         load.setVisibility(View.GONE);
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         register.setVisibility(View.VISIBLE);
     }
 
-    private void showComponents(){
+    private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
         leaderboard.setVisibility(View.VISIBLE);
         load.setVisibility(View.VISIBLE);
@@ -106,17 +108,18 @@ public class MainActivity extends AppCompatActivity {
         register.setVisibility(View.GONE);
     }
 
-    private void changeActivity(Class activity){
+    private void changeActivity(Class activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
     }
 
-    public void logOut(View v){
+    public void logOut(View v) {
         //TODO terminar sessão do utilizador
 
         hideComponents();
     }
 
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed() {
+    }
 }
