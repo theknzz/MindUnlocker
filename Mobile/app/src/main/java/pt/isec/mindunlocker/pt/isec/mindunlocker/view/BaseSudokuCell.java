@@ -31,19 +31,11 @@ public class BaseSudokuCell extends View {
         invalidate();
     }
 
-    public boolean isModifiable() {
-        return modifiable;
-    }
-
     public void setValue(int value){
         if( modifiable ){
             this.value = value;
         }
         invalidate();
-    }
-
-    public int getPosition() {
-        return position;
     }
 
 }
