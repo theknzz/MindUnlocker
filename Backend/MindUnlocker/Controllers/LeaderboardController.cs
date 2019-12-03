@@ -18,6 +18,7 @@ namespace MindUnlocker.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [AllowAnonymous]
         [HttpGet]
         public List<TopUser> Index(){
 

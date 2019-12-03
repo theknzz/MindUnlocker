@@ -328,7 +328,7 @@ namespace MindUnlocker.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email , Name= model.Name};
+            var user = new ApplicationUser() { UserName = model.Name, Email = model.Email , Name= model.Name};
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
