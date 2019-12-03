@@ -14,8 +14,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class MainView {
     private Context context;
@@ -55,11 +54,11 @@ public class MainView {
                 int hints = object.getInt("Hints");
 
                 JSONObject gamesPlayed = object.getJSONObject("GamesPlayed");
+                int easy = gamesPlayed.getInt("Easy");
+                int medium = gamesPlayed.getInt("Medium");
                 int hard = gamesPlayed.getInt("Hard");
-                int medium = gamesPlayed.getInt("Hard");
-                int easy = gamesPlayed.getInt("Hard");
 
-                addRanking(name, points, totalGames, hard, medium, easy, hints, 1);
+                addRanking(name, points, totalGames, hints, hard, medium, easy, 1);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -84,8 +83,6 @@ public class MainView {
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestMethod("GET");
-
-                System.out.println(connection.getResponseCode());
 
                 String line;
 
