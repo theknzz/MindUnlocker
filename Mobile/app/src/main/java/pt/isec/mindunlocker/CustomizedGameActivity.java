@@ -9,11 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 public class CustomizedGameActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
-    Button btnStartGame;
+    Button btnStartGame, btnErase;
 
     static final int MIN_CELLS = 17;
 
@@ -46,41 +47,40 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         btn7.setOnClickListener(this);
         btn8.setOnClickListener(this);
         btn9.setOnClickListener(this);
-
-        btnStartGame = findViewById(R.id.btnStartGame);
-        btnStartGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (GameEngine.getInstance().NFillCells() < MIN_CELLS) {
-                    Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
-                } else {
-                    sudokusolver(GameEngine.getInstance().getTable());
-                    GameEngine.getInstance().createTableWithVars(getApplicationContext(), soluction);
-                    Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
     }
 
-    private boolean sudokusolver(GameTable board) {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                soluction[row][col] = board.getItem(row, col).getValue();
+    public void onStartGame (View v) {
+        if (GameEngine.getInstance().NFillCells() < MIN_CELLS) {
+            Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
+        } else {
+            for (int row = 0; row < 9; row++) {
+                for (int col = 0; col < 9; col++) {
+                    soluction[row][col] = GameEngine.getInstance().getTable().getItem(row, col).getValue();
+                }
             }
+            sudokusolver();
+            GameEngine.getInstance().createTableWithVars(soluction);
+            Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
+            startActivity(intent);
         }
+    }
 
+    public void onErase(View v) {
+        GameEngine.getInstance().setNumberCustom(0, getApplicationContext());
+    }
+
+    private boolean sudokusolver() {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 // we search an empty cell
                 if (soluction[row][col] == 0) {
                     // we try possible numbers
                     for (int number = 1; number <= 9; number++) {
-                        if (GameEngine.getInstance().checkGame(row, col, number)) {
+                        if (checkSudokuCustom(row, col, number)) {
                             // number ok. it respects sudoku constraints
                             soluction[row][col] = number;
 
-                            if (sudokusolver(board)) { // we start backtracking recursively
+                            if (sudokusolver()) { // we start backtracking recursively
                                 return true;
                             } else { // if not a solution, we empty the cell and we continue
                                 soluction[row][col] = 0;
@@ -93,6 +93,36 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
             }
         }
         return true; // sudoku solved
+    }
+
+    private boolean checkSudokuCustom(int row, int col, int number) {
+        return (checkHorizontalCustom(row, col, number) && checkVerticalCustom(row, col, number)
+                && checkRegionsCustom(row, col, number));
+    }
+
+    private boolean checkHorizontalCustom(int row, int col, int number) {
+        for (int i = 0; i < 9; i++)
+            if (soluction[i][col] == number)
+                return false;
+        return true;
+    }
+
+    private boolean checkVerticalCustom(int row, int col, int number) {
+        for (int i = 0; i < 9; i++)
+            if (soluction[row][i] == number)
+                return false;
+        return true;
+    }
+
+    private boolean checkRegionsCustom(int row, int col, int number) {
+        int r = row - row % 3;
+        int c = col - col % 3;
+
+        for (int i = r; i < r + 3; i++)
+            for (int j = c; j < c + 3; j++)
+                if (soluction[i][j] == number)
+                    return false;
+        return true;
     }
 
     @Override

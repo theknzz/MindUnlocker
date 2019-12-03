@@ -1,10 +1,8 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
@@ -44,10 +42,9 @@ public class GameEngine {
         }
     }
 
-    public void createTableWithVars(Context context, int[][] solutionTable) {
+    public void createTableWithVars(int[][] solutionTable) {
         this.solutionTable = solutionTable;
     }
-
 
     public void createTableEmpty(Context context) {
         copieTable();
@@ -76,35 +73,33 @@ public class GameEngine {
         }
     }
 
-    // QUERO BUE MELHORAR A ESTRUTAR DESTA MERDAAA Q CANCROOOO
-    // APENAS FUCKING PROVISORIO
-
+//==============
     public void setNumberCustom(int number, Context context) {
-        if (number != -1)
-            if (checkGame(selectedPosX, selectedPosY, number)) {
+        if (selectedPosX != -1)
+            if (number != 0) {
+                if (checkSudokuCustom(selectedPosX, selectedPosY, number, table.getTable())) {
+                    table.setItem(selectedPosX, selectedPosY, number);
+                } else {
+                    Toast.makeText(context, "You can not put the " + number + " there", Toast.LENGTH_SHORT).show();
+                }
+            } else
                 table.setItem(selectedPosX, selectedPosY, number);
-            } else {
-                Toast.makeText(context, "You can not put the " + number + " there", Toast.LENGTH_SHORT).show();
-            }
+
     }
 
-    public boolean checkGame(int row, int col, int number) {
-        return checkSudokuCustom(row, col, number, table.getTable());
-    }
-
-    private boolean checkSudokuCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
-        return (checkHorizontalCustom(row, col, number, sudokuTable) && checkVerticalCustom(row, col, number, sudokuTable)
+    public boolean checkSudokuCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
+        return (checkHorizontalCustom(col, number, sudokuTable) && checkVerticalCustom(row, number, sudokuTable)
                 && checkRegionsCustom(row, col, number, sudokuTable));
     }
 
-    private boolean checkHorizontalCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
+    private boolean checkHorizontalCustom(int col, int number, SudokuCell[][] sudokuTable) {
         for (int i = 0; i < 9; i++)
             if (sudokuTable[i][col].getValue() == number)
                 return false;
         return true;
     }
 
-    private boolean checkVerticalCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
+    private boolean checkVerticalCustom(int row, int number, SudokuCell[][] sudokuTable) {
         for (int i = 0; i < 9; i++)
             if (sudokuTable[row][i].getValue() == number)
                 return false;

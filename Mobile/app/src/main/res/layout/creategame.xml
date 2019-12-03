@@ -8,15 +8,33 @@
 
     <include layout="@layout/num_buttons" />
 
-    <Button
-        android:id="@+id/btnStartGame"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Game"
-        android:textSize="20sp"
-        android:paddingHorizontal="20dp"
-        android:layout_gravity="center"
-        android:onClick=""
-        android:background="@android:color/holo_green_light"/>
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/btnStartGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_green_light"
+            android:paddingHorizontal="20dp"
+            android:text="Start Game"
+            android:onClick="onStartGame"
+            android:textSize="20sp"
+            android:layout_marginEnd="20dp"/>
+
+        <Button
+            android:id="@+id/btnErase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onErase"
+            android:text="Erase"
+            android:textSize="16sp"
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

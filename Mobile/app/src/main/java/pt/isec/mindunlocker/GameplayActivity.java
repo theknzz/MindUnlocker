@@ -3,9 +3,11 @@ package pt.isec.mindunlocker;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ButtonBarLayout;
 
 import java.util.Random;
 
@@ -52,44 +54,9 @@ public class GameplayActivity extends AppCompatActivity  implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.selectNr1:
-                //Toast.makeText(this,"1",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(1);
-                break;
-            case R.id.selectNr2:
-                //Toast.makeText(this,"2",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(2);
-                break;
-            case R.id.selectNr3:
-                //Toast.makeText(this,"3",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(3);
-                break;
-            case R.id.selectNr4:
-                //Toast.makeText(this,"4",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(4);
-                break;
-            case R.id.selectNr5:
-                //Toast.makeText(this,"5",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(5);
-                break;
-            case R.id.selectNr6:
-                //Toast.makeText(this,"6",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(6);
-                break;
-            case R.id.selectNr7:
-                //Toast.makeText(this,"7",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(7);
-                break;
-            case R.id.selectNr8:
-                //Toast.makeText(this,"8",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(8);
-                break;
-            case R.id.selectNr9:
-                //Toast.makeText(this,"9",Toast.LENGTH_SHORT).show();
-                GameEngine.getInstance().setNumber(9);
-                break;
+        Button b = (Button) v;
 
+        switch(v.getId()) {
             case R.id.giveUpBtn: Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();
                 //GameEngine.getInstance().setNumber(1);
                 break;
@@ -100,6 +67,8 @@ public class GameplayActivity extends AppCompatActivity  implements View.OnClick
             case R.id.eraseBtn: Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();
                 GameEngine.getInstance().setNumber(0);
                 break;
+            default:
+                GameEngine.getInstance().setNumber(Integer.parseInt(b.getText().toString()));
         }
     }
 
