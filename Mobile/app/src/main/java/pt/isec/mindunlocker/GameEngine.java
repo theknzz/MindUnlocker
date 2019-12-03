@@ -1,6 +1,9 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
+
+import java.util.Arrays;
+
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 
 public class GameEngine {
@@ -51,35 +54,17 @@ public class GameEngine {
         return solutionTable[x][y];
     }
 
+    public void setItem() {
+        table.setItem(selectedPosX, selectedPosY,n);
+    }
+
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
         this.selectedPosY = y;
     }
 
     public void setNumber(int number){
-
-        if(selectedPosX != -1 && selectedPosY != -1){
-            n = number;
-            //table.setItem(selectedPosX,selectedPosY,n);
-            //clearPos();
-            if(table.checkGame()){
-                //Show final score
-            }else if(number != 0){
-                table.checkPosition(number,selectedPosX,selectedPosY);
-            }
-        }
-
+        n=number;
     }
 
-    public int getSelectedPosX() {
-        return selectedPosX;
-    }
-
-    public int getSelectedPosY() {
-        return selectedPosY;
-    }
-
-    public int getN() {
-        return n;
-    }
 }

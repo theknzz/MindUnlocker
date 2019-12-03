@@ -64,19 +64,19 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         Button b = (Button)v;
         deselectAllOthers();
         switch(v.getId()){
-            case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show()*/;
+            case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
                 //GameEngine.getInstance().setNumber(1);
                 break;
-            case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show()*/;
+            case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
                 v.invalidate();
                 break;
-            case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show()*/;
+            case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 b.setSelected(true);
                 btnPencil.setSelected(false);
                 GameEngine.getInstance().setNumber(0);
                 break;
-            case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show()*/;
+            case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 if(b.isSelected()) {
                     b.setSelected(false);
                     GameEngine.getInstance().getTable().setPencilMode(true);
@@ -115,11 +115,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             if(GameEngine.getInstance().getTable().getItem(x,y).getValue() == 0){
                 GameEngine.getInstance().setNumber(GameEngine.getInstance().getSolutionTable(x,y));
                 GameEngine.getInstance().setSelectedPosition(x,y);
-                GameEngine.getInstance().getTable().setItem(
-                        GameEngine.getInstance().getSelectedPosX(),
-                        GameEngine.getInstance().getSelectedPosY(),
-                        GameEngine.getInstance().getN()
-                );
+                GameEngine.getInstance().setItem();
                 break;
             }else{
                 x = rand.nextInt(9);
