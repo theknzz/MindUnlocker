@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import pt.isec.mindunlocker.leaderboard.MainView;
 import pt.isec.mindunlocker.login.LoginActivity;
 import pt.isec.mindunlocker.register.RegisterActivity;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private ScrollView leaderboard;
     private Button login, register, load, startGame, history, logOut;
     private static boolean firstTime = true; //check if first time in main
+    private MainView leaderContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_menu);
 
         getViews();
+
+        leaderContainer.getLeaderBoard();
 
         setListeners();
 
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         startGame = findViewById(R.id.btnGenerateGame);
         history = findViewById(R.id.btnHistory);
         logOut = findViewById(R.id.btnLogOut);
+
+        leaderContainer = new MainView(findViewById(R.id.leadercontainer), this);
     }
 
     private void setListeners() {
@@ -87,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
-        leaderboard.setVisibility(View.GONE);
         load.setVisibility(View.GONE);
         history.setVisibility(View.GONE);
         logOut.setVisibility(View.GONE);
@@ -99,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
-        leaderboard.setVisibility(View.VISIBLE);
         load.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
         logOut.setVisibility(View.VISIBLE);
