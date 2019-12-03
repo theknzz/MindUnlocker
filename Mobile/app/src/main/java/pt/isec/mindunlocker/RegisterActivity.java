@@ -1,11 +1,10 @@
-package pt.isec.mindunlocker.register;
+package pt.isec.mindunlocker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -14,16 +13,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Pattern;
 
-import pt.isec.mindunlocker.MainActivity;
-import pt.isec.mindunlocker.R;
-import pt.isec.mindunlocker.login.LoginActivity;
+import pt.isec.mindunlocker.api.register.Registration;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -51,80 +47,70 @@ public class RegisterActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8)
-        {
+        if (SDK_INT > 8) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
     }
 
-    private boolean validateUsername(){
+    private boolean validateUsername() {
         String usernameInput = username.getEditText().getText().toString().trim();
 
-        if(usernameInput.isEmpty()){
+        if (usernameInput.isEmpty()) {
             username.setError("Username necessário");
             return false;
-        }
-        else if(usernameInput.length() > 15){
+        } else if (usernameInput.length() > 15) {
             username.setError("Username tem mais de 15 caracteres");
             return false;
-        }
-        else {
+        } else {
             username.setError(null);
             return true;
         }
     }
 
-    private boolean validatePassword(){
+    private boolean validatePassword() {
         String passwordInput = password.getEditText().getText().toString().trim();
         String repeated = repeat_password.getEditText().getText().toString().trim();
 
-        if(passwordInput.isEmpty()){
+        if (passwordInput.isEmpty()) {
             password.setError("Password necessária");
             return false;
-        }
-        else if(repeated.isEmpty()){
+        } else if (repeated.isEmpty()) {
             repeat_password.setError("Password necessária");
             return false;
-        }
-        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
             password.setError("Password Inválida");
             return false;
-        }
-        else if(!passwordInput.equals(repeated)){
+        } else if (!passwordInput.equals(repeated)) {
             repeat_password.setError("Password não corresponde");
             return false;
-        }
-        else{
+        } else {
             password.setError(null);
             return true;
         }
     }
 
-    private boolean validateEmail(){
+    private boolean validateEmail() {
         String emailInput = email.getEditText().getText().toString().trim();
 
-        if(emailInput.isEmpty()){
+        if (emailInput.isEmpty()) {
             email.setError("Email necessário");
             return false;
-        }
-        else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             email.setError("Email inválido sugestão (xxx@xxx.com)");
             return false;
-        }
-        else{
+        } else {
             email.setError(null);
             return true;
         }
     }
 
-    public void register(View v){
-        if(!validateUsername() | !validatePassword() | !validateEmail()) return;
+    public void register(View v) {
+        if (!validateUsername() | !validatePassword() | !validateEmail()) return;
 
-        if(!onRegister()){
+        if (!onRegister()) {
             return;
         }
-
 
         Intent intent = new Intent(this, LoginActivity.class);
 
@@ -149,8 +135,8 @@ public class RegisterActivity extends AppCompatActivity {
             connection.setRequestProperty("Content-Type",
                     "application/json");
 
-            connection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-            connection.setRequestProperty("Accept","*/*");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
+            connection.setRequestProperty("Accept", "*/*");
 
             //set the request method to POST
             connection.setRequestMethod("POST");
@@ -185,7 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
             response = sb.toString();
 
             // if the http result code is 400, something went wrong
-            if (status==400) {
+            if (status == 400) {
                 String[] arr = response.split(",");
                 response = arr[2].replace("\"", "")
                         .replace("{", "")
@@ -193,14 +179,13 @@ public class RegisterActivity extends AppCompatActivity {
                         .replace("]", "");
                 throw new Exception(response);
             }
-
             isr.close();
             reader.close();
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
+            } catch (Exception e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                return false;
+            }
         return true;
     }
 }
+

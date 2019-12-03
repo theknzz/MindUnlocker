@@ -1,4 +1,4 @@
-package pt.isec.mindunlocker.login;
+package pt.isec.mindunlocker.api.login;
 
 public class GetResponse {
     private String access_token;

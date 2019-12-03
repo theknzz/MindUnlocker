@@ -1,9 +1,12 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
+
+import pt.isec.mindunlocker.api.insertGame.InsertGame;
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 
 public class GameEngine {
+    private InsertGame service = new InsertGame();
     private static GameEngine instance;
     private GameTable table = null;
 
@@ -63,7 +66,8 @@ public class GameEngine {
         }
 
         if(table.checkGame()){
-
+            //TODO get the valid values
+            service.sentData(200, 20, "Hard", 20);
         }
     }
 

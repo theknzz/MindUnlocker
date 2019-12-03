@@ -1,4 +1,4 @@
-package pt.isec.mindunlocker.login;
+package pt.isec.mindunlocker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
