@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -131,14 +134,17 @@ public class LoginActivity extends AppCompatActivity {
 
             //get the string version of the response data
             response = sb.toString();
-            Token.CONTENT = captureTokenFromResponse(response);
+
+            JSONObject object = new JSONObject(response);
+
+            Token.CONTENT = object.getString("access_token");
 
             // debug
             // pass the token to the main activity in a intent bundle?
 
             isr.close();
             reader.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             if (e instanceof FileNotFoundException) {
                 return false;
             }

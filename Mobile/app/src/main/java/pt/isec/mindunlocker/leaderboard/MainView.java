@@ -4,7 +4,7 @@ package pt.isec.mindunlocker.leaderboard;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.StrictMode;
-import android.widget.LinearLayout;
+
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -14,23 +14,58 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.model.TableColumnDpWidthModel;
+import de.codecrafters.tableview.model.TableColumnWeightModel;
+import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 
 
 public class MainView {
     private Context context;
-    private LinearLayout container;
+    private TableView<String []> container;
+    private List<String []> data = new ArrayList<>();
 
-    public MainView(LinearLayout container, final Context context) {
+    public MainView(TableView<String []> container, final Context context) {
         this.container = container;
         this.context = context;
+
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(8);
+
+        for(int i = 0; i < 8; i++){
+            if(i == 1)
+                columnModel.setColumnWeight(i, 2);
+
+            columnModel.setColumnWeight(i, 1);
+        }
+
+        container.setColumnModel(columnModel);
+
+    }
+
+    public void displayData(){
+        String [][] newData = new String[data.size()][];
+
+        for(int i = 0; i < newData.length; i++){
+            newData[i] = data.get(i);
+        }
+
+        container.setDataAdapter(new SimpleTableDataAdapter(context, data));
     }
 
     public void addRanking(String name, int points, int totalGames, int hints, int hard, int medium, int easy, int rank){
-        UserRow newRow = new UserRow(context);
-        newRow.initParams(name, points, totalGames, hints, hard, medium, easy, rank);
-        newRow.setView();
+        data.add(new String[]{String.valueOf(rank), name, String.valueOf(hints), String.valueOf(easy),
+                String.valueOf(medium), String.valueOf(hard), String.valueOf(totalGames), String.valueOf(30)});
 
-        container.addView(newRow);
+        System.out.println(points);
+
+//        UserRow newRow = new UserRow(context);
+//        newRow.initParams(name, points, totalGames, hints, hard, medium, easy, rank);
+//        newRow.setView();
+//
+//        container.addView(newRow);
     }
 
     public void cleanRanking(){

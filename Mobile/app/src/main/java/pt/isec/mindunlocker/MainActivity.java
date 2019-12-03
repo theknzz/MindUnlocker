@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -16,7 +17,7 @@ import pt.isec.mindunlocker.register.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout header, headerLogin;
-    private ScrollView leaderboard;
+    private RelativeLayout leaderboard;
     private Button login, register, load, startGame, history, logOut;
     private static boolean firstTime = true; //check if first time in main
     private MainView leaderContainer;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         getViews();
 
         leaderContainer.getLeaderBoard();
+        leaderContainer.displayData();
 
         setListeners();
 
