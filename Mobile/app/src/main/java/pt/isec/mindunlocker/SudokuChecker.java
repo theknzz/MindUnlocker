@@ -1,5 +1,7 @@
 package pt.isec.mindunlocker;
 
+import android.util.Log;
+
 public class SudokuChecker {
     private static SudokuChecker instance;
 
@@ -75,5 +77,45 @@ public class SudokuChecker {
             }
         }
         return true;
+    }
+
+    public boolean checkSudokuPlay(int[][] sudokuTable, int num, int x, int y) {
+        return (checkHorizontalPlay(sudokuTable,num,x,y) || checkVerticalPlay(sudokuTable,num,x,y) || checkRegionPlay(sudokuTable,num,x,y));
+        //return false;
+    }
+
+    private boolean checkRegionPlay(int[][] sudokuTable, int num, int x, int y) {
+        int bx, by;
+        for (bx = (x/3)*3; bx < (x/3)*3 + 3; bx++) {
+            for (by = (y/3)*3; by < (y/3)*3 + 3; by++) {
+                // bx and by will now loop over each number in the block which also contains x, y
+                if( bx != x && by != y && sudokuTable[bx][by] == sudokuTable[x][y]){
+                    Log.e("Conflito","nums iguais na mesma regiao");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    private boolean checkHorizontalPlay(int[][] sudokuTable, int num, int x, int y) {
+        for( int k = 0 ; k < 9 ; k++ ){
+            if( k != x && sudokuTable[k][y] == num){
+                Log.e("Conflito","nums iguais na mesma linha");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkVerticalPlay(int[][] sudokuTable, int num, int x,int y) {
+        for( int k = 0 ; k < 9 ; k++ ){
+            if( k != y && sudokuTable[x][k] == num){
+                Log.e("Conflito","nums iguais na mesma coluna");
+                return true;
+            }
+        }
+        return false;
     }
 }

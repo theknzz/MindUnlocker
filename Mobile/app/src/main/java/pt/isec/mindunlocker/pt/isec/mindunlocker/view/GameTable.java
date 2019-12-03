@@ -1,8 +1,10 @@
 package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
+import pt.isec.mindunlocker.GameEngine;
 import pt.isec.mindunlocker.SudokuChecker;
 
 public class GameTable {
@@ -47,6 +49,24 @@ public class GameTable {
 
     public void setItem(int x, int y, int number){
         SudokuTable[x][y].setValue(number);
+    }
+
+    public void setPencilMode(boolean val){
+        //SudokuTable[0][0].setGuess(val);
+    }
+
+    public void checkPosition(int number, int x, int y) {
+        int [][] table = new int[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                table[i][j] = getItem(i,j).getValue();
+            }
+        }
+
+        if(SudokuChecker.getInstance().checkSudokuPlay(table,number,x,y)){
+            Toast.makeText(context,"Conflito!",Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     public boolean checkGame(){

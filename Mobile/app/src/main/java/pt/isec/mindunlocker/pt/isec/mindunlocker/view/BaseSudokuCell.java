@@ -7,12 +7,12 @@ public class BaseSudokuCell extends View {
 
     private int value;
     private boolean modifiable = true;
+    private boolean guess = false;
     private int position;
 
     public void setNotModifiable() {
         this.modifiable = false;
     }
-
     public BaseSudokuCell(Context context) {
         super(context);
     }
@@ -33,6 +33,14 @@ public class BaseSudokuCell extends View {
 
     public boolean isModifiable() {
         return modifiable;
+    }
+
+    public boolean isGuess() {
+        return guess;
+    }
+
+    public void setGuess(boolean guess) {
+        this.guess = guess;
     }
 
     public void setValue(int value){

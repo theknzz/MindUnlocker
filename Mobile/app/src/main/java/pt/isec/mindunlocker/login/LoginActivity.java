@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
 
         etUsername = findViewById(R.id.username);
         etPassword = findViewById(R.id.password);
-        tvError = findViewById(R.id.tvError);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)

@@ -10,6 +10,8 @@ public class GameEngine {
     private int[][] solutionTable = new int[9][9];
     private int[][] gameTable = new int[9][9];
 
+
+    private int n = 0;
     private int selectedPosX = -1;
     private int selectedPosY = -1;
     public GameEngine() {
@@ -55,14 +57,29 @@ public class GameEngine {
     }
 
     public void setNumber(int number){
+
         if(selectedPosX != -1 && selectedPosY != -1){
-            table.setItem(selectedPosX,selectedPosY,number);
-            clearPos();
+            n = number;
+            //table.setItem(selectedPosX,selectedPosY,n);
+            //clearPos();
+            if(table.checkGame()){
+                //Show final score
+            }else if(number != 0){
+                table.checkPosition(number,selectedPosX,selectedPosY);
+            }
         }
 
-        if(table.checkGame()){
-
-        }
     }
 
+    public int getSelectedPosX() {
+        return selectedPosX;
+    }
+
+    public int getSelectedPosY() {
+        return selectedPosY;
+    }
+
+    public int getN() {
+        return n;
+    }
 }
