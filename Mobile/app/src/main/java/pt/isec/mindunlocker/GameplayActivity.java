@@ -25,8 +25,6 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     Button btnGiveUp, btnHint, btnErase, btnPencil;
 
-    static long time = System.nanoTime();
-
     Dialog finishDialog,giveupDialog;
     TextView timerTextView,scoreTextView,timeTextView;
     long startTime = 0;
@@ -104,10 +102,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         btnHint.setOnClickListener(this);
         btnErase.setOnClickListener(this);
         btnPencil.setOnClickListener(this);
-
     }
-
-
 
 
     @Override
