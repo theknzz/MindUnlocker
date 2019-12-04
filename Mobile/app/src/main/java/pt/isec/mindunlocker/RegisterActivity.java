@@ -1,11 +1,10 @@
-package pt.isec.mindunlocker.register;
+package pt.isec.mindunlocker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -14,16 +13,15 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Pattern;
 
-import pt.isec.mindunlocker.MainActivity;
 import pt.isec.mindunlocker.R;
-import pt.isec.mindunlocker.login.LoginActivity;
+import pt.isec.mindunlocker.LoginActivity;
+import pt.isec.mindunlocker.register.Registration;
 
 public class RegisterActivity extends AppCompatActivity {
 
