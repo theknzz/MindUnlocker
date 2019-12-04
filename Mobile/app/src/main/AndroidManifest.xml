@@ -27,9 +27,13 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> c64d861635a4cfef89b4a856391367a567a254ce
+=======
+        <activity android:name=".CustomizedGameActivity" />
+>>>>>>> 566ea6fc320409ccba611dcb3340c2d0e40f7e67
     </application>
 
 </manifest>

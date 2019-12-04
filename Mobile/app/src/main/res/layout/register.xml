@@ -100,9 +100,12 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> c64d861635a4cfef89b4a856391367a567a254ce
+=======
+>>>>>>> 566ea6fc320409ccba611dcb3340c2d0e40f7e67
     </LinearLayout>
 
     <LinearLayout
@@ -138,15 +141,19 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
+                android:hint="Password"
                 android:inputType="textPassword"
                 android:textColor="@color/colorAccent" />
 
         </com.google.android.material.textfield.TextInputLayout>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> c64d861635a4cfef89b4a856391367a567a254ce
+=======
+
+>>>>>>> 566ea6fc320409ccba611dcb3340c2d0e40f7e67
     </LinearLayout>
 
     <LinearLayout
@@ -181,7 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:textColor="@color/colorAccent" />
 
         </com.google.android.material.textfield.TextInputLayout>

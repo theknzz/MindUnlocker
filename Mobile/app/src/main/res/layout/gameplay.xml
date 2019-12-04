@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
+            android:id="@+id/gameTimer"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -34,19 +36,8 @@
             android:background="#93C47D"/>
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0">
-
-        <pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuGridView
-            android:id="@+id/sudokuGridView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="9"
-            android:horizontalSpacing="0dp"
-            android:verticalSpacing="0dp"/>
-    </RelativeLayout>
+    <!-- include table -->
+    <include layout="@layout/table" />
 
 
     <LinearLayout
@@ -54,110 +45,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff"
-            android:layout_marginVertical="20dp"
-            android:orientation="vertical">
+        <!-- include number buttons (1 - 9) -->
+        <include layout="@layout/num_buttons" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/selectNr1"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="01"
-                        android:onClick="onClickListener"
-                        android:text="1" />
-
-                    <Button
-                        android:id="@+id/selectNr2"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="TODO"
-                        android:onClick="onClickListener"
-                        android:text="2" />
-
-                    <Button
-                        android:id="@+id/selectNr3"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="TODO"
-                        android:text="3" />
-
-                    <Button
-                        android:id="@+id/selectNr4"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="TODO"
-                        android:onClick="onNumberSelected"
-                        android:text="4" />
-
-                    <Button
-                        android:id="@+id/selectNr5"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:contentDescription="TODO"
-                        android:onClick="onNumberSelected"
-                        android:text="5" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/selectNr6"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:onClick="onNumberSelected"
-                        android:text="6" />
-
-                    <Button
-                        android:id="@+id/selectNr7"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:onClick="onNumberSelected"
-                        android:text="7" />
-
-                    <Button
-                        android:id="@+id/selectNr8"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginHorizontal="5dp"
-                        android:background="@drawable/circle_button"
-                        android:onClick="onNumberSelected"
-                        android:text="8" />
-
-                    <Button
-                        android:id="@+id/selectNr9"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/circle_button"
-                        android:onClick="onNumberSelected"
-                        android:text="9" />
-                </LinearLayout>
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -170,32 +60,52 @@
                 android:id="@+id/giveUpBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:layout_marginHorizontal="10dp"
+                android:layout_weight="4"
                 android:background="#fa4848"
+                android:layout_marginStart="8dp"
+                android:drawableStart="@android:drawable/presence_busy"
                 android:onClick="onOption"
+                android:paddingHorizontal="3dp"
                 android:text="Give up" />
 
             <Button
                 android:id="@+id/eraseBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:background="#edc218"
-                android:drawableStart="@android:drawable/ic_menu_compass"
+                android:layout_marginEnd="2dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="4"
+                android:background="@drawable/erase_button"
+                android:drawableStart="@android:drawable/ic_delete"
                 android:onClick="onOption"
+                android:paddingHorizontal="3dp"
                 android:text="Erase" />
+
+            <Button
+                android:id="@+id/pencilBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:layout_marginStart="2dp"
+                android:layout_weight="4"
+                android:background="@drawable/pencil_button"
+                android:drawableStart="@android:drawable/ic_menu_edit"
+                android:onClick="onOption"
+                android:paddingHorizontal="3dp"
+                android:text="Pencil" />
 
             <Button
                 android:id="@+id/hintBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:layout_marginHorizontal="10dp"
+                android:layout_weight="4"
+                android:background="#3DAECA"
+                android:layout_marginEnd="8dp"
                 android:drawableStart="@android:drawable/btn_star_big_on"
-                android:background="#04ba13"
-                android:onClick="onOption"
+                android:onClick="popupFinish"
+                android:paddingHorizontal="3dp"
                 android:text="Hint" />
+            <!--android:layout_marginHorizontal="10dp"-->
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

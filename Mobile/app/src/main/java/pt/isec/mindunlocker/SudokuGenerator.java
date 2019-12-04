@@ -8,7 +8,7 @@ import java.util.Random;
 public class SudokuGenerator {
 
     private static SudokuGenerator instance;
-    private ArrayList<ArrayList<Integer>> Available = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<ArrayList<Integer>> Available = new ArrayList<>();
     private Random rand = new Random();
 
     public SudokuGenerator() {
@@ -25,9 +25,7 @@ public class SudokuGenerator {
         int[][] sudokuTable = new int[9][9];
         int currPos = 0;
 
-
         while( currPos < 81){
-            //Log.i("Loop","pos: " +currPos);
             if(currPos == 0){
                 clearTable(sudokuTable);
             }
@@ -56,7 +54,6 @@ public class SudokuGenerator {
                 currPos--;
             }
         }
-
         return sudokuTable;
     }
 
@@ -70,7 +67,7 @@ public class SudokuGenerator {
         }
 
         for (int spot = 0; spot < 81; spot++){
-            Available.add(new ArrayList<Integer>());
+            Available.add(new ArrayList<>());
             for (int n = 1; n <= 9; n++) {
                 Available.get(spot).add(n);
             }
@@ -81,10 +78,7 @@ public class SudokuGenerator {
         int posX = currPos % 9;
         int posY = currPos / 9;
 
-        if(checkHorizontal(sudokuTable,number,posX,posY) || checkVertical(sudokuTable,number,posX,posY) || check3x3square(sudokuTable,number,posX,posY)){
-            return true;
-        }
-        return false;
+        return checkHorizontal(sudokuTable, number, posX, posY) || checkVertical(sudokuTable, number, posX, posY) || check3x3square(sudokuTable, number, posX, posY);
     }
 
     private boolean checkVertical(int[][] sudokuTable, int number, int posX, int posY){
@@ -139,6 +133,5 @@ public class SudokuGenerator {
             }
         }
         return sudokuTable;
-
     }
 }
