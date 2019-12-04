@@ -1,13 +1,138 @@
 package pt.isec.mindunlocker;
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 public class HistoryActivity extends AppCompatActivity {
+    private Context context;
+    TableLayout tlGameHistory = null;
+    private List<String []> data = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.history);
+        setContentView(R.layout.history_refactor);
+        tlGameHistory = findViewById(R.id.tlGameHistory);
+
+        getApiData();
+    }
+
+
+    private void getApiData() {
+        JSONArray data = new RetrieveFeedTask(context)
+                .doInBackground("https://mindunlocker20191126085502.azurewebsites.net/api/Games");
+        if (data == null) return;
+        try {
+            for (int i=0; i<data.length(); i++) {
+                JSONObject object = data.getJSONObject(i);
+
+                int gameId = object.getInt("ID");
+                int points = object.getInt("Points");
+                int difficulty = object.getInt("Dificulty");
+                int hints = object.getInt("Hints");
+                int duration = object.getInt("Duration");
+
+                String dif = parseDifficulty(difficulty);
+                if (dif != null)
+                    addGame(gameId, points, dif, hints, duration);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addGame(int gameId, int points, String difficulty, int hints, int duration) {
+        TableRow tr = new TableRow(context);
+
+        TextView tvId = new TextView(context);
+        tvId.setText(String.valueOf(gameId));
+
+        TextView tvPoints = new TextView(context);
+        tvPoints.setText(String.valueOf(points));
+
+        TextView tvHints = new TextView(context);
+        tvHints.setText(String.valueOf(hints));
+
+        TextView tvDuration = new TextView(context);
+        tvDuration.setText(String.valueOf(duration));
+
+        tr.addView(tvId);
+        tr.addView(tvPoints);
+        tr.addView(tvHints);
+        tr.addView(tvDuration);
+    }
+
+    private String parseDifficulty(int id) {
+        switch (id) {
+            case 0: return "Easy";
+            case 1: return "Medium";
+            case 2: return "Hard";
+        }
+        return null;
+    }
+
+    static class RetrieveFeedTask extends AsyncTask<String, Void, JSONArray> {
+        private Context context;
+
+        public RetrieveFeedTask(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        protected JSONArray doInBackground(String... param) {
+            try {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+
+                URL url = new URL(param[0]);
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestMethod("GET");
+
+                String line;
+
+                InputStreamReader isr;
+                isr = new InputStreamReader(connection.getInputStream());
+
+                //read in the data from input stream, this can be done a variety of way
+
+                BufferedReader reader = new BufferedReader(isr);
+                StringBuilder sb = new StringBuilder();
+
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
+                }
+
+                //get the string version of the response data
+                return new JSONArray(sb.toString());
+            } catch (Exception e) {
+                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
+
+            return null;
+        }
     }
 }

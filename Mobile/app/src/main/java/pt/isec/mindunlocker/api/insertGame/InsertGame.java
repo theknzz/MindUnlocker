@@ -8,6 +8,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import pt.isec.mindunlocker.Token;
+
 public class InsertGame {
     public void sentData(int points, int duration, String difficulty, int hints) {
 
@@ -36,7 +38,7 @@ public class InsertGame {
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestProperty("Content-Type", "application/json");
                     connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Authorization", "Bearer " + "ckpERcqX5xGmkxGQVKSRSeJcZCeZ_cx2yjoQl_YtU_Wt_YMUzERsTcaHbqaKWgR-TXqIb1b6UwfM22RDWcz-o3NtGsGr46W25INh5whaNTOG-FFmhGICZ-7X6E206MoeKItPmwQMid5-ZHMg3xUDZMnKJ2s1YBKip09SS5m7RSPdz-oZN4Xfv9f2w4KPCsH6_DKYtXf6JPwu6sG4fW-_-CNPGLGj-purBy_gtTLwbC-PizqS2N101DiK3nrdzW_WZZ0z8xcGl2CEAUDaoeyoVBh3j0QN5SZ9fQx-iqZK632SWpHE4xmKJSpQP90TAtKvOBjsy0dRqZwNHSOQYKdV7ujvxMzmxRuRdu4LZuBaF2hijC0MKC7mbg_uIW85JHDops2TeWpfdsg3jso6Y9TZnokTVllLU63NCewOuA_xNtmxYUw2fU9-T1p-5moEs13OUA8sjeYjY4LyXIWCypSeJZmaDIiETzA0A8WSwx9JLeY");
+                    connection.setRequestProperty("Authorization", "Bearer " + Token.CONTENT);
                     connection.setDoOutput(false);
 
                     BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
