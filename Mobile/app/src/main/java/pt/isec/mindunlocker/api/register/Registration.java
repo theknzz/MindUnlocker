@@ -1,4 +1,4 @@
-package pt.isec.mindunlocker.register;
+package pt.isec.mindunlocker.api.register;
 
 import java.io.Serializable;
 

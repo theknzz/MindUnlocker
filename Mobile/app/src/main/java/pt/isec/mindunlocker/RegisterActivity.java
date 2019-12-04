@@ -19,9 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Pattern;
 
-import pt.isec.mindunlocker.R;
-import pt.isec.mindunlocker.LoginActivity;
-import pt.isec.mindunlocker.register.Registration;
+import pt.isec.mindunlocker.api.register.Registration;
 
 public class RegisterActivity extends AppCompatActivity {
 
