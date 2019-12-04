@@ -1,5 +1,14 @@
 ﻿<div class="jumbotron">
-    <h1>Mind Unlocker</h1>
-   
+
+    <h2>
+        Users:
+    </h2>
+
+    @foreach (var user in ViewBag.users)
+    {
+        <div>
+            <h3>@user.Name</h3>
+        </div>
+    }
 </div>
 

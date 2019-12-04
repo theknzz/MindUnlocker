@@ -6,6 +6,20 @@
     android:background="#CCCCCC"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="#9C27B0"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/username_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/username_layout">
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
@@ -49,8 +63,7 @@
 
         android:clickable="true"
         android:text="Register new account"
-        android:textColor="@android:color/holo_red_dark"
-        android:textColorLink="#cf2a27"
+        android:textColor="@android:color/holo_green_dark"
         android:textSize="15sp"
         android:textStyle="bold"
 

@@ -3,6 +3,7 @@ package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,23 +26,22 @@ public class SudokuGridView extends GridView {
         SudokuGridViewAdapter gridViewAdapter = new SudokuGridViewAdapter(context);
         setAdapter(gridViewAdapter);
 
-        setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int x = position % 9;
-                int y = position / 9;
+        setOnItemClickListener((parent, view, position, id) -> {
+            int x = position % 9;
+            int y = position / 9;
 
-                GameEngine.getInstance().setSelectedPosition(x,y);
+            GameEngine.getInstance().setSelectedPosition(x,y);
+            GameEngine.getInstance().setItem();
 
-                //Toast toast = Toast.makeText(context, "Selected item- x: " + x + " y: " + y, Toast.LENGTH_LONG);
-                //toast.show();
-            }
+            Log.i("Info","selected pos: " + x + "," + y);
+            //Toast toast = Toast.makeText(context, "Selected item- x: " + x + " y: " + y, Toast.LENGTH_LONG);
+            //toast.show();
         });
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     class SudokuGridViewAdapter extends BaseAdapter {
@@ -69,7 +69,6 @@ public class SudokuGridView extends GridView {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             return GameEngine.getInstance().getTable().getItem(position);
         }
     }
