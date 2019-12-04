@@ -19,31 +19,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.codecrafters.tableview.TableView;
-import de.codecrafters.tableview.model.TableColumnDpWidthModel;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 
-public class MainView {
+public class LeaderboardContainer {
     private Context context;
     private TableView<String []> container;
     private List<String []> data = new ArrayList<>();
 
-    public MainView(TableView<String []> container, final Context context) {
+    public LeaderboardContainer(TableView<String []> container, final Context context) {
         this.container = container;
         this.context = context;
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(7);
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(7); //modelo para a tabela
+
         columnModel.setColumnWeight(0, 2);
-        columnModel.setColumnWeight(1, 2);
-        columnModel.setColumnWeight(5, 2);
-        columnModel.setColumnWeight(6, 2);
 
         container.setColumnModel(columnModel);
 
-        container.setHeaderBackgroundColor(Color.parseColor("#2ecc71"));
-        container.setHeaderAdapter(new SimpleTableHeaderAdapter(context, "Nome", "Hints", "E", "M", "H", "Total Games", "Points"));
+        container.setHeaderBackgroundColor(Color.parseColor("#ffffff"));
+
+        SimpleTableHeaderAdapter sTHA = new SimpleTableHeaderAdapter(context, "Name", "Hints", "Easy", "Medium",
+                "Hard", "Total", "Points");
+        sTHA.setTextSize(10);
+
+        container.setHeaderAdapter(sTHA);
     }
 
     public void displayData(){
@@ -53,7 +55,11 @@ public class MainView {
             newData[i] = data.get(i);
         }
 
-        container.setDataAdapter(new SimpleTableDataAdapter(context, data));
+        SimpleTableDataAdapter sTDA = new SimpleTableDataAdapter(context, data);
+        sTDA.setTextSize(10);
+        sTDA.setTextColor(Color.WHITE);
+
+        container.setDataAdapter(sTDA);
     }
 
     public void addRanking(String name, int points, int totalGames, int hints, int hard, int medium, int easy, int rank){
@@ -62,11 +68,6 @@ public class MainView {
 
         System.out.println(points);
 
-//        UserRow newRow = new UserRow(context);
-//        newRow.initParams(name, points, totalGames, hints, hard, medium, easy, rank);
-//        newRow.setView();
-//
-//        container.addView(newRow);
     }
 
     public void cleanRanking(){
@@ -94,7 +95,7 @@ public class MainView {
                 int medium = gamesPlayed.getInt("Medium");
                 int hard = gamesPlayed.getInt("Hard");
 
-                addRanking(name, points, totalGames, hints, hard, medium, easy, 1);
+                addRanking(name, points, totalGames, hints, hard, medium, easy, i+1);
             }
         }catch (Exception e){
             e.printStackTrace();

@@ -6,12 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import pt.isec.mindunlocker.leaderboard.MainView;
+import pt.isec.mindunlocker.leaderboard.LeaderboardContainer;
 import pt.isec.mindunlocker.login.LoginActivity;
 import pt.isec.mindunlocker.register.RegisterActivity;
 
@@ -20,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private RelativeLayout leaderboard;
     private Button login, register, load, startGame, history, logOut;
     private static boolean firstTime = true; //check if first time in main
-    private MainView leaderContainer;
+    private LeaderboardContainer leaderContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         history = findViewById(R.id.btnHistory);
         logOut = findViewById(R.id.btnLogOut);
 
-        leaderContainer = new MainView(findViewById(R.id.leadercontainer), this);
+        leaderContainer = new LeaderboardContainer(findViewById(R.id.leadercontainer), this);
     }
 
     private void setListeners() {
