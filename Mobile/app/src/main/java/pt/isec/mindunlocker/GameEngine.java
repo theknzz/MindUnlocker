@@ -3,12 +3,13 @@ package pt.isec.mindunlocker;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
-public class GameEngine {
+public class GameEngine implements Serializable {
     private static GameEngine instance;
     private GameTable table = null;
 
@@ -31,12 +32,6 @@ public class GameEngine {
         n = 0;
     }
 
-    public static GameEngine getInstance() {
-        if(instance == null){
-            instance = new GameEngine();
-        }
-        return instance;
-    }
 
     public void copieTable(){
         for(int i = 0; i < 9; i++)
@@ -88,15 +83,4 @@ public class GameEngine {
         n=number;
     }
 
-    public int NFillCells() {
-        return table.fillCells();
-    }
-
-    public boolean getCustom() {
-        return custom;
-    }
-
-    public void startTimer() {
-
-    }
 }

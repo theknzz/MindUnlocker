@@ -41,6 +41,7 @@
             android:text="Save this game to play later"
             android:visibility="visible" />
         <EditText
+            android:id="@+id/tv_fileName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -59,6 +60,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:text="Save Game and Leave"
+            android:onClick="onLeaveSave"
             android:background="#4CAF50"/>
     </LinearLayout>
 
@@ -72,6 +74,7 @@
             android:layout_height="wrap_content"
             android:background="#F44336"
             android:text="Leave"
+            android:onClick="onLeave"
             android:layout_marginEnd="5dp"/>
 
         <Button
@@ -80,6 +83,7 @@
             android:layout_height="wrap_content"
             android:background="#FFC107"
             android:text="Cancel"
+            android:onClick="onCancel_Leave"
             android:layout_marginStart="5dp"/>
 
     </LinearLayout>

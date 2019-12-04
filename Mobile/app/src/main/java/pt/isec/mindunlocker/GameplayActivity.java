@@ -1,6 +1,9 @@
 package pt.isec.mindunlocker;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,26 +15,28 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import java.io.Serializable;
 import java.time.Clock;
 import java.util.List;
 import java.util.Random;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 
-public class GameplayActivity extends AppCompatActivity implements View.OnClickListener {
+public class GameplayActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
     private Random rand = new Random();
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     Button btnGiveUp, btnHint, btnErase, btnPencil;
 
-    Dialog finishDialog,giveupDialog;
-    TextView timerTextView,scoreTextView,timeTextView;
+    Dialog finishDialog, giveupDialog;
+    TextView timerTextView, scoreTextView, timeTextView;
     long startTime = 0;
 
-    public String getFinalTime() {
-        return finalTime;
-    }
+    GameEngine gameEngine;
 
     String finalTime = null;
 
@@ -57,7 +62,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
 
-        GameEngine.getInstance().createTable(this);
+        gameEngine = new GameEngine();
+        gameEngine.createTable(this);
+
         //printSudoku(solutionTable);
 
         // Set the timer counting
@@ -107,9 +114,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        Button b = (Button)v;
+        Button b = (Button) v;
         deselectAllOthers();
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
                 giveupDialog.show();
                 break;
@@ -120,27 +127,27 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 b.setSelected(true);
                 btnPencil.setSelected(false);
-                GameEngine.getInstance().setNumber(0);
+                gameEngine.setNumber(0);
                 break;
             case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
-                if(b.isSelected()) {
+                if (b.isSelected()) {
                     b.setSelected(false);
-                    GameEngine.getInstance().getTable().setPencilMode(true);
-                }else{
+                    gameEngine.getTable().setPencilMode(true);
+                } else {
                     b.setSelected(true);
-                    GameEngine.getInstance().getTable().setPencilMode(true);
+                    gameEngine.getTable().setPencilMode(true);
                 }
                 break;
             default:
                 b.setSelected(true);
-                GameEngine.getInstance().setNumber(Integer.parseInt(b.getText().toString()));
-                Log.i("Info","selected num: " + b.getText().toString());
+                gameEngine.setNumber(Integer.parseInt(b.getText().toString()));
+                Log.i("Info", "selected num: " + b.getText().toString());
                 //manda parar a thread do timer
         }
-        if(GameEngine.getInstance().getTable().isFinish()){
+        if (gameEngine.getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
             scoreTextView.setText("1000000");
-            timeTextView.setText(getFinalTime());
+            timeTextView.setText(finalTime);
             finishDialog.show();
         }
     }
@@ -163,18 +170,70 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         int x = rand.nextInt(9);
         int y = rand.nextInt(9);
 
-        while(true){
-            if(GameEngine.getInstance().getTable().getItem(x,y).getValue() == 0){
-                GameEngine.getInstance().setNumber(GameEngine.getInstance().getSolutionTable(x,y));
-                GameEngine.getInstance().setSelectedPosition(x,y);
-                GameEngine.getInstance().setItem();
+        while (true) {
+            if (gameEngine.getTable().getItem(x, y).getValue() == 0) {
+                gameEngine.setNumber(gameEngine.getSolutionTable(x, y));
+                gameEngine.setSelectedPosition(x, y);
+                gameEngine.setItem();
                 break;
-            }else{
+            } else {
                 x = rand.nextInt(9);
                 y = rand.nextInt(9);
             }
         }
 
-        System.out.println("Hint: X: " + x + " Y: " + y + " Valor: " + GameEngine.getInstance().getSolutionTable(x,y));
+        System.out.println("Hint: X: " + x + " Y: " + y + " Valor: " + gameEngine.getSolutionTable(x, y));
+    }
+
+    /*
+     * Functions onClicks - Dialog giveup
+     */
+
+    /**
+     * @param view - Button Save and Leave from giveup pop up
+     */
+    public void onLeaveSave(View view) {
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)  ||
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+            ActivityCompat.requestPermissions(this, new String[] {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+            }, 1234);
+            return;
+        } else {
+            TextView tv = findViewById(R.id.tv_fileName);
+
+            if (tv.getText().toString().trim().equals(" ") && !tv.getText().toString().isEmpty());
+
+
+
+            backToMain();
+        }
+    }
+
+    /**
+     * @param view - Button Leave from giveup pop up
+     */
+    public void onLeave(View view) {
+        backToMain();
+    }
+
+    /**
+     * @param view - Button Cancel from giveup pop up
+     */
+    public void onCancel_Leave(View view) {
+    }
+
+    private void backToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1234) {
+
+        }
     }
 }
