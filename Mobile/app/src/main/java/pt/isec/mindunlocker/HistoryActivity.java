@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -35,12 +36,18 @@ public class HistoryActivity extends AppCompatActivity {
         setContentView(R.layout.history_refactor);
         tlGameHistory = findViewById(R.id.tlGameHistory);
 
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         getApiData();
     }
 
 
     private void getApiData() {
-        JSONArray data = new RetrieveFeedTask(context)
+        JSONArray data = new RetrieveFeedTask()
                 .doInBackground("https://mindunlocker20191126085502.azurewebsites.net/api/Games");
         if (data == null) return;
         try {
@@ -63,22 +70,26 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void addGame(int gameId, int points, String difficulty, int hints, int duration) {
-        TableRow tr = new TableRow(context);
+        TableRow tr = new TableRow(this);
 
-        TextView tvId = new TextView(context);
+        TextView tvId = new TextView(this);
         tvId.setText(String.valueOf(gameId));
 
-        TextView tvPoints = new TextView(context);
+        TextView tvPoints = new TextView(this);
         tvPoints.setText(String.valueOf(points));
 
-        TextView tvHints = new TextView(context);
+        TextView tvDifficulty = new TextView(this);
+        tvDifficulty.setText(difficulty);
+
+        TextView tvHints = new TextView(this);
         tvHints.setText(String.valueOf(hints));
 
-        TextView tvDuration = new TextView(context);
+        TextView tvDuration = new TextView(this);
         tvDuration.setText(String.valueOf(duration));
 
         tr.addView(tvId);
         tr.addView(tvPoints);
+        tr.addView(tvDifficulty);
         tr.addView(tvHints);
         tr.addView(tvDuration);
     }
@@ -93,11 +104,11 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     static class RetrieveFeedTask extends AsyncTask<String, Void, JSONArray> {
-        private Context context;
-
-        public RetrieveFeedTask(Context context) {
-            this.context = context;
-        }
+//        private Context context;
+//
+//        public RetrieveFeedTask(Context context) {
+//            this.context = context;
+//        }
 
         @Override
         protected JSONArray doInBackground(String... param) {
@@ -109,11 +120,28 @@ public class HistoryActivity extends AppCompatActivity {
 
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Authorization", "Bearer " + Token.CONTENT);
                 connection.setRequestMethod("GET");
+                connection.setDoOutput(true);
+
+                connection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
+                connection.setRequestProperty("Accept", "*/*");
+
 
                 String line;
 
                 InputStreamReader isr;
+                InputStream inputStream;
+                int status = connection.getResponseCode();
+
+                if (status != HttpURLConnection.HTTP_OK)  {
+                    inputStream = connection.getErrorStream();
+                }
+                else  {
+                    inputStream = connection.getInputStream();
+                }
+
+
                 isr = new InputStreamReader(connection.getInputStream());
 
                 //read in the data from input stream, this can be done a variety of way
@@ -128,7 +156,7 @@ public class HistoryActivity extends AppCompatActivity {
                 //get the string version of the response data
                 return new JSONArray(sb.toString());
             } catch (Exception e) {
-                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
             }
 
