@@ -16,7 +16,7 @@ import pt.isec.mindunlocker.register.RegisterActivity;
 public class MainActivity extends AppCompatActivity {
     private LinearLayout header, headerLogin;
     private ScrollView leaderboard;
-    private Button login, register, load, startGame, history, logOut;
+    private Button login, register, load, generateGame, customizedGame, history, logOut;
     private static boolean firstTime = true; //check if first time in main
 
     @Override
@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         login = findViewById(R.id.btnLogin);
         register = findViewById(R.id.btnCreateAcc);
         load = findViewById(R.id.btnLoadGame);
-        startGame = findViewById(R.id.btnGenerateGame);
+        generateGame = findViewById(R.id.btnGenerateGame);
+        customizedGame = findViewById(R.id.btnCreateGame);
         history = findViewById(R.id.btnHistory);
         logOut = findViewById(R.id.btnLogOut);
     }
@@ -58,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private void setListeners() {
         setButtonListener(login, LoginActivity.class);
         setButtonListener(register, RegisterActivity.class);
-        setButtonListener(startGame, GameplayActivity.class);
+        setButtonListener(generateGame, GameplayActivity.class);
+        setButtonListener(customizedGame, CustomizedGameActivity.class);
         setButtonListener(history, HistoryActivity.class);
     }
 
@@ -121,7 +123,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-
-    }
+    public void onBackPressed() { }
 }

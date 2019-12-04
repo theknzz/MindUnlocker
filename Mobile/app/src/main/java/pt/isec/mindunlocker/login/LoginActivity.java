@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        eUsername = findViewById(R.id.username);
-        ePassword = findViewById(R.id.password);
+        etUsername = findViewById(R.id.username);
+        etPassword = findViewById(R.id.password);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
