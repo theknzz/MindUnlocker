@@ -1,6 +1,7 @@
 package pt.isec.mindunlocker;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,11 +26,10 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     Button btnGiveUp, btnHint, btnErase, btnPencil;
 
-    static long time = System.nanoTime();
-
-    Dialog finishDialog,giveupDialog;
-    TextView timerTextView,scoreTextView,timeTextView;
+    Dialog finishDialog, giveupDialog;
+    TextView timerTextView,scoreTextView,timeTextView,levelTextView;
     long startTime = 0;
+    int level = 0, points = 0;
 
     public String getFinalTime() {
         return finalTime;
@@ -59,8 +59,28 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
 
-        GameEngine.getInstance().createTable(this);
+        Bundle b = getIntent().getExtras();
+        if(b != null){
+            level = b.getInt("level");
+        }else{
+            level = 1;
+        }
+
+        GameEngine.getInstance().createTable(this,level);
         //printSudoku(solutionTable);
+
+        //Set level
+        levelTextView = findViewById(R.id.show_level);
+        String lvl = "level: ";
+        switch (level){
+            case 1: lvl += "Easy";
+                break;
+            case 2: lvl += "Medium";
+                break;
+            case 3: lvl += "Hard";
+                break;
+        }
+        levelTextView.setText(String.format(lvl));
 
         // Set the timer counting
         timerTextView = findViewById(R.id.gameTimer);
@@ -106,9 +126,6 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         btnPencil.setOnClickListener(this);
 
     }
-
-
-
 
     @Override
     public void onClick(View v) {

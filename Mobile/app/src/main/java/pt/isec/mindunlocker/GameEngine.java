@@ -38,10 +38,10 @@ public class GameEngine {
 
     }
 
-    public void createTable(Context context){
+    public void createTable(Context context, int level){
         solutionTable = SudokuGenerator.getInstance().generateTable();
         copieTable();
-        gameTable = SudokuGenerator.getInstance().removeElements(gameTable,0);
+        gameTable = SudokuGenerator.getInstance().removeElements(gameTable,level);
         table = new GameTable(context);
         table.setTable(gameTable);
     }
