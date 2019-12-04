@@ -10,9 +10,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import pt.isec.mindunlocker.login.LoginActivity;
-import pt.isec.mindunlocker.register.RegisterActivity;
-
 public class MainActivity extends AppCompatActivity {
     private LinearLayout header, headerLogin;
     private ScrollView leaderboard;
