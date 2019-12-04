@@ -2,6 +2,7 @@ package pt.isec.mindunlocker.leaderboard;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 
@@ -21,6 +22,7 @@ import de.codecrafters.tableview.TableView;
 import de.codecrafters.tableview.model.TableColumnDpWidthModel;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
+import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 
 public class MainView {
@@ -32,17 +34,16 @@ public class MainView {
         this.container = container;
         this.context = context;
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(8);
-
-        for(int i = 0; i < 8; i++){
-            if(i == 1)
-                columnModel.setColumnWeight(i, 2);
-
-            columnModel.setColumnWeight(i, 1);
-        }
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(7);
+        columnModel.setColumnWeight(0, 2);
+        columnModel.setColumnWeight(1, 2);
+        columnModel.setColumnWeight(5, 2);
+        columnModel.setColumnWeight(6, 2);
 
         container.setColumnModel(columnModel);
 
+        container.setHeaderBackgroundColor(Color.parseColor("#2ecc71"));
+        container.setHeaderAdapter(new SimpleTableHeaderAdapter(context, "Nome", "Hints", "E", "M", "H", "Total Games", "Points"));
     }
 
     public void displayData(){
@@ -56,7 +57,7 @@ public class MainView {
     }
 
     public void addRanking(String name, int points, int totalGames, int hints, int hard, int medium, int easy, int rank){
-        data.add(new String[]{String.valueOf(rank), name, String.valueOf(hints), String.valueOf(easy),
+        data.add(new String[]{rank + " " + name, String.valueOf(hints), String.valueOf(easy),
                 String.valueOf(medium), String.valueOf(hard), String.valueOf(totalGames), String.valueOf(30)});
 
         System.out.println(points);
