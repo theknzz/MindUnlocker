@@ -95,4 +95,8 @@ public class GameEngine {
     public boolean getCustom() {
         return custom;
     }
+
+    public void startTimer() {
+
+    }
 }
