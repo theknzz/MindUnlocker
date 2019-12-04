@@ -100,7 +100,7 @@ public class SudokuChecker {
         return false;
     }
 
-    private boolean checkHorizontalPlay(int[][] sudokuTable, int num, int x, int y) {
+    private boolean checkHorizontalPlay(SudokuCell[][] sudokuTable, int num, int x, int y) {
         for( int k = 0 ; k < 9 ; k++ ){
             if( k != x && sudokuTable[k][y].getValue() == num){
                 Log.e("Conflito","nums iguais na mesma linha");
