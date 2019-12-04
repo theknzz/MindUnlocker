@@ -53,7 +53,20 @@ public class GameTable {
         if (checkGame()) {
             //Show final score
         } else if (number != 0) {
-            checkPosition(number, x, y);
+            if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
+                Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void setItemCustom(int x, int y, int number) {
+        if (number == 0)
+            SudokuTable[x][y].setValue(number);
+        else {
+            if (SudokuChecker.getInstance().checkPositionCustom(getTable(), number, x, y))
+                SudokuTable[x][y].setValue(number);
+            else
+                Toast.makeText(context, "You can't put " + number + " here", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -61,29 +74,8 @@ public class GameTable {
         //SudokuTable[0][0].setGuess(val);
     }
 
-    public void checkPosition(int number, int x, int y) {
-        int[][] table = new int[9][9];
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                table[i][j] = getItem(i, j).getValue();
-            }
-        }
-
-        if (SudokuChecker.getInstance().checkSudokuPlay(table, number, x, y)) {
-            Toast.makeText(context, "Conflito!", Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
     public boolean checkGame() {
-        int[][] table = new int[9][9];
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
-                table[x][y] = getItem(x, y).getValue();
-            }
-        }
-
-        if (SudokuChecker.getInstance().checkSudoku(table)) {
+        if (SudokuChecker.getInstance().checkSudoku(getTable())) {
             Toast.makeText(context, "Congratulations! You've solved the puzzle!", Toast.LENGTH_LONG).show();
             return true;
         }
@@ -101,5 +93,4 @@ public class GameTable {
         }
         return count;
     }
-
 }

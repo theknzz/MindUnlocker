@@ -15,7 +15,7 @@ import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 public class CustomizedGameActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
-    Button btnStartGame, btnErase;
+    Button btnErase;
 
     static final int MIN_CELLS = 17;
 
@@ -48,6 +48,8 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         btn7.setOnClickListener(this);
         btn8.setOnClickListener(this);
         btn9.setOnClickListener(this);
+
+        btnErase = findViewById(R.id.btnErase);
     }
 
     public void onStartGame (View v) {
@@ -67,8 +69,8 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
     }
 
     public void onErase(View v) {
-        //GameEngine.getInstance().setNumberCustom(0, getApplicationContext());
         Button b = (Button)v;
+        deselectAllOthers();
         b.setSelected(true);
         GameEngine.getInstance().setNumber(0);
     }
@@ -138,7 +140,6 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         deselectAllOthers();
         b.setSelected(true);
 
-        //GameEngine.getInstance().setNumberCustom(num, getApplicationContext());
         GameEngine.getInstance().setNumber(num);
         Log.i("Info","selected num: " + b.getText().toString());
     }

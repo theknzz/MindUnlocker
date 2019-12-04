@@ -12,15 +12,23 @@ public class GameEngine {
     private static GameEngine instance;
     private GameTable table = null;
 
-    private int[][] solutionTable = new int[9][9];
-    private int[][] gameTable = new int[9][9];
+    private int[][] solutionTable;
+    private int[][] gameTable;
 
 
-    private int n = 0;
-    private int selectedPosX = -1;
-    private int selectedPosY = -1;
+    private int n;
+    private int selectedPosX;
+    private int selectedPosY;
+
+    private boolean custom;
 
     public GameEngine() {
+        gameTable = new int[9][9];
+        solutionTable = new int[9][9];
+
+        selectedPosX = -1;
+        selectedPosY = -1;
+        n = 0;
     }
 
     public static GameEngine getInstance() {
@@ -36,12 +44,8 @@ public class GameEngine {
                  gameTable[i][j] = solutionTable[i][j];
     }
 
-    private void clearPos() {
-        selectedPosY = selectedPosX = -1;
-
-    }
-
     public void createTable(Context context){
+        custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
         copieTable();
         gameTable = SudokuGenerator.getInstance().removeElements(gameTable,0);
@@ -54,6 +58,7 @@ public class GameEngine {
     }
 
     public void createTableEmpty(Context context) {
+        custom = true;
         copieTable();
         table = new GameTable(context);
     }
@@ -70,6 +75,10 @@ public class GameEngine {
         table.setItem(selectedPosX, selectedPosY,n);
     }
 
+    public void setItemCustom() {
+        table.setItemCustom(selectedPosX, selectedPosY,n);
+    }
+
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
         this.selectedPosY = y;
@@ -79,50 +88,11 @@ public class GameEngine {
         n=number;
     }
 
-    //==============
-    /*public void setNumberCustom(int number, Context context) {
-        if (selectedPosX != -1)
-            if (number != 0) {
-                if (checkSudokuCustom(selectedPosX, selectedPosY, number, table.getTable())) {
-                    table.setItem(selectedPosX, selectedPosY, number);
-                } else {
-                    Toast.makeText(context, "You can not put the " + number + " there", Toast.LENGTH_SHORT).show();
-                }
-            } else
-                table.setItem(selectedPosX, selectedPosY, number);
-    }*/
-
-    public boolean checkSudokuCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
-        return (checkHorizontalCustom(col, number, sudokuTable) && checkVerticalCustom(row, number, sudokuTable)
-                && checkRegionsCustom(row, col, number, sudokuTable));
-    }
-
-    private boolean checkHorizontalCustom(int col, int number, SudokuCell[][] sudokuTable) {
-        for (int i = 0; i < 9; i++)
-            if (sudokuTable[i][col].getValue() == number)
-                return false;
-        return true;
-    }
-
-    private boolean checkVerticalCustom(int row, int number, SudokuCell[][] sudokuTable) {
-        for (int i = 0; i < 9; i++)
-            if (sudokuTable[row][i].getValue() == number)
-                return false;
-        return true;
-    }
-
-    private boolean checkRegionsCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
-        int r = row - row % 3;
-        int c = col - col % 3;
-
-        for (int i = r; i < r + 3; i++)
-            for (int j = c; j < c + 3; j++)
-                if (sudokuTable[i][j].getValue() == number)
-                    return false;
-        return true;
-    }
-
     public int NFillCells() {
         return table.fillCells();
+    }
+
+    public boolean getCustom() {
+        return custom;
     }
 }

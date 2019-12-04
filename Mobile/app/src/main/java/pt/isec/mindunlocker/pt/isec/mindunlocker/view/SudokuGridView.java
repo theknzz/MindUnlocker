@@ -31,7 +31,11 @@ public class SudokuGridView extends GridView {
             int y = position / 9;
 
             GameEngine.getInstance().setSelectedPosition(x,y);
-            GameEngine.getInstance().setItem();
+            if (!GameEngine.getInstance().getCustom()) {
+                GameEngine.getInstance().setItem();
+            } else {
+                GameEngine.getInstance().setItemCustom();
+            }
 
             Log.i("Info","selected pos: " + x + "," + y);
             //Toast toast = Toast.makeText(context, "Selected item- x: " + x + " y: " + y, Toast.LENGTH_LONG);

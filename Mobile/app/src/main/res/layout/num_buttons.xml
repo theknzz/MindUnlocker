@@ -17,7 +17,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:contentDescription="01"
                 android:onClick="onClickListener"
                 android:text="1" />
@@ -27,7 +27,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:contentDescription="TODO"
                 android:onClick="onClickListener"
                 android:text="2" />
@@ -37,7 +37,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:contentDescription="TODO"
                 android:text="3" />
 
@@ -45,7 +45,7 @@
                 android:id="@+id/selectNr4"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:contentDescription="TODO"
                 android:onClick="onNumberSelected"
                 android:text="4" />
@@ -55,7 +55,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:contentDescription="TODO"
                 android:onClick="onNumberSelected"
                 android:text="5" />
@@ -72,7 +72,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:onClick="onNumberSelected"
                 android:text="6" />
 
@@ -81,7 +81,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:onClick="onNumberSelected"
                 android:text="7" />
 
@@ -90,7 +90,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:onClick="onNumberSelected"
                 android:text="8" />
 
@@ -98,7 +98,7 @@
                 android:id="@+id/selectNr9"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/number_buttons"
+                android:background="@drawable/circle_button"
                 android:onClick="onNumberSelected"
                 android:text="9" />
         </LinearLayout>
