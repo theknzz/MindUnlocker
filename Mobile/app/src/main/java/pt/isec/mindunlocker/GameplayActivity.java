@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -33,8 +34,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Button btnGiveUp, btnHint, btnErase, btnPencil;
 
     Dialog finishDialog, giveupDialog;
-    TextView timerTextView, scoreTextView, timeTextView;
+    TextView timerTextView,scoreTextView,timeTextView,levelTextView;
     long startTime = 0;
+    int level = 0, points = 0;
 
     GameEngine gameEngine;
 
@@ -65,7 +67,28 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         gameEngine = new GameEngine();
         gameEngine.createTable(this);
 
+        Bundle b = getIntent().getExtras();
+        if(b != null){
+            level = b.getInt("level");
+        }else{
+            level = 1;
+        }
+
+        GameEngine.getInstance().createTable(this,level);
         //printSudoku(solutionTable);
+
+        //Set level
+        levelTextView = findViewById(R.id.show_level);
+        String lvl = "level: ";
+        switch (level){
+            case 1: lvl += "Easy";
+                break;
+            case 2: lvl += "Medium";
+                break;
+            case 3: lvl += "Hard";
+                break;
+        }
+        levelTextView.setText(String.format(lvl));
 
         // Set the timer counting
         timerTextView = findViewById(R.id.gameTimer);
@@ -109,8 +132,8 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         btnHint.setOnClickListener(this);
         btnErase.setOnClickListener(this);
         btnPencil.setOnClickListener(this);
-    }
 
+    }
 
     @Override
     public void onClick(View v) {

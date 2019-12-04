@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="#CACACA"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="New Game"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Select the level you want to play"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/btn_easylevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#93C47D"
+            android:textColor="#000000"
+            android:onClick="onPickLevel"
+            android:text="Easy"/>
+
+        <Button
+            android:id="@+id/btn_mediumlevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="#93C47D"
+            android:textColor="#000000"
+            android:onClick="onPickLevel"
+            android:text="Medium"/>
+
+        <Button
+            android:id="@+id/btn_hardlevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#93C47D"
+            android:textColor="#000000"
+            android:onClick="onPickLevel"
+            android:text="Hard"/>
+
+    </LinearLayout>
+</LinearLayout>

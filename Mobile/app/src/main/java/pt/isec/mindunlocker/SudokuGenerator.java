@@ -119,12 +119,12 @@ public class SudokuGenerator {
     }
 
     public int[][] removeElements( int[][] sudokuTable, int level){
-        int i = 0,n = 1;
+        int i = 0, n;
 
         switch (level){
-            case 0: n = 60;break;
-            case 1: n = 40;break;
-            case 2: n = 30;break;
+            case 0: n = 30;break;
+            case 2: n = 60;break;
+            default: n = 40; // se for medio ou outro
         }
         //n=1; //Debug
 

@@ -32,7 +32,6 @@ public class GameEngine implements Serializable {
         n = 0;
     }
 
-
     public void copieTable(){
         for(int i = 0; i < 9; i++)
             for(int j = 0; j < 9; j++)
@@ -43,7 +42,7 @@ public class GameEngine implements Serializable {
         custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
         copieTable();
-        gameTable = SudokuGenerator.getInstance().removeElements(gameTable,0);
+        gameTable = SudokuGenerator.getInstance().removeElements(gameTable,level);
         table = new GameTable(context);
         table.setTable(gameTable);
     }
@@ -83,4 +82,7 @@ public class GameEngine implements Serializable {
         n=number;
     }
 
+    public void startTimer() {
+
+    }
 }
