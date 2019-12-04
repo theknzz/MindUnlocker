@@ -1,16 +1,20 @@
 package pt.isec.mindunlocker;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.Clock;
 import java.util.List;
 import java.util.Random;
 
@@ -21,14 +25,58 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     Button btnGiveUp, btnHint, btnErase, btnPencil;
 
+    static long time = System.nanoTime();
+
+    Dialog finishDialog,giveupDialog;
+    TextView timerTextView,scoreTextView,timeTextView;
+    long startTime = 0;
+
+    public String getFinalTime() {
+        return finalTime;
+    }
+
+    String finalTime = null;
+
+    //runs without a timer by reposting this handler at the end of the runnable
+    Handler timerHandler = new Handler();
+    Runnable timerRunnable = new Runnable() {
+
+        @Override
+        public void run() {
+            long millis = System.currentTimeMillis() - startTime;
+            int seconds = (int) (millis / 1000);
+            int minutes = seconds / 60;
+            seconds = seconds % 60;
+
+            finalTime = minutes + ":" + seconds;
+            timerTextView.setText(String.format("time: %d:%02d", minutes, seconds));
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.login);
         setContentView(R.layout.gameplay);
 
         GameEngine.getInstance().createTable(this);
         //printSudoku(solutionTable);
 
+        // Set the timer counting
+        timerTextView = findViewById(R.id.gameTimer);
+        startTime = System.currentTimeMillis();
+        timerHandler.postDelayed(timerRunnable, 0);
+
+        // Set Dialogs
+        giveupDialog = new Dialog(this);
+        giveupDialog.setContentView(R.layout.popup_giveup);
+
+        finishDialog = new Dialog(this);
+        finishDialog.setContentView(R.layout.popup_finish);
+        scoreTextView = (TextView) finishDialog.findViewById(R.id.final_score);
+        timeTextView = (TextView) finishDialog.findViewById(R.id.final_time);
+
+        // SetButtons
         btn1 = findViewById(R.id.selectNr1);
         btn2 = findViewById(R.id.selectNr2);
         btn3 = findViewById(R.id.selectNr3);
@@ -59,13 +107,16 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+
+
+
     @Override
     public void onClick(View v) {
         Button b = (Button)v;
         deselectAllOthers();
         switch(v.getId()){
             case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
-                //GameEngine.getInstance().setNumber(1);
+                giveupDialog.show();
                 break;
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
@@ -84,12 +135,18 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                     b.setSelected(true);
                     GameEngine.getInstance().getTable().setPencilMode(true);
                 }
-
                 break;
             default:
                 b.setSelected(true);
                 GameEngine.getInstance().setNumber(Integer.parseInt(b.getText().toString()));
                 Log.i("Info","selected num: " + b.getText().toString());
+                //manda parar a thread do timer
+        }
+        if(GameEngine.getInstance().getTable().isFinish()){
+            timerHandler.removeCallbacks(timerRunnable);
+            scoreTextView.setText("1000000");
+            timeTextView.setText(getFinalTime());
+            finishDialog.show();
         }
     }
 

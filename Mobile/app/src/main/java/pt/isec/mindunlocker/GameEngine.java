@@ -67,4 +67,7 @@ public class GameEngine {
         n=number;
     }
 
+    public void startTimer() {
+
+    }
 }

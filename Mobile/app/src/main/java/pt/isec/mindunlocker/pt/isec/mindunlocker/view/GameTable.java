@@ -12,6 +12,12 @@ public class GameTable {
 
     private Context context;
 
+    public boolean isFinish() {
+        return finish;
+    }
+
+    private boolean finish = false;
+
     public GameTable(Context context) {
         this.context = context;
 
@@ -51,7 +57,7 @@ public class GameTable {
         SudokuTable[x][y].setValue(number);
         //clearPos();
         if (checkGame()) {
-            //Show final score
+            finish = true;
         } else if (number != 0) {
             checkPosition(number, x, y);
         }
