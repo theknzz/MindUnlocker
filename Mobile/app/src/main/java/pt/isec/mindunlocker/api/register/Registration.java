@@ -2,6 +2,9 @@ package pt.isec.mindunlocker.api.register;
 
 import java.io.Serializable;
 
+/**
+ * Class that wraps the request body of the registration
+ */
 public class Registration implements Serializable {
     protected String Email;
     protected String Password;

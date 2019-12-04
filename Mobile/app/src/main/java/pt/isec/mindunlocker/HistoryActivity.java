@@ -7,16 +7,10 @@ import android.os.StrictMode;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.gson.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -45,7 +39,9 @@ public class HistoryActivity extends AppCompatActivity {
         getApiData();
     }
 
-
+    /**
+     * Makes the call to the backend api in other to get the list of games done by the actual player
+     */
     private void getApiData() {
         JSONArray data = new RetrieveFeedTask()
                 .doInBackground("https://mindunlocker20191126085502.azurewebsites.net/api/Games");
@@ -69,6 +65,14 @@ public class HistoryActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Insert a TableRow with the information of each game inside the TableLayout
+     * @param gameId - The game's id
+     * @param points - The game's points
+     * @param difficulty - The game's difficulty
+     * @param hints - The game's hints
+     * @param duration - The game's duration
+     */
     private void addGame(int gameId, int points, String difficulty, int hints, int duration) {
         TableRow tr = new TableRow(this);
 
@@ -94,6 +98,11 @@ public class HistoryActivity extends AppCompatActivity {
         tr.addView(tvDuration);
     }
 
+    /**
+     * Parse the difficulty identifier, got from the backend api, to a String
+     * @param id - difficulty identifier
+     * @return String correspondent to the difficulty identifier
+     */
     private String parseDifficulty(int id) {
         switch (id) {
             case 0: return "Easy";
@@ -103,12 +112,10 @@ public class HistoryActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Async task that talks to the backend api in order to get the need information
+     */
     static class RetrieveFeedTask extends AsyncTask<String, Void, JSONArray> {
-//        private Context context;
-//
-//        public RetrieveFeedTask(Context context) {
-//            this.context = context;
-//        }
 
         @Override
         protected JSONArray doInBackground(String... param) {
@@ -126,7 +133,6 @@ public class HistoryActivity extends AppCompatActivity {
 
                 connection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
                 connection.setRequestProperty("Accept", "*/*");
-
 
                 String line;
 

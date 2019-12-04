@@ -7,12 +7,18 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import pt.isec.mindunlocker.Token;
 
 public class InsertGame {
-    public void sentData(int points, int duration, String difficulty, int hints) {
 
+    /**
+     * Method that populates a InsertGameBody class with the user's game information and sent it back to the backend
+     * @param points - user's game points
+     * @param duration - user's game duration
+     * @param difficulty - user's game difficulty
+     * @param hints - user's game nr. of hints
+     */
+    public void sentData(int points, int duration, String difficulty, int hints) {
         // creating the request body
         InsertGameBody body = new InsertGameBody(points, duration, difficulty, hints);
 
@@ -25,6 +31,9 @@ public class InsertGame {
         System.out.println("Something went wrong");
     }
 
+    /**
+     * Async static class the talks to the backend api in order to post the information
+     */
         static class RetrieveFeedTask extends AsyncTask<String, Void, Boolean> {
 
             @Override
@@ -57,6 +66,9 @@ public class InsertGame {
     }
 }
 
+/**
+ * The class the wraps the json object
+ */
 class InsertGameBody {
     private int Points;
     private int Duration;

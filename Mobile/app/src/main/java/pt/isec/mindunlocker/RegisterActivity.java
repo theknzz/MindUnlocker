@@ -53,14 +53,18 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the username to correspond to the project requirements
+     * @return username is valid ? true : false
+     */
     private boolean validateUsername() {
         String usernameInput = username.getEditText().getText().toString().trim();
 
         if (usernameInput.isEmpty()) {
-            username.setError("Username necessário");
+            username.setError("Invalid username");
             return false;
         } else if (usernameInput.length() > 15) {
-            username.setError("Username tem mais de 15 caracteres");
+            username.setError("Username cant have more than 15 characters");
             return false;
         } else {
             username.setError(null);
@@ -68,6 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the password to correspond to the project requirements
+     * @return if the password is valid ? true : false
+     */
     private boolean validatePassword() {
         String passwordInput = password.getEditText().getText().toString().trim();
         String repeated = repeat_password.getEditText().getText().toString().trim();
@@ -90,6 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the inputted email to correspond to the project requirements
+     * @return if the email is valid ? true : false
+     */
     private boolean validateEmail() {
         String emailInput = email.getEditText().getText().toString().trim();
 
@@ -105,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    //TODO javadoc
     public void register(View v) {
         if (!validateUsername() | !validatePassword() | !validateEmail()) return;
 
@@ -117,6 +130,10 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * When the Register button is pressed listener
+     * @return if the register has success ? true : false
+     */
     public boolean onRegister() {
         try {
             String tEmail = email.getEditText().getText().toString().trim();
