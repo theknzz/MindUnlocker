@@ -32,17 +32,24 @@ public class GameEngine implements Serializable {
         n = 0;
     }
 
+    public static GameEngine getInstance() {
+        if(instance == null){
+            instance = new GameEngine();
+        }
+        return instance;
+    }
+
     public void copieTable(){
         for(int i = 0; i < 9; i++)
             for(int j = 0; j < 9; j++)
                  gameTable[i][j] = solutionTable[i][j];
     }
 
-    public void createTable(Context context){
+    public void createTable(Context context, int level){
         custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
         copieTable();
-        gameTable = SudokuGenerator.getInstance().removeElements(gameTable,level);
+        gameTable = SudokuGenerator.getInstance().removeElements(gameTable, level);
         table = new GameTable(context);
         table.setTable(gameTable);
     }
@@ -80,6 +87,14 @@ public class GameEngine implements Serializable {
 
     public void setNumber(int number){
         n=number;
+    }
+
+    public int NFillCells() {
+        return table.fillCells();
+    }
+
+    public boolean getCustom() {
+        return custom;
     }
 
     public void startTimer() {

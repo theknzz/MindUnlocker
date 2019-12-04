@@ -4,17 +4,12 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +17,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import java.io.Serializable;
-import java.time.Clock;
-import java.util.List;
 import java.util.Random;
 
-import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 
 public class GameplayActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
     private Random rand = new Random();
@@ -38,7 +30,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     long startTime = 0;
     int level = 0, points = 0;
 
-    GameEngine gameEngine;
+    //GameEngine gameEngine;
 
     String finalTime = null;
 
@@ -64,8 +56,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
 
-        gameEngine = new GameEngine();
-        gameEngine.createTable(this);
+        //gameEngine = new GameEngine();
 
         Bundle b = getIntent().getExtras();
         if(b != null){
@@ -74,18 +65,18 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             level = 1;
         }
 
-        GameEngine.getInstance().createTable(this,level);
+        GameEngine.getInstance().createTable(this, level);
         //printSudoku(solutionTable);
 
         //Set level
         levelTextView = findViewById(R.id.show_level);
         String lvl = "level: ";
         switch (level){
-            case 1: lvl += "Easy";
+            case 0: lvl += "Easy";
                 break;
-            case 2: lvl += "Medium";
+            case 1: lvl += "Medium";
                 break;
-            case 3: lvl += "Hard";
+            case 2: lvl += "Hard";
                 break;
         }
         levelTextView.setText(String.format(lvl));
@@ -150,24 +141,24 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 b.setSelected(true);
                 btnPencil.setSelected(false);
-                gameEngine.setNumber(0);
+                GameEngine.getInstance().setNumber(0);
                 break;
             case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 if (b.isSelected()) {
                     b.setSelected(false);
-                    gameEngine.getTable().setPencilMode(true);
+                    GameEngine.getInstance().getTable().setPencilMode(true);
                 } else {
                     b.setSelected(true);
-                    gameEngine.getTable().setPencilMode(true);
+                    GameEngine.getInstance().getTable().setPencilMode(true);
                 }
                 break;
             default:
                 b.setSelected(true);
-                gameEngine.setNumber(Integer.parseInt(b.getText().toString()));
+                GameEngine.getInstance().setNumber(Integer.parseInt(b.getText().toString()));
                 Log.i("Info", "selected num: " + b.getText().toString());
                 //manda parar a thread do timer
         }
-        if (gameEngine.getTable().isFinish()) {
+        if (GameEngine.getInstance().getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
             scoreTextView.setText("1000000");
             timeTextView.setText(finalTime);
@@ -194,10 +185,10 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         int y = rand.nextInt(9);
 
         while (true) {
-            if (gameEngine.getTable().getItem(x, y).getValue() == 0) {
-                gameEngine.setNumber(gameEngine.getSolutionTable(x, y));
-                gameEngine.setSelectedPosition(x, y);
-                gameEngine.setItem();
+            if (GameEngine.getInstance().getTable().getItem(x, y).getValue() == 0) {
+                GameEngine.getInstance().setNumber(GameEngine.getInstance().getSolutionTable(x, y));
+                GameEngine.getInstance().setSelectedPosition(x, y);
+                GameEngine.getInstance().setItem();
                 break;
             } else {
                 x = rand.nextInt(9);
@@ -205,7 +196,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             }
         }
 
-        System.out.println("Hint: X: " + x + " Y: " + y + " Valor: " + gameEngine.getSolutionTable(x, y));
+        System.out.println("Hint: X: " + x + " Y: " + y + " Valor: " + GameEngine.getInstance().getSolutionTable(x, y));
     }
 
     /*
