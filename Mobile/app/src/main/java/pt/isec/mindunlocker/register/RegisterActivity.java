@@ -31,12 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
     private String response = null;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
-                    "(?=.*[0-9])" + //pelo menos um numero
-                    "(?=.*[a-z])" + //pelo menos um caracter minusculo
-                    "(?=.*[A-Z])" + //pelo menus um caracter maiusculo
-                    "(?=.*[@#$%^&+=])" + //pelo menos um caracter especial
                     "(?=\\S+$)" + //sem espaços
-                    ".{6,}" + //pelo menos seis caracteres
+                    ".{8,12}" + //pelo menos seis caracteres e no maximo 12
                     "$"); //TODO alterar para o padrao definido
     private TextInputLayout username, password, repeat_password, email;
 
