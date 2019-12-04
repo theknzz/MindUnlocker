@@ -2,6 +2,7 @@ package pt.isec.mindunlocker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -66,7 +67,10 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
     }
 
     public void onErase(View v) {
-        GameEngine.getInstance().setNumberCustom(0, getApplicationContext());
+        //GameEngine.getInstance().setNumberCustom(0, getApplicationContext());
+        Button b = (Button)v;
+        b.setSelected(true);
+        GameEngine.getInstance().setNumber(0);
     }
 
     private boolean sudokusolver() {
@@ -131,6 +135,24 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
 
         int num = Integer.parseInt(b.getText().toString());
 
-        GameEngine.getInstance().setNumberCustom(num, getApplicationContext());
+        deselectAllOthers();
+        b.setSelected(true);
+
+        //GameEngine.getInstance().setNumberCustom(num, getApplicationContext());
+        GameEngine.getInstance().setNumber(num);
+        Log.i("Info","selected num: " + b.getText().toString());
+    }
+
+    private void deselectAllOthers() {
+        btn1.setSelected(false);
+        btn2.setSelected(false);
+        btn3.setSelected(false);
+        btn4.setSelected(false);
+        btn5.setSelected(false);
+        btn6.setSelected(false);
+        btn7.setSelected(false);
+        btn8.setSelected(false);
+        btn9.setSelected(false);
+        btnErase.setSelected(false);
     }
 }

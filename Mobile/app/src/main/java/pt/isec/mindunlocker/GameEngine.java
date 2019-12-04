@@ -1,10 +1,12 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 public class GameEngine {
     private static GameEngine instance;
@@ -78,7 +80,7 @@ public class GameEngine {
     }
 
     //==============
-    public void setNumberCustom(int number, Context context) {
+    /*public void setNumberCustom(int number, Context context) {
         if (selectedPosX != -1)
             if (number != 0) {
                 if (checkSudokuCustom(selectedPosX, selectedPosY, number, table.getTable())) {
@@ -88,8 +90,8 @@ public class GameEngine {
                 }
             } else
                 table.setItem(selectedPosX, selectedPosY, number);
+    }*/
 
-    }
     public boolean checkSudokuCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {
         return (checkHorizontalCustom(col, number, sudokuTable) && checkVerticalCustom(row, number, sudokuTable)
                 && checkRegionsCustom(row, col, number, sudokuTable));

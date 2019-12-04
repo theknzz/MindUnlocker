@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#fff"
-    android:orientation="vertical"
-    android:layout_marginVertical="20dp">
-
-    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:layout_weight="0.2">
+        android:layout_marginVertical="20dp"
+        android:background="#fff"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <Button
@@ -23,7 +17,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:contentDescription="01"
                 android:onClick="onClickListener"
                 android:text="1" />
@@ -33,7 +27,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:contentDescription="TODO"
                 android:onClick="onClickListener"
                 android:text="2" />
@@ -43,7 +37,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:contentDescription="TODO"
                 android:text="3" />
 
@@ -51,7 +45,7 @@
                 android:id="@+id/selectNr4"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:contentDescription="TODO"
                 android:onClick="onNumberSelected"
                 android:text="4" />
@@ -61,23 +55,16 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:contentDescription="TODO"
                 android:onClick="onNumberSelected"
                 android:text="5" />
         </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:layout_weight="0.2">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <Button
@@ -85,7 +72,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:onClick="onNumberSelected"
                 android:text="6" />
 
@@ -94,7 +81,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:onClick="onNumberSelected"
                 android:text="7" />
 
@@ -103,7 +90,7 @@
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:onClick="onNumberSelected"
                 android:text="8" />
 
@@ -111,10 +98,8 @@
                 android:id="@+id/selectNr9"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/circle_button"
+                android:background="@drawable/number_buttons"
                 android:onClick="onNumberSelected"
                 android:text="9" />
         </LinearLayout>
-    </RelativeLayout>
-
-</LinearLayout>
+    </LinearLayout>
