@@ -36,7 +36,6 @@
             android:background="#93C47D"/>
     </LinearLayout>
 
-
     <!-- include table -->
     <include layout="@layout/table" />
 
