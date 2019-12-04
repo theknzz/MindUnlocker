@@ -1,4 +1,4 @@
-package pt.isec.mindunlocker.login;
+package pt.isec.mindunlocker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        etUsername = findViewById(R.id.username);
-        etPassword = findViewById(R.id.password);
+        eUsername = findViewById(R.id.username);
+        ePassword = findViewById(R.id.password);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
