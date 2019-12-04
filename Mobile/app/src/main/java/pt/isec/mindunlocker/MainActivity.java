@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         getViews();
 
+        leaderContainer.cleanRanking();
         leaderContainer.getLeaderBoard();
         leaderContainer.displayData();
 

@@ -13,8 +13,10 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 
 public class LeaderboardContainer {
     private Context context;
-    private TableView<String []> container;
+    private TableView<String []> container; //view de uma libraria importada
     private List<String []> data = new ArrayList<>();
 
     public LeaderboardContainer(TableView<String []> container, final Context context) {
@@ -35,15 +37,15 @@ public class LeaderboardContainer {
 
         TableColumnWeightModel columnModel = new TableColumnWeightModel(7); //modelo para a tabela
 
-        columnModel.setColumnWeight(0, 2);
+        columnModel.setColumnWeight(0, 2); //set weight for first string
 
         container.setColumnModel(columnModel);
 
-        container.setHeaderBackgroundColor(Color.parseColor("#ffffff"));
+        container.setHeaderBackgroundColor(Color.parseColor("#ffffff")); //cor do header da tabela
 
         SimpleTableHeaderAdapter sTHA = new SimpleTableHeaderAdapter(context, "Name", "Hints", "Easy", "Medium",
-                "Hard", "Total", "Points");
-        sTHA.setTextSize(10);
+                "Hard", "Total", "Points"); //data do header
+        sTHA.setTextSize(10); // tamanho da letra do header
 
         container.setHeaderAdapter(sTHA);
     }
@@ -55,22 +57,20 @@ public class LeaderboardContainer {
             newData[i] = data.get(i);
         }
 
-        SimpleTableDataAdapter sTDA = new SimpleTableDataAdapter(context, data);
-        sTDA.setTextSize(10);
-        sTDA.setTextColor(Color.WHITE);
+        SimpleTableDataAdapter sTDA = new SimpleTableDataAdapter(context, data); // data para o body da tabela(recebe o contexto e um array 2D)
+        sTDA.setTextSize(10); // tamanho da letra do body
+        sTDA.setTextColor(Color.WHITE); // cor da letra
 
         container.setDataAdapter(sTDA);
     }
 
     public void addRanking(String name, int points, int totalGames, int hints, int hard, int medium, int easy, int rank){
         data.add(new String[]{rank + " " + name, String.valueOf(hints), String.valueOf(easy),
-                String.valueOf(medium), String.valueOf(hard), String.valueOf(totalGames), String.valueOf(30)});
-
-        System.out.println(points);
-
+                String.valueOf(medium), String.valueOf(hard), String.valueOf(totalGames), String.valueOf(points)});
     }
 
     public void cleanRanking(){
+        data = new ArrayList<>();
         container.removeAllViews();
     }
 
