@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat;
 import java.io.Serializable;
 import java.util.Random;
 
+import pt.isec.mindunlocker.api.insertGame.InsertGame;
+
 
 public class GameplayActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
     private Random rand = new Random();
@@ -30,9 +32,10 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     long startTime = 0;
     int level = 0;
     int minutes,seconds;
-    int level = 0, points = 0, hints =0;
 
     String finalTime = null;
+
+    InsertGame service = new InsertGame();
 
     //runs without a timer by reposting this handler at the end of the runnable
     Handler timerHandler = new Handler();
@@ -168,6 +171,8 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             scoreTextView.setText(GameEngine.getInstance().finalScore());
             timeTextView.setText(finalTime);
             finishDialog.show();
+            // updating the database with the actual game information
+            service.sentData(GameEngine.getInstance().getScore(), minutes*60 + seconds, level, GameEngine.getInstance().getHints());
         }
     }
 
@@ -254,5 +259,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         if (requestCode == 1234) {
 
         }
+    }
+
+    public void onFinish(View view) {
+        backToMain();
     }
 }

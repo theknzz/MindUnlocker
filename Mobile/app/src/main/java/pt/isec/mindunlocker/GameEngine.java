@@ -27,7 +27,7 @@ public class GameEngine implements Serializable {
     int FS;             // Final Score: [FS = LM - (TS * 5)]
     int LM = 0;         // Level-Multiplier: The level-multiplier is 500, 250 and 100.
     int TS = 0;         // Time Spent: is the finalTime.
-
+    int hints = 0;
 
     public GameEngine() {
         gameTable = new int[9][9];
@@ -134,17 +134,25 @@ public class GameEngine implements Serializable {
     public void setTimeSpent(int seconds, int minutes){
         TS = seconds;
         if(minutes > 0)
-            TS += 1/(minutes*60);
+            TS += (minutes*60);
     }
 
     public void tookHint(){
         points -= 500;
+        hints++;
     }
 
     public String finalScore(){
+        return " " + getScore() + " points";
+    }
+
+    public int getScore() {
         FS = points;
         FS += LM - (TS * 5);
-        String s = " " + FS + " points";
-        return s;
+        return FS;
+    }
+
+    public int getHints() {
+        return hints;
     }
 }
