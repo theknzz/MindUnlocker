@@ -1,14 +1,25 @@
 package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.widget.Toast;
 
+import pt.isec.mindunlocker.GameEngine;
 import pt.isec.mindunlocker.SudokuChecker;
 
 public class GameTable {
     private SudokuCell[][] SudokuTable = new SudokuCell[9][9];
 
+    private GameEngine gameEngine = GameEngine.getInstance();
     private Context context;
+    private boolean isPencil = false;
+
+    public boolean isFinish() {
+        return finish;
+    }
+
+    private boolean finish = false;
 
     public GameTable(Context context) {
         this.context = context;
@@ -24,7 +35,7 @@ public class GameTable {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
                 SudokuTable[x][y].setInitValue(table[x][y]);
-                if(table[x][y] != 0){
+                if (table[x][y] != 0) {
                     SudokuTable[x][y].setNotModifiable();
                 }
             }
@@ -35,7 +46,7 @@ public class GameTable {
         return SudokuTable;
     }
 
-    public SudokuCell getItem(int x, int y){
+    public SudokuCell getItem(int x, int y) {
         return SudokuTable[x][y];
     }
 
@@ -45,23 +56,64 @@ public class GameTable {
         return SudokuTable[x][y];
     }
 
-    public void setItem(int x, int y, int number){
-        SudokuTable[x][y].setValue(number);
+    public void setItem(int x, int y, int number) {
+            SudokuCell selectedCell = getItem(x, y);
+            if (isPencil) {
+                selectedCell.setGuess(true);
+                selectedCell.setValue(number);
+            } else {
+                SudokuTable[x][y].setValue(number);
+                //clearPos();
+                if (checkGame()) {
+                    GameEngine.getInstance().finalScore();
+                    finish = true;
+                    } else if (number != 0) {
+                        selectedCell.setWrong(false);
+                        if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
+                            GameEngine.getInstance().incorrectPlay();
+                            selectedCell.setWrong(true);
+                            Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        selectedCell.setWrong(false);
+                        GameEngine.getInstance().correctPlay();
+                }
+            }
     }
 
-    public boolean checkGame(){
-        int [][] table = new int[9][9];
-        for (int x = 0; x < 9; x++) {
-            for (int y = 0; y < 9; y++) {
-                table[x][y] = getItem(x,y).getValue();
-            }
+    public void setItemCustom(int x, int y, int number) {
+        if (number == 0)
+            SudokuTable[x][y].setValue(number);
+        else {
+            if (SudokuChecker.getInstance().checkPositionCustom(getTable(), number, x, y))
+                SudokuTable[x][y].setValue(number);
+            else
+                Toast.makeText(context, "You can't put " + number + " here", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        if(SudokuChecker.getInstance().checkSudoku(table)){
-            Toast.makeText(context,"Congratulations! You've solved the puzzle!",Toast.LENGTH_LONG).show();
+    public void setPencilMode(boolean val) {
+        isPencil = val;
+    }
+
+    public boolean checkGame() {
+        if (SudokuChecker.getInstance().checkSudoku(getTable())) {
+            Toast.makeText(context, "Congratulations! You've solved the puzzle!", Toast.LENGTH_LONG).show();
             return true;
         }
         return false;
+    }
+
+    public int fillCells() {
+        int count = 0;
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                if (getItem(x, y).getValue() != 0) {
+                    ++count;
+                }
+            }
+        }
+        return count;
     }
 
 }
