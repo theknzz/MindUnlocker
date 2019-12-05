@@ -1,11 +1,10 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
+import pt.isec.mindunlocker.api.insertGame.InsertGame;
 import android.widget.Toast;
-
 import java.io.Serializable;
 import java.util.Arrays;
-
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
@@ -88,7 +87,7 @@ public class GameEngine implements Serializable {
     public void setNumber(int number){
         n=number;
     }
-
+  
     public int NFillCells() {
         return table.fillCells();
     }
