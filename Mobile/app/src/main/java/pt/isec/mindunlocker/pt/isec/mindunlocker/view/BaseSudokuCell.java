@@ -14,6 +14,7 @@ public class BaseSudokuCell extends View {
     public void setNotModifiable() {
         this.modifiable = false;
     }
+
     public BaseSudokuCell(Context context) {
         super(context);
     }

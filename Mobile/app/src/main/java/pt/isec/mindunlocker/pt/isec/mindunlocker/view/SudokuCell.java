@@ -37,13 +37,12 @@ public class SudokuCell extends BaseSudokuCell {
             nPaint.setTypeface(Typeface.DEFAULT_BOLD);
         }
 
-        if(isGuess()){
-            nPaint.setColor(Color.BLUE);
-        }
-
         if (isWrong()) {
             this.setBackgroundColor(Color.RED);
-        } else {
+        } else if(isGuess()){
+            nPaint.setColor(Color.BLUE);
+            nPaint.setTextSize(40);
+        }else{
             this.setBackgroundColor(Color.WHITE);
         }
 
