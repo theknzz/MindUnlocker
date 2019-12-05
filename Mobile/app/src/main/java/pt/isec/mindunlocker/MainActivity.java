@@ -40,10 +40,26 @@ public class MainActivity extends AppCompatActivity {
 
             if (response == null) return;
 
-            if (!"login".equals(response.getString("result"))) return;
+            if ("login".equals(response.getString("result")))
+                loginResult(response);
 
-            loginResult(response);
+            if(Token.CONTENT != null){
+                TextView user = findViewById(R.id.user);
+                int [] info = leaderContainer.getUserInfo(String.valueOf(user.getText()));
+
+                if(info != null){
+                    setUserInfo(info[0], info[1]);
+                }
+            }
         }
+    }
+
+    private void setUserInfo(int rank, int score){
+        TextView tScore = findViewById(R.id.score);
+        TextView ranking = findViewById(R.id.ranking);
+
+        ranking.setText(rank + " ");
+        tScore.setText(score + " ");
     }
 
     private void getViews() {
@@ -109,14 +125,9 @@ public class MainActivity extends AppCompatActivity {
         boolean temp = response.getBoolean("success");
 
         if (temp) {
-            //TODO obter da API valores reais apos login
             TextView user = findViewById(R.id.user);
-            TextView score = findViewById(R.id.score);
-            TextView ranking = findViewById(R.id.ranking);
 
             user.setText(response.getString("user"));
-            score.setText(response.getString("score"));
-            ranking.setText(response.getString("ranking"));
 
             showComponents();
         } else
@@ -158,5 +169,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
     }
 }

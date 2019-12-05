@@ -57,6 +57,20 @@ public class LeaderboardContainer {
         container.setHeaderAdapter(sTHA);
     }
 
+    public int[] getUserInfo(String userName){
+        for(String [] temp : data){
+            String [] splitter = temp[0].split(" ");
+            String name = splitter[1];
+
+            if(name.equals(userName)){
+
+                return new int[]{Integer.parseInt(splitter[0]), Integer.parseInt(temp[temp.length - 1])};
+            }
+        }
+
+        return null;
+    }
+
     /**
      * add data in List<String[]> data to view in SimpleTableDataAdpter
      */
@@ -86,7 +100,6 @@ public class LeaderboardContainer {
 
     public void cleanRanking(){
         data = new ArrayList<>();
-        container.removeAllViews();
     }
 
     /**

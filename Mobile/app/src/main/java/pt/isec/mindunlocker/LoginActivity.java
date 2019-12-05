@@ -90,8 +90,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("result", "login");
         intent.putExtra("success", true);
-        intent.putExtra("score", "1024");
-        intent.putExtra("ranking", "#1");
         intent.putExtra("user", eUsername.getEditText().getText().toString());
 
         startActivity(intent);
