@@ -142,6 +142,15 @@ public class GameEngine implements Serializable {
         hints++;
     }
 
+    public void levelScoreAdded(int level){
+        switch(level){
+            case 0: LM = 100;break;
+            case 1: LM = 250;break;
+            case 2: LM = 500;break;
+            default: LM = 50;
+        }
+    }
+
     public String finalScore(){
         return " " + getScore() + " points";
     }
