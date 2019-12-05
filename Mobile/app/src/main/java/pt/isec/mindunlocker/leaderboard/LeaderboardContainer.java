@@ -58,6 +58,26 @@ public class LeaderboardContainer {
     }
 
     /**
+     * get user informations by leaderboard
+     * @param userName - name of the user to get info
+     * @return - array with information
+     */
+
+    public String[] getUserInfo(String userName){
+        for(String [] temp : data){
+            String [] splitter = temp[0].split(" ");
+            String name = splitter[1];
+
+            if(name.equals(userName)){
+
+                return new String[]{splitter[0], temp[temp.length - 1]};
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * add data in List<String[]> data to view in SimpleTableDataAdpter
      */
 
@@ -86,7 +106,6 @@ public class LeaderboardContainer {
 
     public void cleanRanking(){
         data = new ArrayList<>();
-        container.removeAllViews();
     }
 
     /**
