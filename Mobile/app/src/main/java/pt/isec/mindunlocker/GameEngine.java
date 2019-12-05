@@ -15,12 +15,19 @@ public class GameEngine implements Serializable {
     private int[][] solutionTable;
     private int[][] gameTable;
 
-
     private int n;
     private int selectedPosX;
     private int selectedPosY;
 
     private boolean custom;
+    //Point System:
+    int points = 1000;  // When the game starts the user has 1000 points.
+    int CM = 50;        // Correct Multiplier: For each correct entry the user scores 3 * CM.
+    int EM = 5;         // Error Multiplier: An error costs the user an error-multiplier (EM).
+    int FS;             // Final Score: [FS = LM - (TS * 5)]
+    int LM = 0;         // Level-Multiplier: The level-multiplier is 500, 250 and 100.
+    int TS = 0;         // Time Spent: is the finalTime.
+
 
     public GameEngine() {
         gameTable = new int[9][9];
@@ -95,7 +102,7 @@ public class GameEngine implements Serializable {
     public void setNumber(int number){
         n=number;
     }
-  
+
     public int NFillCells() {
         return table.fillCells();
     }
@@ -106,5 +113,38 @@ public class GameEngine implements Serializable {
 
     public void startTimer() {
 
+    }
+
+    /**
+     * The functions below are reserved for scoring purposes
+     */
+    public void correctPlay(){
+        points += CM;
+    }
+
+    public void incorrectPlay(){
+        points += EM;
+        EM *= 2;    //The error-multiplier (EM) starts at 5 and is doubled every time the user makes a mistake.
+    }
+
+    public void decrementCM(){
+        CM -= -1;
+    }
+
+    public void setTimeSpent(int seconds, int minutes){
+        TS = seconds;
+        if(minutes > 0)
+            TS += 1/(minutes*60);
+    }
+
+    public void tookHint(){
+        points -= 500;
+    }
+
+    public String finalScore(){
+        FS = points;
+        FS += LM - (TS * 5);
+        String s = " " + FS + " points";
+        return s;
     }
 }

@@ -65,15 +65,19 @@ public class GameTable {
                 SudokuTable[x][y].setValue(number);
                 //clearPos();
                 if (checkGame()) {
+                    GameEngine.getInstance().finalScore();
                     finish = true;
-                } else if (number != 0) {
-                    selectedCell.setWrong(false);
-                    if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
-                        selectedCell.setWrong(true);
-                        Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
-                    }
-                } else
-                    selectedCell.setWrong(false);
+                    } else if (number != 0) {
+                        selectedCell.setWrong(false);
+                        if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
+                            GameEngine.getInstance().incorrectPlay();
+                            selectedCell.setWrong(true);
+                            Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        selectedCell.setWrong(false);
+                        GameEngine.getInstance().correctPlay();
+                }
             }
     }
 

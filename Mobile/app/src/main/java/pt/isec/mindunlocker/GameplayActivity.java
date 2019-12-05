@@ -28,9 +28,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Dialog finishDialog, giveupDialog;
     TextView timerTextView,scoreTextView,timeTextView,levelTextView;
     long startTime = 0;
+    int level = 0;
+    int minutes,seconds;
     int level = 0, points = 0, hints =0;
-
-    //GameEngine gameEngine;
 
     String finalTime = null;
 
@@ -41,9 +41,12 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         @Override
         public void run() {
             long millis = System.currentTimeMillis() - startTime;
-            int seconds = (int) (millis / 1000);
-            int minutes = seconds / 60;
+            seconds = (int) (millis / 1000);
+            minutes = seconds / 60;
             seconds = seconds % 60;
+
+            //The correct-multiplier starts at 50 and is decremented (-1) every 30 seconds.
+            if(seconds == 30 || seconds == 0){GameEngine.getInstance().decrementCM();}
 
             finalTime = minutes + ":" + seconds;
             timerTextView.setText(String.format("time: %d:%02d", minutes, seconds));
@@ -136,7 +139,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
-                hints++;
+                GameEngine.getInstance().tookHint();
                 v.invalidate();
                 break;
             case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
@@ -161,7 +164,8 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         }
         if (GameEngine.getInstance().getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
-            scoreTextView.setText("1000000");
+            GameEngine.getInstance().setTimeSpent(seconds, minutes);
+            scoreTextView.setText(GameEngine.getInstance().finalScore());
             timeTextView.setText(finalTime);
             finishDialog.show();
         }
