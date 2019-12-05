@@ -1,12 +1,14 @@
 package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import pt.isec.mindunlocker.GameEngine;
 

@@ -38,12 +38,11 @@ public class SudokuChecker {
     private boolean checkHorizontal(SudokuCell[][] sudokuTable) {
         for( int y = 0 ; y < 9 ; y++ ){
             for( int posX = 0 ; posX < 9 ; posX++ ){
-
-                if( sudokuTable[posX][y].getValue() == 0 ){
+                if (sudokuTable[posX][y].getValue() == 0) {
                     return false;
                 }
-                for( int x = posX + 1 ; x < 9 ; x++ ){
-                    if( sudokuTable[posX][y] == sudokuTable[x][y] || sudokuTable[x][y].getValue() == 0 ){
+                for (int x = posX + 1; x < 9; x++) {
+                    if (sudokuTable[posX][y] == sudokuTable[x][y] || sudokuTable[x][y].getValue() == 0) {
                         return false;
                     }
                 }
@@ -60,12 +59,11 @@ public class SudokuChecker {
     private boolean checkVertical(SudokuCell[][] sudokuTable) {
         for( int x = 0 ; x < 9 ; x++ ){
             for( int posY = 0 ; posY < 9 ; posY++ ){
-
-                if( sudokuTable[x][posY].getValue() == 0 ){
+                if (sudokuTable[x][posY].getValue() == 0) {
                     return false;
                 }
-                for( int y = posY + 1 ; y < 9 ; y++ ){
-                    if( sudokuTable[x][posY] == sudokuTable[x][y] || sudokuTable[x][y].getValue() == 0 ){
+                for (int y = posY + 1; y < 9; y++) {
+                    if (sudokuTable[x][posY] == sudokuTable[x][y] || sudokuTable[x][y].getValue() == 0) {
                         return false;
                     }
                 }
@@ -103,7 +101,7 @@ public class SudokuChecker {
             for( int posY = yRegion * 3 ; posY < yRegion * 3 + 3 ; posY++ ){
                 for( int x = posX ; x < xRegion * 3 + 3 ; x++ ){
                     for( int y = posY ; y < yRegion * 3 + 3 ; y++ ){
-                        if( (( x != posX || y != posY) && sudokuTable[posX][posY] == sudokuTable[x][y] ) || sudokuTable[x][y].getValue() == 0 ){
+                        if (((x != posX || y != posY) && sudokuTable[posX][posY] == sudokuTable[x][y]) || sudokuTable[x][y].getValue() == 0) {
                             return false;
                         }
                     }

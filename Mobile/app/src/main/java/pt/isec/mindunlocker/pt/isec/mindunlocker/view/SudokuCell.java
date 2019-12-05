@@ -20,7 +20,6 @@ public class SudokuCell extends BaseSudokuCell {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         drawNumbers(canvas);
         drawLines(canvas);
     }
@@ -38,8 +37,13 @@ public class SudokuCell extends BaseSudokuCell {
             nPaint.setTypeface(Typeface.DEFAULT_BOLD);
         }
 
-        if(isGuess()){
+        if (isWrong()) {
+            this.setBackgroundColor(Color.RED);
+        } else if(isGuess()){
             nPaint.setColor(Color.BLUE);
+            nPaint.setTextSize(40);
+        }else{
+            this.setBackgroundColor(Color.WHITE);
         }
 
         if(getValue() != 0){
@@ -48,6 +52,7 @@ public class SudokuCell extends BaseSudokuCell {
                     (getHeight() + bounds.height()) / 2, nPaint);
         }
     }
+
 
     private void drawLines(Canvas canvas){
         nPaint.setColor(Color.BLACK);
