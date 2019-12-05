@@ -55,6 +55,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setUserInfo(String rank, String score){
+        TextView tScore = findViewById(R.id.score);
+        TextView ranking = findViewById(R.id.ranking);
+
+        ranking.setText(rank);
+        tScore.setText(score);
+    }
+
     private void getViews() {
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
