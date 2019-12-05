@@ -4,24 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.google.android.material.textfield.TextInputLayout;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import pt.isec.mindunlocker.MainActivity;
-import pt.isec.mindunlocker.R;
-import pt.isec.mindunlocker.Token;
 
 public class LoginActivity extends AppCompatActivity {
     private URL url = null;
@@ -37,7 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         ePassword = findViewById(R.id.password);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8) {
+        if (SDK_INT > 8)
+        {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
@@ -103,8 +97,8 @@ public class LoginActivity extends AppCompatActivity {
      */
     public boolean onLogin() {
         try {
-            String username = eUsername.getEditText().getText().toString();
-            String password = ePassword.getEditText().getText().toString();
+            String username = eUsername.getEditText().getText().toString().trim();
+            String password = ePassword.getEditText().getText().toString().trim();
 
 //                debug:
 //                username="henrymfdays@gmail.com";
@@ -157,17 +151,5 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Capture the token inside of json object that the backend api returns
-     *
-     * @param response - response to the get request in json object format
-     * @return String - token
-     */
-    private String captureTokenFromResponse(String response) {
-        String[] arr = response.split(",");
-        arr = arr[0].split(":");
-        return arr[1];
     }
 }
