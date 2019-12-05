@@ -34,12 +34,12 @@ public class MainActivity extends AppCompatActivity {
             hideComponents();
             firstTime = false;
         } else {
-            Bundle response = getIntent().getExtras();
 
-            if (response != null) {
-                if ("login".equals(response.getString("result"))) {
-                    loginResult(response);
+            if (Token.CONTENT != null) {
+                if ("login".equals(getIntent().getStringExtra("result"))) {
+                    loginResult(getIntent().getExtras());
                 }
+                showComponents();
             }
         }
     }
