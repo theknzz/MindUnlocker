@@ -99,13 +99,7 @@
                 android:textColor="@color/colorAccent" />
 
         </com.google.android.material.textfield.TextInputLayout>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> c64d861635a4cfef89b4a856391367a567a254ce
-=======
->>>>>>> 566ea6fc320409ccba611dcb3340c2d0e40f7e67
     </LinearLayout>
 
     <LinearLayout
@@ -146,14 +140,7 @@
                 android:textColor="@color/colorAccent" />
 
         </com.google.android.material.textfield.TextInputLayout>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> c64d861635a4cfef89b4a856391367a567a254ce
-=======
-
->>>>>>> 566ea6fc320409ccba611dcb3340c2d0e40f7e67
     </LinearLayout>
 
     <LinearLayout

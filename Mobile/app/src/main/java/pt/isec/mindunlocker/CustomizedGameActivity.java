@@ -17,6 +17,8 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     Button btnErase;
 
+    //GameEngine gameEngine;
+
     static final int MIN_CELLS = 17;
 
     int[][] soluction = new int[9][9];
@@ -27,6 +29,7 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
 
         setContentView(R.layout.creategame);
 
+        //gameEngine = new GameEngine();
         GameEngine.getInstance().createTableEmpty(this);
 
         btn1 = findViewById(R.id.selectNr1);

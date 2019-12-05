@@ -1,30 +1,36 @@
 package pt.isec.mindunlocker;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import pt.isec.mindunlocker.login.LoginActivity;
-import pt.isec.mindunlocker.register.RegisterActivity;
+import pt.isec.mindunlocker.leaderboard.LeaderboardContainer;
+
 
 public class MainActivity extends AppCompatActivity {
+    private Dialog startGameDialog;
     private LinearLayout header, headerLogin;
-    private ScrollView leaderboard;
-    private Button login, register, load, generateGame, customizedGame, history, logOut;
+    private Button login, register, load, customizedGame, history, logOut;
     private static boolean firstTime = true; //check if first time in main
+    private LeaderboardContainer leaderContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
 
+        startGameDialog = new Dialog(this);
+
         getViews();
+
+        leaderContainer.getLeaderBoard();
+        leaderContainer.displayData();
 
         setListeners();
 
@@ -42,28 +48,60 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void getViews() {
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
-        leaderboard = findViewById(R.id.leaderboard);
         login = findViewById(R.id.btnLogin);
         register = findViewById(R.id.btnCreateAcc);
         load = findViewById(R.id.btnLoadGame);
-        generateGame = findViewById(R.id.btnGenerateGame);
         customizedGame = findViewById(R.id.btnCreateGame);
         history = findViewById(R.id.btnHistory);
         logOut = findViewById(R.id.btnLogOut);
+
+        leaderContainer = new LeaderboardContainer(findViewById(R.id.leadercontainer), this);
     }
 
     private void setListeners() {
         setButtonListener(login, LoginActivity.class);
         setButtonListener(register, RegisterActivity.class);
-        setButtonListener(generateGame, GameplayActivity.class);
         setButtonListener(customizedGame, CustomizedGameActivity.class);
         setButtonListener(history, HistoryActivity.class);
     }
 
+    public void onPickLevel(View v) {
+
+        Intent intent = new Intent(MainActivity.this, GameplayActivity.class);
+        Bundle bundle = new Bundle();
+
+        Button b = (Button) v;
+        switch (b.getId()) {
+            case R.id.btn_easylevel:
+                //Toast.makeText(this,"Starting an easy game",Toast.LENGTH_LONG).show();
+                bundle.putInt("level", 0);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            case R.id.btn_mediumlevel:
+                //Toast.makeText(this,"Starting a medium game",Toast.LENGTH_LONG).show();
+                bundle.putInt("level", 1);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            case R.id.btn_hardlevel:
+                //Toast.makeText(this,"Starting hard game",Toast.LENGTH_LONG).show();
+                bundle.putInt("level", 2);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+        }
+
+        startGameDialog.cancel();
+    }
+
+    public void onGameStart(View v) {
+        startGameDialog.setContentView(R.layout.popup_start);
+        startGameDialog.show();
+    }
 
     private void setButtonListener(Button button, final Class activity) {
         button.setOnClickListener(v -> changeActivity(activity)); //mudar para java 8 nos modulos se der erro
@@ -89,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
-        leaderboard.setVisibility(View.GONE);
         load.setVisibility(View.GONE);
         history.setVisibility(View.GONE);
         logOut.setVisibility(View.GONE);
@@ -101,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
-        leaderboard.setVisibility(View.VISIBLE);
         load.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
         logOut.setVisibility(View.VISIBLE);
@@ -123,13 +159,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() { }
-<<<<<<< HEAD
-<<<<<<< HEAD
+    public void onBackPressed() {
+    }
 }
-=======
-}
->>>>>>> c64d861635a4cfef89b4a856391367a567a254ce
-=======
-}
->>>>>>> 566ea6fc320409ccba611dcb3340c2d0e40f7e67

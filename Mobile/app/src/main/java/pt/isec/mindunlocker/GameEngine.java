@@ -3,12 +3,13 @@ package pt.isec.mindunlocker;
 import android.content.Context;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
-public class GameEngine {
+public class GameEngine implements Serializable {
     private static GameEngine instance;
     private GameTable table = null;
 
@@ -44,11 +45,11 @@ public class GameEngine {
                  gameTable[i][j] = solutionTable[i][j];
     }
 
-    public void createTable(Context context){
+    public void createTable(Context context, int level){
         custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
         copieTable();
-        gameTable = SudokuGenerator.getInstance().removeElements(gameTable,0);
+        gameTable = SudokuGenerator.getInstance().removeElements(gameTable, level);
         table = new GameTable(context);
         table.setTable(gameTable);
     }
