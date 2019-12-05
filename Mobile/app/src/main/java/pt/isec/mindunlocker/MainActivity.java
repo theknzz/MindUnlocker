@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
             if(Token.CONTENT != null){
                 TextView user = findViewById(R.id.user);
-                int [] info = leaderContainer.getUserInfo(String.valueOf(user.getText()));
+                String [] info = leaderContainer.getUserInfo(String.valueOf(user.getText()));
 
                 if(info != null){
                     setUserInfo(info[0], info[1]);
@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setUserInfo(int rank, int score){
+    private void setUserInfo(String rank, String score){
         TextView tScore = findViewById(R.id.score);
         TextView ranking = findViewById(R.id.ranking);
 
-        ranking.setText(rank + " ");
-        tScore.setText(score + " ");
+        ranking.setText(rank);
+        tScore.setText(score);
     }
 
     private void getViews() {

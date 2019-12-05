@@ -57,14 +57,20 @@ public class LeaderboardContainer {
         container.setHeaderAdapter(sTHA);
     }
 
-    public int[] getUserInfo(String userName){
+    /**
+     * get user informations by leaderboard
+     * @param userName - name of the user to get info
+     * @return - array with information
+     */
+
+    public String[] getUserInfo(String userName){
         for(String [] temp : data){
             String [] splitter = temp[0].split(" ");
             String name = splitter[1];
 
             if(name.equals(userName)){
 
-                return new int[]{Integer.parseInt(splitter[0]), Integer.parseInt(temp[temp.length - 1])};
+                return new String[]{splitter[0], temp[temp.length - 1]};
             }
         }
 
