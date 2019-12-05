@@ -30,6 +30,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     long startTime = 0;
     int level = 0;
     int minutes,seconds;
+    int level = 0, points = 0, hints =0;
 
     String finalTime = null;
 
@@ -149,7 +150,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 if (b.isSelected()) {
                     b.setSelected(false);
-                    GameEngine.getInstance().getTable().setPencilMode(true);
+                    GameEngine.getInstance().getTable().setPencilMode(false);
                 } else {
                     b.setSelected(true);
                     GameEngine.getInstance().getTable().setPencilMode(true);

@@ -38,6 +38,14 @@ public class GameEngine implements Serializable {
         n = 0;
     }
 
+    public int getSelectedPosX() {
+        return selectedPosX;
+    }
+
+    public int getSelectedPosY() {
+        return selectedPosY;
+    }
+
     public static GameEngine getInstance() {
         if(instance == null){
             instance = new GameEngine();
