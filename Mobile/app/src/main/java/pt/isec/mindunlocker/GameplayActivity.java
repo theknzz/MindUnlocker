@@ -171,8 +171,10 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             scoreTextView.setText(GameEngine.getInstance().finalScore());
             timeTextView.setText(finalTime);
             finishDialog.show();
-            // updating the database with the actual game information
-            service.sentData(GameEngine.getInstance().getScore(), minutes*60 + seconds, level, GameEngine.getInstance().getHints());
+            if (Token.CONTENT!=null) {
+                // updating the database with the actual game information
+                service.sentData(GameEngine.getInstance().getScore(), minutes * 60 + seconds, level, GameEngine.getInstance().getHints());
+            }
         }
     }
 
