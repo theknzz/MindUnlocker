@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import pt.isec.mindunlocker.leaderboard.LeaderboardContainer;
+
 public class MainActivity extends AppCompatActivity {
     private Dialog startGameDialog;
     private LinearLayout header, headerLogin;
