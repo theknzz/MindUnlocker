@@ -74,8 +74,11 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+    /**
+     * Method for when login button is pressed
+     * @param v - View of the button
+     */
 
-    //TODO make javadoc
     public void login(View v){
         if(!validateUsername() | !validatePassword()) return;
         //TODO verificar do servidor/db se existe conta
@@ -151,21 +154,11 @@ public class LoginActivity extends AppCompatActivity {
             isr.close();
             reader.close();
         } catch (IOException | JSONException e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             if (e instanceof FileNotFoundException) {
                 return false;
             }
         }
         return true;
-    }
-
-    /**
-     * Capture the token inside of json object that the backend api returns
-     * @param response - response to the get request in json object format
-     * @return String - token
-     */
-    private String captureTokenFromResponse(String response) {
-        String[] arr = response.split(",");
-        arr= arr[0].split(":");
-        return arr[1];
     }
 }

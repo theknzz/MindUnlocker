@@ -31,6 +31,13 @@ public class LeaderboardContainer {
     private TableView<String []> container; //view de uma libraria importada
     private List<String []> data = new ArrayList<>();
 
+    /**
+     * Initialize model of table and header
+     *
+     * @param container object of de.codecrafters.tableview.TableView
+     * @param context context of the view where is call
+     */
+
     public LeaderboardContainer(TableView<String []> container, final Context context) {
         this.container = container;
         this.context = context;
@@ -49,6 +56,10 @@ public class LeaderboardContainer {
 
         container.setHeaderAdapter(sTHA);
     }
+
+    /**
+     * add data in List<String[]> data to view in SimpleTableDataAdpter
+     */
 
     public void displayData(){
         String [][] newData = new String[data.size()][];
@@ -69,10 +80,18 @@ public class LeaderboardContainer {
                 String.valueOf(medium), String.valueOf(hard), String.valueOf(totalGames), String.valueOf(points)});
     }
 
+    /**
+     * clean views after second time getLeaderboard() is call
+     */
+
     public void cleanRanking(){
         data = new ArrayList<>();
         container.removeAllViews();
     }
+
+    /**
+     * Get list data from API about leaderboard
+     */
 
     public void getLeaderBoard(){
         JSONArray data = new RetrieveFeedTask(context)
@@ -102,12 +121,21 @@ public class LeaderboardContainer {
         }
     }
 
+    /**
+     * Async task that talks to the backend api in order to get the need information
+     */
     static class RetrieveFeedTask extends AsyncTask<String, Void, JSONArray> {
         private Context context;
 
         public RetrieveFeedTask(Context context){
             this.context = context;
         }
+
+        /**
+         * Get values from api to a JSONArray
+         * @param param url to communicate with API
+         * @return JSONArray with data of players to leaderboard or null if occur an error
+         */
 
         @Override
         protected JSONArray doInBackground(String... param) {
