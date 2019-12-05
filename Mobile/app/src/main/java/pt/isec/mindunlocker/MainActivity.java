@@ -9,14 +9,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import pt.isec.mindunlocker.leaderboard.LeaderboardContainer;
 
 public class MainActivity extends AppCompatActivity {
     private Dialog startGameDialog;
     private LinearLayout header, headerLogin;
     private Button login, register, load, customizedGame, history, logOut;
-    private static boolean firstTime = true; //check if first time in main
     private LeaderboardContainer leaderContainer;
+
+    private static String name, score, rank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +34,24 @@ public class MainActivity extends AppCompatActivity {
 
         setListeners();
 
-        if (firstTime) {
-            hideComponents();
-            firstTime = false;
-        } else {
+
+        hideComponents();
+
+        if (Token.CONTENT != null) {
+
             Bundle response = getIntent().getExtras();
+            if (response != null && "login".equals(response.getString("result")))
+                    loginResult(response);
 
-            if (response == null) return;
+            TextView tv_user = findViewById(R.id.user);
+            TextView tv_score = findViewById(R.id.score);
+            TextView tv_ranking = findViewById(R.id.ranking);
 
-            if (!"login".equals(response.getString("result"))) return;
+            tv_user.setText(name);
+            tv_score.setText(score);
+            tv_ranking.setText(rank);
 
-            loginResult(response);
+            showComponents();
         }
     }
 
@@ -110,17 +119,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (temp) {
             //TODO obter da API valores reais apos login
-            TextView user = findViewById(R.id.user);
-            TextView score = findViewById(R.id.score);
-            TextView ranking = findViewById(R.id.ranking);
 
-            user.setText(response.getString("user"));
-            score.setText(response.getString("score"));
-            ranking.setText(response.getString("ranking"));
+            name = response.getString("user");
+            score = response.getString("score");
+            rank = response.getString("ranking");
 
-            showComponents();
-        } else
-            hideComponents();
+        }
     }
 
     private void hideComponents() {
@@ -151,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logOut(View v) {
-        Token.CONTENT = null;
+        Token.CONTENT = name = score = rank = null;
 
         hideComponents();
     }

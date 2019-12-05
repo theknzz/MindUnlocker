@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 import pt.isec.mindunlocker.GameEngine;
 import pt.isec.mindunlocker.SudokuChecker;
 
-public class GameTable {
+public class GameTable implements Serializable {
     private SudokuCell[][] SudokuTable = new SudokuCell[9][9];
 
     private GameEngine gameEngine = GameEngine.getInstance();
