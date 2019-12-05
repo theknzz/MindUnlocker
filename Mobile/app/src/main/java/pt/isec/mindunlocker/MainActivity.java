@@ -6,17 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 public class MainActivity extends AppCompatActivity {
     private Dialog startGameDialog;
     private LinearLayout header, headerLogin;
-    private ScrollView leaderboard;
     private Button login, register, load, customizedGame, history, logOut;
     private static boolean firstTime = true; //check if first time in main
+    private LeaderboardContainer leaderContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
         startGameDialog = new Dialog(this);
 
         getViews();
+
+        leaderContainer.getLeaderBoard();
+        leaderContainer.displayData();
 
         setListeners();
 
@@ -46,13 +50,14 @@ public class MainActivity extends AppCompatActivity {
     private void getViews(){
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
-        leaderboard = findViewById(R.id.leaderboard);
         login = findViewById(R.id.btnLogin);
         register = findViewById(R.id.btnCreateAcc);
         load = findViewById(R.id.btnLoadGame);
         customizedGame = findViewById(R.id.btnCreateGame);
         history = findViewById(R.id.btnHistory);
         logOut = findViewById(R.id.btnLogOut);
+
+        leaderContainer = new LeaderboardContainer(findViewById(R.id.leadercontainer), this);
     }
 
     private void setListeners() {
@@ -121,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
-        leaderboard.setVisibility(View.GONE);
         load.setVisibility(View.GONE);
         history.setVisibility(View.GONE);
         logOut.setVisibility(View.GONE);
@@ -133,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
-        leaderboard.setVisibility(View.VISIBLE);
         load.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
         logOut.setVisibility(View.VISIBLE);
