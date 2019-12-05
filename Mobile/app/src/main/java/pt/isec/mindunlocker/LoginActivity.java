@@ -1,15 +1,14 @@
 package pt.isec.mindunlocker;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputLayout;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import pt.isec.mindunlocker.MainActivity;
 import pt.isec.mindunlocker.R;
 import pt.isec.mindunlocker.Token;
@@ -141,15 +139,18 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             //get the string version of the response data
-            response = sb.toString();
-            Token.CONTENT = captureTokenFromResponse(response);
 
+            //response = sb.toString();
+            //Token.CONTENT = captureTokenFromResponse(response);
+            JSONObject dataToken = new JSONObject(sb.toString());
+            Token.CONTENT = dataToken.getString("access_token");
+          
             // debug
             // pass the token to the main activity in a intent bundle?
 
             isr.close();
             reader.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             if (e instanceof FileNotFoundException) {
                 return false;
             }
@@ -167,5 +168,4 @@ public class LoginActivity extends AppCompatActivity {
         arr= arr[0].split(":");
         return arr[1];
     }
-
 }

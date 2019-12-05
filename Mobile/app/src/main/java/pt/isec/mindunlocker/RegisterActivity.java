@@ -25,15 +25,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private URL url = null;
     private String response = null;
-//    private static final Pattern PASSWORD_PATTERN =
-//            Pattern.compile("^" +
-//                    "(?=.*[0-9])" + //pelo menos um numero
-//                    "(?=.*[a-z])" + //pelo menos um caracter minusculo
-//                    "(?=.*[A-Z])" + //pelo menus um caracter maiusculo
-//                    "(?=.*[@#$%^&+=])" + //pelo menos um caracter especial
-//                    "(?=\\S+$)" + //sem espaços
-//                    ".{6,}" + //pelo menos seis caracteres
-//                    "$"); //TODO alterar para o padrao definido
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" + //pelo menos um numero
+                    "(?=.*[a-z])" + //pelo menos um caracter minusculo
+                    "(?=.*[A-Z])" + //pelo menus um caracter maiusculo
+                    "(?=.*[@#$%^&+=])" + //pelo menos um caracter especial
+                    "(?=\\S+$)" + //sem espaços
+                    ".{6,}" + //pelo menos seis caracteres
+                    "$"); //TODO alterar para o padrao definido
     private TextInputLayout username, password, repeat_password, email;
 
     @Override
@@ -47,7 +47,8 @@ public class RegisterActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
 
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8) {
+        if (SDK_INT > 8)
+        {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
@@ -72,28 +73,32 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * Validates the password to correspond to the project requirements
      * @return if the password is valid ? true : false
      */
-    private boolean validatePassword() {
+    private boolean validatePassword(){
         String passwordInput = password.getEditText().getText().toString().trim();
         String repeated = repeat_password.getEditText().getText().toString().trim();
 
-        if (passwordInput.isEmpty()) {
+        if(passwordInput.isEmpty()){
             password.setError("Password necessária");
             return false;
-        } else if (repeated.isEmpty()) {
+        }
+        else if(repeated.isEmpty()){
             repeat_password.setError("Password necessária");
             return false;
         }
-//        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-//            password.setError("Password Inválida");
-//            return false;
-        else if (!passwordInput.equals(repeated)) {
+        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
+            password.setError("Password Inválida");
+            return false;
+        }
+        else if(!passwordInput.equals(repeated)){
             repeat_password.setError("Password não corresponde");
             return false;
-        } else {
+        }
+        else{
             password.setError(null);
             return true;
         }
@@ -119,13 +124,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     //TODO javadoc
-    public void register(View v) {
-        if (!validateUsername() | !validatePassword() | !validateEmail()) return;
+    public void register(View v){
+        if(!validateUsername() | !validatePassword() | !validateEmail()) return;
 
-        if (!onRegister()) {
+        if(!onRegister()){
             return;
         }
-
         Intent intent = new Intent(this, LoginActivity.class);
 
         startActivity(intent);
@@ -206,4 +210,3 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 }
-

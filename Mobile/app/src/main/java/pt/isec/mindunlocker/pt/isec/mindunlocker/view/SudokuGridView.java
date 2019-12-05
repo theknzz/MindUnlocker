@@ -1,18 +1,14 @@
 package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import pt.isec.mindunlocker.GameEngine;
-import pt.isec.mindunlocker.R;
 
 public class SudokuGridView extends GridView {
 
@@ -25,17 +21,21 @@ public class SudokuGridView extends GridView {
         SudokuGridViewAdapter gridViewAdapter = new SudokuGridViewAdapter(context);
         setAdapter(gridViewAdapter);
 
-        setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int x = position % 9;
-                int y = position / 9;
+        setOnItemClickListener((parent, view, position, id) -> {
+            int x = position % 9;
+            int y = position / 9;
 
-                GameEngine.getInstance().setSelectedPosition(x,y);
+            GameEngine.getInstance().setSelectedPosition(x,y);
 
-                //Toast toast = Toast.makeText(context, "Selected item- x: " + x + " y: " + y, Toast.LENGTH_LONG);
-                //toast.show();
+            if (!GameEngine.getInstance().getCustom()) {
+                GameEngine.getInstance().setItem();
+            } else {
+                GameEngine.getInstance().setItemCustom();
             }
+
+            Log.i("Info","selected pos: " + x + "," + y);
+            //Toast toast = Toast.makeText(context, "Selected item- x: " + x + " y: " + y, Toast.LENGTH_LONG);
+            //toast.show();
         });
     }
 
@@ -69,7 +69,6 @@ public class SudokuGridView extends GridView {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
             return GameEngine.getInstance().getTable().getItem(position);
         }
     }

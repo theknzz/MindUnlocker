@@ -1,6 +1,9 @@
 package pt.isec.mindunlocker;
 
-import android.util.Log;
+/**
+ * Autor: João Páris
+ * Data:
+ */
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -8,10 +11,12 @@ import java.util.Random;
 public class SudokuGenerator {
 
     private static SudokuGenerator instance;
-    private ArrayList<ArrayList<Integer>> Available = new ArrayList<ArrayList<Integer>>();
-    private Random rand = new Random();
+    private ArrayList<ArrayList<Integer>> available;
+    private Random rand;
 
     public SudokuGenerator() {
+        available = new ArrayList<>();
+        rand = new Random();
     }
 
     public static SudokuGenerator getInstance(){
@@ -25,16 +30,14 @@ public class SudokuGenerator {
         int[][] sudokuTable = new int[9][9];
         int currPos = 0;
 
-
         while( currPos < 81){
-            //Log.i("Loop","pos: " +currPos);
             if(currPos == 0){
                 clearTable(sudokuTable);
             }
 
-            if(Available.get(currPos).size() != 0){
-                int i = rand.nextInt(Available.get(currPos).size());
-                int number = Available.get(currPos).get(i);
+            if(available.get(currPos).size() != 0){
+                int i = rand.nextInt(available.get(currPos).size());
+                int number = available.get(currPos).get(i);
 
                 if(!hasConflict(sudokuTable, currPos, number)){
                     int posX = currPos % 9;
@@ -42,26 +45,25 @@ public class SudokuGenerator {
 
                     sudokuTable[posX][posY] = number;
 
-                    Available.get(currPos).remove(i);
+                    available.get(currPos).remove(i);
 
                     currPos++;
                 }else{
-                    Available.get(currPos).remove(i);
+                    available.get(currPos).remove(i);
                 }
 
             }else{
                 for (int i = 1; i <= 9; i++){
-                    Available.get(currPos).add(i);
+                    available.get(currPos).add(i);
                 }
                 currPos--;
             }
         }
-
         return sudokuTable;
     }
 
     private void clearTable(int[][] sudokuTable) {
-        Available.clear();
+        available.clear();
 
         for (int i = 0; i < 9; i++){
             for (int j = 0; j < 9; j++) {
@@ -70,9 +72,9 @@ public class SudokuGenerator {
         }
 
         for (int spot = 0; spot < 81; spot++){
-            Available.add(new ArrayList<Integer>());
+            available.add(new ArrayList<>());
             for (int n = 1; n <= 9; n++) {
-                Available.get(spot).add(n);
+                available.get(spot).add(n);
             }
         }
     }
@@ -81,10 +83,7 @@ public class SudokuGenerator {
         int posX = currPos % 9;
         int posY = currPos / 9;
 
-        if(checkHorizontal(sudokuTable,number,posX,posY) || checkVertical(sudokuTable,number,posX,posY) || check3x3square(sudokuTable,number,posX,posY)){
-            return true;
-        }
-        return false;
+        return checkHorizontal(sudokuTable, number, posX, posY) || checkVertical(sudokuTable, number, posX, posY) || check3x3square(sudokuTable, number, posX, posY);
     }
 
     private boolean checkVertical(int[][] sudokuTable, int number, int posX, int posY){
@@ -120,12 +119,12 @@ public class SudokuGenerator {
     }
 
     public int[][] removeElements( int[][] sudokuTable, int level){
-        int i = 0,n = 1;
+        int i = 0, n;
 
         switch (level){
-            case 0: n = 60;break;
-            case 1: n = 40;break;
-            case 2: n = 30;break;
+            case 0: n = 30;break;
+            case 2: n = 60;break;
+            default: n = 40; // se for medio ou outro
         }
         //n=1; //Debug
 
@@ -139,6 +138,5 @@ public class SudokuGenerator {
             }
         }
         return sudokuTable;
-
     }
 }
