@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout header, headerLogin;
     private Button login, register, load, customizedGame, history, logOut;
     private static boolean firstTime = true; //check if first time in main
-    private LeaderboardContainer leaderContainer;
+    //private LeaderboardContainer leaderContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         getViews();
 
-        leaderContainer.getLeaderBoard();
-        leaderContainer.displayData();
+        //leaderContainer.getLeaderBoard();
+        //leaderContainer.displayData();
 
         setListeners();
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         history = findViewById(R.id.btnHistory);
         logOut = findViewById(R.id.btnLogOut);
 
-        leaderContainer = new LeaderboardContainer(findViewById(R.id.leadercontainer), this);
+        //leaderContainer = new LeaderboardContainer(findViewById(R.id.leadercontainer), this);
     }
 
     private void setListeners() {
