@@ -146,7 +146,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 if (b.isSelected()) {
                     b.setSelected(false);
-                    GameEngine.getInstance().getTable().setPencilMode(true);
+                    GameEngine.getInstance().getTable().setPencilMode(false);
                 } else {
                     b.setSelected(true);
                     GameEngine.getInstance().getTable().setPencilMode(true);

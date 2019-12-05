@@ -3,6 +3,7 @@ package pt.isec.mindunlocker;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -35,15 +36,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Bundle response = getIntent().getExtras();
 
-            if (response == null) return;
-
-            if (!"login".equals(response.getString("result"))) return;
-
-            loginResult(response);
+            if (response != null) {
+                if ("login".equals(response.getString("result"))) {
+                    loginResult(response);
+                }
+            }
         }
     }
 
-    private void getViews(){
+    private void getViews() {
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
         leaderboard = findViewById(R.id.leaderboard);
@@ -62,28 +63,28 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(history, HistoryActivity.class);
     }
 
-    public void onPickLevel(View v){
+    public void onPickLevel(View v) {
 
         Intent intent = new Intent(MainActivity.this, GameplayActivity.class);
         Bundle bundle = new Bundle();
 
-        Button b = (Button)v;
-        switch (b.getId()){
+        Button b = (Button) v;
+        switch (b.getId()) {
             case R.id.btn_easylevel:
                 //Toast.makeText(this,"Starting an easy game",Toast.LENGTH_LONG).show();
-                bundle.putInt("level",0);
+                bundle.putInt("level", 0);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case R.id.btn_mediumlevel:
                 //Toast.makeText(this,"Starting a medium game",Toast.LENGTH_LONG).show();
-                bundle.putInt("level",1);
+                bundle.putInt("level", 1);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case R.id.btn_hardlevel:
                 //Toast.makeText(this,"Starting hard game",Toast.LENGTH_LONG).show();
-                bundle.putInt("level",2);
+                bundle.putInt("level", 2);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         startGameDialog.cancel();
     }
 
-    public void onGameStart(View v){
+    public void onGameStart(View v) {
         startGameDialog.setContentView(R.layout.popup_start);
         startGameDialog.show();
     }
@@ -122,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
     private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
         leaderboard.setVisibility(View.GONE);
-        load.setVisibility(View.GONE);
         history.setVisibility(View.GONE);
         logOut.setVisibility(View.GONE);
 
@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
     private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
         leaderboard.setVisibility(View.VISIBLE);
-        load.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
         logOut.setVisibility(View.VISIBLE);
 
@@ -155,5 +154,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed() {
+    }
 }
