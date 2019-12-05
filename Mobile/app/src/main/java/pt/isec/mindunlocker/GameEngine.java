@@ -1,20 +1,35 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
-import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
+import android.widget.Toast;
 
-public class GameEngine {
+import java.io.Serializable;
+import java.util.Arrays;
+
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
+
+public class GameEngine implements Serializable {
     private static GameEngine instance;
     private GameTable table = null;
 
-    private int[][] solutionTable = new int[9][9];
-    private int[][] gameTable = new int[9][9];
+    private int[][] solutionTable;
+    private int[][] gameTable;
 
+
+    private int n;
     private int selectedPosX;
     private int selectedPosY;
 
+    private boolean custom;
+
     public GameEngine() {
-        clearPos();
+        gameTable = new int[9][9];
+        solutionTable = new int[9][9];
+
+        selectedPosX = -1;
+        selectedPosY = -1;
+        n = 0;
     }
 
     public static GameEngine getInstance() {
@@ -30,17 +45,23 @@ public class GameEngine {
                  gameTable[i][j] = solutionTable[i][j];
     }
 
-    private void clearPos() {
-        selectedPosY = selectedPosX = -1;
-
-    }
-
-    public void createTable(Context context){
+    public void createTable(Context context, int level){
+        custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
         copieTable();
-        gameTable = SudokuGenerator.getInstance().removeElements(gameTable,0);
+        gameTable = SudokuGenerator.getInstance().removeElements(gameTable, level);
         table = new GameTable(context);
         table.setTable(gameTable);
+    }
+
+    public void createTableWithVars(int[][] solutionTable) {
+        this.solutionTable = solutionTable;
+    }
+
+    public void createTableEmpty(Context context) {
+        custom = true;
+        copieTable();
+        table = new GameTable(context);
     }
 
     public GameTable getTable() {
@@ -51,20 +72,32 @@ public class GameEngine {
         return solutionTable[x][y];
     }
 
+    public void setItem() {
+        table.setItem(selectedPosX, selectedPosY,n);
+    }
+
+    public void setItemCustom() {
+        table.setItemCustom(selectedPosX, selectedPosY,n);
+    }
+
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
         this.selectedPosY = y;
     }
 
     public void setNumber(int number){
-        if(selectedPosX != -1 && selectedPosY != -1){
-            table.setItem(selectedPosX,selectedPosY,number);
-            clearPos();
-        }
-
-        if(table.checkGame()){
-
-        }
+        n=number;
     }
 
+    public int NFillCells() {
+        return table.fillCells();
+    }
+
+    public boolean getCustom() {
+        return custom;
+    }
+
+    public void startTimer() {
+
+    }
 }

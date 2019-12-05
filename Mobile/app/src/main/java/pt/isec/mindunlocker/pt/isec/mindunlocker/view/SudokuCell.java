@@ -38,6 +38,10 @@ public class SudokuCell extends BaseSudokuCell {
             nPaint.setTypeface(Typeface.DEFAULT_BOLD);
         }
 
+        if(isGuess()){
+            nPaint.setColor(Color.BLUE);
+        }
+
         if(getValue() != 0){
             canvas.drawText(String.valueOf(getValue()),
                     (getWidth() - bounds.width())/2,

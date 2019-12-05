@@ -157,6 +157,7 @@
             android:background="#009E0F"
             android:layout_gravity="center"
             android:text="Generate New Game"
+            android:onClick="onGameStart"
             android:textAllCaps="false"
             android:textColor="#fff" />
 
