@@ -20,10 +20,9 @@ public class InsertGame {
      */
     public void sentData(int points, int duration, String difficulty, int hints) {
         // creating the request body
-        InsertGameBody body = new InsertGameBody(points, duration, difficulty, hints);
 
         // converting the class with the body into json
-        String parameters = new Gson().toJson(body);
+        String parameters = new Gson().toJson("a");
 
         if (new RetrieveFeedTask().doInBackground("https://mindunlocker20191126085502.azurewebsites.net/api/Games", parameters))
             //TODO existe output quando o post é feito com sucesso ?
@@ -34,10 +33,10 @@ public class InsertGame {
     /**
      * Async static class the talks to the backend api in order to post the information
      */
-        static class RetrieveFeedTask extends AsyncTask<String, Void, Boolean> {
+        public static class RetrieveFeedTask extends AsyncTask<String, Void, Boolean> {
 
             @Override
-            protected Boolean doInBackground(String... params) {
+            public Boolean doInBackground(String... params) {
                 try {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                     StrictMode.setThreadPolicy(policy);
@@ -66,19 +65,4 @@ public class InsertGame {
     }
 }
 
-/**
- * The class the wraps the json object
- */
-class InsertGameBody {
-    private int Points;
-    private int Duration;
-    private String Dificulty;
-    private int Hints;
 
-    public InsertGameBody(int points, int duration, String difficulty, int hints) {
-        this.Points = points;
-        this.Duration = duration;
-        this.Dificulty = difficulty;
-        this.Hints = hints;
-    }
-}
