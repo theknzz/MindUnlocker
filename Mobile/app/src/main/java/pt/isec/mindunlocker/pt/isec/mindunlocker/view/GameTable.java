@@ -57,10 +57,14 @@ public class GameTable {
         SudokuTable[x][y].setValue(number);
         //clearPos();
         if (checkGame()) {
+            GameEngine.getInstance().finalScore();
             finish = true;
         } else if (number != 0) {
             if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
+                GameEngine.getInstance().incorrectPlay();
                 Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+            }else{
+                GameEngine.getInstance().correctPlay();
             }
         }
     }
