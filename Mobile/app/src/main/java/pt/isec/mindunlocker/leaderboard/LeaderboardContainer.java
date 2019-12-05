@@ -135,7 +135,6 @@ public class LeaderboardContainer {
                     sb.append(line).append("\n");
                 }
 
-                System.out.println("test");
                 //get the string version of the response data
                 return new JSONArray(sb.toString());
             }catch(Exception e) {
