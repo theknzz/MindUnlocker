@@ -96,7 +96,6 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
                             }
                         }
                     }
-
                     return false; // we return false
                 }
             }

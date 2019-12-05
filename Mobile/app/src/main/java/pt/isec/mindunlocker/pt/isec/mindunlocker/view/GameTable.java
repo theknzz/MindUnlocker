@@ -56,16 +56,18 @@ public class GameTable {
 
     public void setItem(int x, int y, int number) {
         SudokuTable[x][y].setValue(number);
+        SudokuCell selectedCell = getItem(x, y);
         //clearPos();
         if (checkGame()) {
             finish = true;
         } else if (number != 0) {
-            getItem(x,y).setWrong(false);
+           selectedCell.setWrong(false);
             if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
-                getItem(x,y).setWrong(true);
+                selectedCell.setWrong(true);
                 Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
             }
-        }
+        } else
+            selectedCell.setWrong(false);
     }
 
     public void setItemCustom(int x, int y, int number) {
