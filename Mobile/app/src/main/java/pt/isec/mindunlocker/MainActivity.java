@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button login, register, load, customizedGame, history, logOut;
     private LeaderboardContainer leaderContainer;
 
-    private static String name, score, rank;
+    private static String username/*, score, rank*/;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,20 +47,14 @@ public class MainActivity extends AppCompatActivity {
             TextView tv_score = findViewById(R.id.score);
             TextView tv_ranking = findViewById(R.id.ranking);
 
-            tv_user.setText(name);
-            tv_score.setText(score);
-            tv_ranking.setText(rank);
+            String [] info = leaderContainer.getUserInfo(String.valueOf(username));
+
+            tv_user.setText(username);
+            tv_score.setText(info[0]);
+            tv_ranking.setText(info[0]);
 
             showComponents();
         }
-    }
-
-    private void setUserInfo(String rank, String score){
-        TextView tScore = findViewById(R.id.score);
-        TextView ranking = findViewById(R.id.ranking);
-
-        ranking.setText(rank);
-        tScore.setText(score);
     }
 
     private void getViews() {
@@ -128,16 +122,15 @@ public class MainActivity extends AppCompatActivity {
         if (temp) {
             //TODO obter da API valores reais apos login
 
-            name = response.getString("user");
-            score = response.getString("score");
-            rank = response.getString("ranking");
+            username = response.getString("user");
+            //score = response.getString("score");
+            //rank = response.getString("ranking");
 
         }
     }
 
     private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
-        load.setVisibility(View.GONE);
         history.setVisibility(View.GONE);
         logOut.setVisibility(View.GONE);
 
@@ -148,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
-        load.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
         logOut.setVisibility(View.VISIBLE);
 
@@ -163,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logOut(View v) {
-        Token.CONTENT = name = score = rank = null;
+        Token.CONTENT = username /*= score = rank*/ = null;
 
         hideComponents();
     }
