@@ -164,6 +164,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         if (GameEngine.getInstance().getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
             GameEngine.getInstance().setTimeSpent(seconds, minutes);
+            GameEngine.getInstance().levelScoreAdded(level);
             scoreTextView.setText(GameEngine.getInstance().finalScore());
             timeTextView.setText(finalTime);
             finishDialog.show();
