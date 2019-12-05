@@ -13,22 +13,32 @@ public class InsertGame {
 
     /**
      * Method that populates a InsertGameBody class with the user's game information and sent it back to the backend
-     * @param points - user's game points
-     * @param duration - user's game duration
-     * @param difficulty - user's game difficulty
-     * @param hints - user's game nr. of hints
+     * @param points user's game points
+     * @param duration  user's game duration
+     * @param difficulty  user's game difficulty
+     * @param hints user's game nr. of hints
      */
-    public void sentData(int points, int duration, String difficulty, int hints) {
+    public void sentData(int points, int duration, int difficulty, int hints) {
+        String difficultyText = parseToLevel(difficulty);
+        if (difficultyText==null) return;
         // creating the request body
-        InsertGameBody body = new InsertGameBody(points, duration, difficulty, hints);
+        InsertGameBody body = new InsertGameBody(points, duration, difficultyText, hints);
 
         // converting the class with the body into json
         String parameters = new Gson().toJson(body);
 
         if (new RetrieveFeedTask().doInBackground("https://mindunlocker20191126085502.azurewebsites.net/api/Games", parameters))
-            //TODO existe output quando o post é feito com sucesso ?
-            System.out.println("Leaderboard updated");
-        System.out.println("Something went wrong");
+            System.out.println("Database updated!");
+    }
+
+
+    private String parseToLevel(int difficulty) {
+        switch (difficulty) {
+            case 0: return "Easy";
+            case 1: return "Medium";
+            case 2: return "Hard";
+        }
+        return null;
     }
 
     /**
