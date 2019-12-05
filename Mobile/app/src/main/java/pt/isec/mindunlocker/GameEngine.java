@@ -134,17 +134,29 @@ public class GameEngine implements Serializable {
     public void setTimeSpent(int seconds, int minutes){
         TS = seconds;
         if(minutes > 0)
-            TS += 1/(minutes*60);
+            TS += (minutes*60);
     }
 
     public void tookHint(){
         points -= 500;
     }
 
+    public void levelScoreAdded(int level){
+        switch(level){
+            case 0: LM = 100;break;
+            case 1: LM = 250;break;
+            case 2: LM = 500;break;
+            default: LM = 50;
+        }
+    }
+
     public String finalScore(){
+        return " " + getScore() + " points";
+    }
+
+    public int getScore(){
         FS = points;
         FS += LM - (TS * 5);
-        String s = " " + FS + " points";
-        return s;
+        return FS;
     }
 }
