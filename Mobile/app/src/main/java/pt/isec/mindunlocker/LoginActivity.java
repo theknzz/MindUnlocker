@@ -155,9 +155,7 @@ public class LoginActivity extends AppCompatActivity {
             reader.close();
         } catch (IOException | JSONException e) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-            if (e instanceof FileNotFoundException) {
-                return false;
-            }
+            return false;
         }
         return true;
     }

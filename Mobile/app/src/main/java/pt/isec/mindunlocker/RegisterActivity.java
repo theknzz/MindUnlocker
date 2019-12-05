@@ -25,15 +25,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     private URL url = null;
     private String response = null;
-//    private static final Pattern PASSWORD_PATTERN =
-//            Pattern.compile("^" +
-//                    "(?=.*[0-9])" + //pelo menos um numero
-//                    "(?=.*[a-z])" + //pelo menos um caracter minusculo
-//                    "(?=.*[A-Z])" + //pelo menus um caracter maiusculo
-//                    "(?=.*[@#$%^&+=])" + //pelo menos um caracter especial
-//                    "(?=\\S+$)" + //sem espaços
-//                    ".{6,}" + //pelo menos seis caracteres
-//                    "$"); //TODO alterar para o padrao definido
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" + //pelo menos um numero
+                    "(?=.*[A-Z])" + //pelo menos um caracter maiusculo
+                    "(?=\\S+$)" + //sem espaços
+                    ".{8,12}" + //pelo menos seis caracteres
+                    "$"); //TODO alterar para o padrao definido
     private TextInputLayout username, password, repeat_password, email;
 
     @Override
@@ -90,10 +88,10 @@ public class RegisterActivity extends AppCompatActivity {
             repeat_password.setError("Password necessária");
             return false;
         }
-//        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
-//            password.setError("Password Inválida");
-//            return false;
-//        }
+        else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
+            password.setError("Password fraca, sugestão(Aa1aaaaa)");
+            return false;
+        }
         else if(!passwordInput.equals(repeated)){
             repeat_password.setError("Password não corresponde");
             return false;
@@ -128,6 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(!validateUsername() | !validatePassword() | !validateEmail()) return;
 
         if(!onRegister()){
+            Toast.makeText(this, "Erro ao registar, tente outra vez", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent(this, LoginActivity.class);
@@ -141,6 +140,11 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public boolean onRegister() {
         try {
+            email.setError(null);
+            username.setError(null);
+            password.setError(null);
+            repeat_password.setError(null);
+
             String tEmail = email.getEditText().getText().toString().trim();
             String tUser = username.getEditText().getText().toString().trim();
             String pw = password.getEditText().getText().toString().trim();
@@ -185,6 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
             //read in the data from input stream, this can be done a variety of ways
             BufferedReader reader = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
+
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append("\n");
             }
@@ -204,7 +209,7 @@ public class RegisterActivity extends AppCompatActivity {
             isr.close();
             reader.close();
             } catch (Exception e) {
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
                 return false;
             }
         return true;
