@@ -16,7 +16,6 @@ import pt.isec.mindunlocker.register.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout header, headerLogin;
-    private RelativeLayout leaderboard;
     private Button login, register, load, startGame, history, logOut;
     private static boolean firstTime = true; //check if first time in main
     private LeaderboardContainer leaderContainer;
@@ -28,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
         getViews();
 
-        leaderContainer.cleanRanking();
         leaderContainer.getLeaderBoard();
         leaderContainer.displayData();
 
@@ -52,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private void getViews() {
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
-        leaderboard = findViewById(R.id.leaderboard);
         login = findViewById(R.id.btnLogin);
         register = findViewById(R.id.btnCreateAcc);
         load = findViewById(R.id.btnLoadGame);
