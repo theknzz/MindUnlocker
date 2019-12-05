@@ -39,30 +39,13 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
 
     //runs without a timer by reposting this handler at the end of the runnable
     Handler timerHandler = new Handler();
-    Runnable timerRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            long millis = System.currentTimeMillis() - startTime;
-            seconds = (int) (millis / 1000);
-            minutes = seconds / 60;
-            seconds = seconds % 60;
-
-            //The correct-multiplier starts at 50 and is decremented (-1) every 30 seconds.
-            if(seconds == 30 || seconds == 0){GameEngine.getInstance().decrementCM();}
-
-            finalTime = minutes + ":" + seconds;
-            timerTextView.setText(String.format("time: %d:%02d", minutes, seconds));
-
-            timerHandler.postDelayed(this, 500);
-        }
-    };
+    Runnable timerRunnable = null;
 
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameplay);
-
-        //gameEngine = new GameEngine();
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.gameplay);
+        //
+        //        //gameEngine = new GameEngine();
 
         Bundle b = getIntent().getExtras();
         if(b != null){
@@ -90,6 +73,8 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         // Set the timer counting
         timerTextView = findViewById(R.id.gameTimer);
         startTime = System.currentTimeMillis();
+        // create object runnable
+        timerRunnable = new TimeThread(startTime, finalTime, timerHandler, timerTextView);
         timerHandler.postDelayed(timerRunnable, 0);
 
         // Set Dialogs
