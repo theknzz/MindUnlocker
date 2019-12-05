@@ -1,15 +1,14 @@
 package pt.isec.mindunlocker;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputLayout;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import pt.isec.mindunlocker.MainActivity;
 import pt.isec.mindunlocker.R;
 import pt.isec.mindunlocker.Token;
@@ -43,6 +41,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the inputted username to match the project requirements
+     * @return if the username is valid ? true : false
+     */
     private boolean validateUsername(){
         String usernameInput = eUsername.getEditText().getText().toString().trim();
 
@@ -56,6 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the inputted password to match the project requirements
+     * @return if the password is valid ? true : false
+     */
     private boolean validatePassword(){
         String passwordInput = ePassword.getEditText().getText().toString().trim();
 
@@ -69,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //TODO make javadoc
     public void login(View v){
         if(!validateUsername() | !validatePassword()) return;
         //TODO verificar do servidor/db se existe conta
@@ -76,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Username ou password errados", Toast.LENGTH_SHORT).show();
             return;
         }
-
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("result", "login");
@@ -89,7 +95,10 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-
+    /**
+     * When the Login button is pressed listener
+     * @return if the login was made with success ? true : false
+     */
     public boolean onLogin() {
         try {
             String username = eUsername.getEditText().getText().toString().trim();
@@ -130,27 +139,33 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             //get the string version of the response data
-            response = sb.toString();
-            Token.CONTENT = captureTokenFromResponse(response);
 
+            //response = sb.toString();
+            //Token.CONTENT = captureTokenFromResponse(response);
+            JSONObject dataToken = new JSONObject(sb.toString());
+            Token.CONTENT = dataToken.getString("access_token");
+          
             // debug
             // pass the token to the main activity in a intent bundle?
 
             isr.close();
             reader.close();
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             if (e instanceof FileNotFoundException) {
                 return false;
             }
         }
-
         return true;
     }
 
+    /**
+     * Capture the token inside of json object that the backend api returns
+     * @param response - response to the get request in json object format
+     * @return String - token
+     */
     private String captureTokenFromResponse(String response) {
         String[] arr = response.split(",");
         arr= arr[0].split(":");
         return arr[1];
     }
-
 }

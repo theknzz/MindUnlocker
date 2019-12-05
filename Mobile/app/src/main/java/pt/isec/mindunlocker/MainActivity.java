@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import pt.isec.mindunlocker.leaderboard.LeaderboardContainer;
 
 public class MainActivity extends AppCompatActivity {
     private Dialog startGameDialog;
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getViews(){
+    private void getViews() {
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
         login = findViewById(R.id.btnLogin);
@@ -67,28 +66,28 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(history, HistoryActivity.class);
     }
 
-    public void onPickLevel(View v){
+    public void onPickLevel(View v) {
 
         Intent intent = new Intent(MainActivity.this, GameplayActivity.class);
         Bundle bundle = new Bundle();
 
-        Button b = (Button)v;
-        switch (b.getId()){
+        Button b = (Button) v;
+        switch (b.getId()) {
             case R.id.btn_easylevel:
                 //Toast.makeText(this,"Starting an easy game",Toast.LENGTH_LONG).show();
-                bundle.putInt("level",0);
+                bundle.putInt("level", 0);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case R.id.btn_mediumlevel:
                 //Toast.makeText(this,"Starting a medium game",Toast.LENGTH_LONG).show();
-                bundle.putInt("level",1);
+                bundle.putInt("level", 1);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case R.id.btn_hardlevel:
                 //Toast.makeText(this,"Starting hard game",Toast.LENGTH_LONG).show();
-                bundle.putInt("level",2);
+                bundle.putInt("level", 2);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         startGameDialog.cancel();
     }
 
-    public void onGameStart(View v){
+    public void onGameStart(View v) {
         startGameDialog.setContentView(R.layout.popup_start);
         startGameDialog.show();
     }
@@ -158,5 +157,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed() {
+    }
 }
