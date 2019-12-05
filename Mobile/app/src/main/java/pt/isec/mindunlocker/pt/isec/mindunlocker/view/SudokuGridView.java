@@ -1,19 +1,14 @@
 package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import pt.isec.mindunlocker.GameEngine;
-import pt.isec.mindunlocker.R;
 
 public class SudokuGridView extends GridView {
 
@@ -31,6 +26,7 @@ public class SudokuGridView extends GridView {
             int y = position / 9;
 
             GameEngine.getInstance().setSelectedPosition(x,y);
+
             if (!GameEngine.getInstance().getCustom()) {
                 GameEngine.getInstance().setItem();
             } else {
