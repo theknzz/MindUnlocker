@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     private Dialog startGameDialog;
     private LinearLayout header, headerLogin;
-    private ScrollView leaderboard;
     private Button login, register, load, customizedGame, history, logOut;
-    private static boolean firstTime = true; //check if first time in main
+    private LeaderboardContainer leaderContainer;
+
+    private static String username/*, score, rank*/;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,32 +28,44 @@ public class MainActivity extends AppCompatActivity {
 
         getViews();
 
+        leaderContainer.getLeaderBoard();
+        leaderContainer.displayData();
+
         setListeners();
 
-        if (firstTime) {
-            hideComponents();
-            firstTime = false;
-        } else {
+        hideComponents();
 
-            if (Token.CONTENT != null) {
-                if ("login".equals(getIntent().getStringExtra("result"))) {
-                    loginResult(getIntent().getExtras());
-                }
-                showComponents();
-            }
+        if (Token.CONTENT != null) {
+
+            Bundle response = getIntent().getExtras();
+            if (response != null && "login".equals(response.getString("result")))
+                loginResult(response);
+
+            TextView tv_user = findViewById(R.id.user);
+            TextView tv_score = findViewById(R.id.score);
+            TextView tv_ranking = findViewById(R.id.ranking);
+
+            String [] info = leaderContainer.getUserInfo(String.valueOf(username));
+
+            tv_user.setText(username);
+            tv_score.setText(info[0]);
+            tv_ranking.setText(info[0]);
+
+            showComponents();
         }
     }
 
     private void getViews() {
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
-        leaderboard = findViewById(R.id.leaderboard);
         login = findViewById(R.id.btnLogin);
         register = findViewById(R.id.btnCreateAcc);
         load = findViewById(R.id.btnLoadGame);
         customizedGame = findViewById(R.id.btnCreateGame);
         history = findViewById(R.id.btnHistory);
         logOut = findViewById(R.id.btnLogOut);
+
+        leaderContainer = new LeaderboardContainer(findViewById(R.id.leadercontainer), this);
     }
 
     private void setListeners() {
@@ -111,18 +123,15 @@ public class MainActivity extends AppCompatActivity {
             TextView score = findViewById(R.id.score);
             TextView ranking = findViewById(R.id.ranking);
 
-            user.setText(response.getString("user"));
-            score.setText(response.getString("score"));
-            ranking.setText(response.getString("ranking"));
+            username = response.getString("user");
+            //score = response.getString("score");
+            //rank = response.getString("ranking");
 
-            showComponents();
-        } else
-            hideComponents();
+        }
     }
 
     private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
-        leaderboard.setVisibility(View.GONE);
         history.setVisibility(View.GONE);
         logOut.setVisibility(View.GONE);
 
@@ -133,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
-        leaderboard.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
         logOut.setVisibility(View.VISIBLE);
 
@@ -148,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logOut(View v) {
-        Token.CONTENT = null;
+        Token.CONTENT = username /*= score = rank*/ = null;
 
         hideComponents();
     }

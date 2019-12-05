@@ -28,11 +28,9 @@ public class RegisterActivity extends AppCompatActivity {
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     "(?=.*[0-9])" + //pelo menos um numero
-                    "(?=.*[a-z])" + //pelo menos um caracter minusculo
-                    "(?=.*[A-Z])" + //pelo menus um caracter maiusculo
-                    "(?=.*[@#$%^&+=])" + //pelo menos um caracter especial
+                    "(?=.*[A-Z])" + //pelo menos um caracter maiusculo
                     "(?=\\S+$)" + //sem espaços
-                    ".{6,}" + //pelo menos seis caracteres
+                    ".{8,12}" + //pelo menos seis caracteres
                     "$"); //TODO alterar para o padrao definido
     private TextInputLayout username, password, repeat_password, email;
 
@@ -54,23 +52,30 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateUsername(){
+    /**
+     * Validates the username to correspond to the project requirements
+     * @return username is valid ? true : false
+     */
+    private boolean validateUsername() {
         String usernameInput = username.getEditText().getText().toString().trim();
 
-        if(usernameInput.isEmpty()){
-            username.setError("Username necessário");
+        if (usernameInput.isEmpty()) {
+            username.setError("Invalid username");
             return false;
-        }
-        else if(usernameInput.length() > 15){
-            username.setError("Username tem mais de 15 caracteres");
+        } else if (usernameInput.length() > 15) {
+            username.setError("Username cant have more than 15 characters");
             return false;
-        }
-        else {
+        } else {
             username.setError(null);
             return true;
         }
     }
 
+
+    /**
+     * Validates the password to correspond to the project requirements
+     * @return if the password is valid ? true : false
+     */
     private boolean validatePassword(){
         String passwordInput = password.getEditText().getText().toString().trim();
         String repeated = repeat_password.getEditText().getText().toString().trim();
@@ -84,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
         else if(!PASSWORD_PATTERN.matcher(passwordInput).matches()){
-            password.setError("Password Inválida");
+            password.setError("Password fraca, sugestão(Aa1aaaaa)");
             return false;
         }
         else if(!passwordInput.equals(repeated)){
@@ -97,38 +102,49 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateEmail(){
+    /**
+     * Validates the inputted email to correspond to the project requirements
+     * @return if the email is valid ? true : false
+     */
+    private boolean validateEmail() {
         String emailInput = email.getEditText().getText().toString().trim();
 
-        if(emailInput.isEmpty()){
+        if (emailInput.isEmpty()) {
             email.setError("Email necessário");
             return false;
-        }
-        else if(!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             email.setError("Email inválido sugestão (xxx@xxx.com)");
             return false;
-        }
-        else{
+        } else {
             email.setError(null);
             return true;
         }
     }
 
+    //TODO javadoc
     public void register(View v){
         if(!validateUsername() | !validatePassword() | !validateEmail()) return;
 
         if(!onRegister()){
+            Toast.makeText(this, "Erro ao registar, tente outra vez", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
         Intent intent = new Intent(this, LoginActivity.class);
 
         startActivity(intent);
     }
 
+    /**
+     * When the Register button is pressed listener
+     * @return if the register has success ? true : false
+     */
     public boolean onRegister() {
         try {
+            email.setError(null);
+            username.setError(null);
+            password.setError(null);
+            repeat_password.setError(null);
+
             String tEmail = email.getEditText().getText().toString().trim();
             String tUser = username.getEditText().getText().toString().trim();
             String pw = password.getEditText().getText().toString().trim();
@@ -145,8 +161,8 @@ public class RegisterActivity extends AppCompatActivity {
             connection.setRequestProperty("Content-Type",
                     "application/json");
 
-            connection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
-            connection.setRequestProperty("Accept","*/*");
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 ( compatible ) ");
+            connection.setRequestProperty("Accept", "*/*");
 
             //set the request method to POST
             connection.setRequestMethod("POST");
@@ -173,6 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
             //read in the data from input stream, this can be done a variety of ways
             BufferedReader reader = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
+
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append("\n");
             }
@@ -181,7 +198,7 @@ public class RegisterActivity extends AppCompatActivity {
             response = sb.toString();
 
             // if the http result code is 400, something went wrong
-            if (status==400) {
+            if (status == 400) {
                 String[] arr = response.split(",");
                 response = arr[2].replace("\"", "")
                         .replace("{", "")
@@ -189,14 +206,12 @@ public class RegisterActivity extends AppCompatActivity {
                         .replace("]", "");
                 throw new Exception(response);
             }
-
             isr.close();
             reader.close();
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
         return true;
     }
 }

@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat;
 import java.io.Serializable;
 import java.util.Random;
 
+import pt.isec.mindunlocker.api.insertGame.InsertGame;
+
 
 public class GameplayActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
     private Random rand = new Random();
@@ -28,35 +30,22 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Dialog finishDialog, giveupDialog;
     TextView timerTextView,scoreTextView,timeTextView,levelTextView;
     long startTime = 0;
-    int level = 0, points = 0;
-
-    //GameEngine gameEngine;
+    int level = 0;
+    int minutes,seconds;
 
     String finalTime = null;
 
+    InsertGame service = new InsertGame();
+
     //runs without a timer by reposting this handler at the end of the runnable
     Handler timerHandler = new Handler();
-    Runnable timerRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            long millis = System.currentTimeMillis() - startTime;
-            int seconds = (int) (millis / 1000);
-            int minutes = seconds / 60;
-            seconds = seconds % 60;
-
-            finalTime = minutes + ":" + seconds;
-            timerTextView.setText(String.format("time: %d:%02d", minutes, seconds));
-
-            timerHandler.postDelayed(this, 500);
-        }
-    };
+    Runnable timerRunnable = null;
 
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.gameplay);
-
-        //gameEngine = new GameEngine();
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.gameplay);
+        //
+        //        //gameEngine = new GameEngine();
 
         Bundle b = getIntent().getExtras();
         if(b != null){
@@ -84,6 +73,8 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         // Set the timer counting
         timerTextView = findViewById(R.id.gameTimer);
         startTime = System.currentTimeMillis();
+        // create object runnable
+        timerRunnable = new TimeThread(startTime, finalTime, timerHandler, timerTextView);
         timerHandler.postDelayed(timerRunnable, 0);
 
         // Set Dialogs
@@ -136,6 +127,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
+                GameEngine.getInstance().tookHint();
                 v.invalidate();
                 break;
             case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
@@ -160,9 +152,15 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         }
         if (GameEngine.getInstance().getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
-            scoreTextView.setText("1000000");
+            GameEngine.getInstance().setTimeSpent(seconds, minutes);
+            GameEngine.getInstance().levelScoreAdded(level);
+            scoreTextView.setText(GameEngine.getInstance().finalScore());
             timeTextView.setText(finalTime);
             finishDialog.show();
+            if (Token.CONTENT!=null) {
+                // updating the database with the actual game information
+                service.sentData(GameEngine.getInstance().getScore(), minutes * 60 + seconds, level, GameEngine.getInstance().getHints());
+            }
         }
     }
 
@@ -249,5 +247,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         if (requestCode == 1234) {
 
         }
+    }
+
+    public void onFinish(View view) {
+        backToMain();
     }
 }

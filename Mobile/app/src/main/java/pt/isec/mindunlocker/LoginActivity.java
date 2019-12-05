@@ -1,14 +1,12 @@
 package pt.isec.mindunlocker;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
@@ -21,7 +19,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import pt.isec.mindunlocker.MainActivity;
 import pt.isec.mindunlocker.R;
 import pt.isec.mindunlocker.Token;
@@ -48,10 +45,9 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Validates the inputted username to match the project requirements
-     *
      * @return if the username is valid ? true : false
      */
-    private boolean validateUsername() {
+    private boolean validateUsername(){
         String usernameInput = eUsername.getEditText().getText().toString().trim();
 
         if (usernameInput.isEmpty()) {
@@ -65,10 +61,9 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Validates the inputted password to match the project requirements
-     *
      * @return if the password is valid ? true : false
      */
-    private boolean validatePassword() {
+    private boolean validatePassword(){
         String passwordInput = ePassword.getEditText().getText().toString().trim();
 
         if (passwordInput.isEmpty()) {
@@ -79,6 +74,10 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+    /**
+     * Method for when login button is pressed
+     * @param v - View of the button
+     */
 
     //TODO make javadoc
     public void login(View v) {
@@ -92,8 +91,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("result", "login");
         intent.putExtra("success", true);
-        intent.putExtra("score", "1024");
-        intent.putExtra("ranking", "#1");
         intent.putExtra("user", eUsername.getEditText().getText().toString());
 
         startActivity(intent);
@@ -102,7 +99,6 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * When the Login button is pressed listener
-     *
      * @return if the login was made with success ? true : false
      */
     public boolean onLogin() {
@@ -157,6 +153,7 @@ public class LoginActivity extends AppCompatActivity {
             isr.close();
             reader.close();
         } catch (IOException | JSONException e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
