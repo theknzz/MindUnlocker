@@ -1,6 +1,7 @@
 package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,7 +11,9 @@ import pt.isec.mindunlocker.SudokuChecker;
 public class GameTable {
     private SudokuCell[][] SudokuTable = new SudokuCell[9][9];
 
+    private GameEngine gameEngine = GameEngine.getInstance();
     private Context context;
+    private boolean isPencil = false;
 
     public boolean isFinish() {
         return finish;
@@ -54,15 +57,24 @@ public class GameTable {
     }
 
     public void setItem(int x, int y, int number) {
-        SudokuTable[x][y].setValue(number);
-        //clearPos();
-        if (checkGame()) {
-            finish = true;
-        } else if (number != 0) {
-            if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
-                Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+            SudokuCell selectedCell = getItem(x, y);
+            if (isPencil) {
+                selectedCell.setGuess(true);
+                selectedCell.setValue(number);
+            } else {
+                SudokuTable[x][y].setValue(number);
+                //clearPos();
+                if (checkGame()) {
+                    finish = true;
+                } else if (number != 0) {
+                    selectedCell.setWrong(false);
+                    if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
+                        selectedCell.setWrong(true);
+                        Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+                    }
+                } else
+                    selectedCell.setWrong(false);
             }
-        }
     }
 
     public void setItemCustom(int x, int y, int number) {
@@ -77,7 +89,7 @@ public class GameTable {
     }
 
     public void setPencilMode(boolean val) {
-        //SudokuTable[0][0].setGuess(val);
+        isPencil = val;
     }
 
     public boolean checkGame() {
@@ -99,4 +111,5 @@ public class GameTable {
         }
         return count;
     }
+
 }
