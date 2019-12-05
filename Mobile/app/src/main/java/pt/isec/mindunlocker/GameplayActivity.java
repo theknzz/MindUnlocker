@@ -28,7 +28,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Dialog finishDialog, giveupDialog;
     TextView timerTextView,scoreTextView,timeTextView,levelTextView;
     long startTime = 0;
-    int level = 0, points = 0;
+    int level = 0, points = 0, hints =0;
 
     //GameEngine gameEngine;
 
@@ -136,6 +136,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
+                hints++;
                 v.invalidate();
                 break;
             case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/

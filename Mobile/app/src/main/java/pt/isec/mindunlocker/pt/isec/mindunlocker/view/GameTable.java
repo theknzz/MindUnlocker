@@ -1,6 +1,7 @@
 package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -59,7 +60,9 @@ public class GameTable {
         if (checkGame()) {
             finish = true;
         } else if (number != 0) {
+            getItem(x,y).setWrong(false);
             if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
+                getItem(x,y).setWrong(true);
                 Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
             }
         }
@@ -99,4 +102,5 @@ public class GameTable {
         }
         return count;
     }
+
 }
