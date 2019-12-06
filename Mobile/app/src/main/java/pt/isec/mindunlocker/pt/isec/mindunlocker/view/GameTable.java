@@ -11,7 +11,6 @@ import pt.isec.mindunlocker.SudokuChecker;
 public class GameTable {
     private SudokuCell[][] SudokuTable = new SudokuCell[9][9];
 
-    private GameEngine gameEngine = GameEngine.getInstance();
     private Context context;
     private boolean isPencil = false;
 
@@ -58,10 +57,15 @@ public class GameTable {
 
     public void setItem(int x, int y, int number) {
             SudokuCell selectedCell = getItem(x, y);
+            if (!selectedCell.isModifiable())  {
+                selectedCell.setGuess(false);
+                return;
+            }
             if (isPencil) {
                 selectedCell.setGuess(true);
                 selectedCell.setValue(number);
             } else {
+                selectedCell.setGuess(false);
                 SudokuTable[x][y].setValue(number);
                 //clearPos();
                 if (checkGame()) {
