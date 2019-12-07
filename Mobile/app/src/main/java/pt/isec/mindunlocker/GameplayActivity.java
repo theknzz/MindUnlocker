@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +29,10 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Button btnGiveUp, btnHint, btnErase, btnPencil;
 
     Dialog finishDialog, giveupDialog;
-    TextView timerTextView,scoreTextView,timeTextView,levelTextView;
+    TextView timerTextView, scoreTextView, timeTextView, levelTextView;
     long startTime = 0;
     int level = 0;
-    int minutes,seconds;
+    int minutes, seconds;
 
     String finalTime = null;
 
@@ -42,15 +43,15 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Runnable timerRunnable = null;
 
     protected void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.gameplay);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.gameplay);
         //
         //        //gameEngine = new GameEngine();
 
         Bundle b = getIntent().getExtras();
-        if(b != null){
+        if (b != null) {
             level = b.getInt("level");
-        }else{
+        } else {
             level = 1;
         }
 
@@ -60,12 +61,15 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         //Set level
         levelTextView = findViewById(R.id.show_level);
         String lvl = "level: ";
-        switch (level){
-            case 0: lvl += "Easy";
+        switch (level) {
+            case 0:
+                lvl += "Easy";
                 break;
-            case 1: lvl += "Medium";
+            case 1:
+                lvl += "Medium";
                 break;
-            case 2: lvl += "Hard";
+            case 2:
+                lvl += "Hard";
                 break;
         }
         levelTextView.setText(String.format(lvl));
@@ -114,7 +118,6 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         btnHint.setOnClickListener(this);
         btnErase.setOnClickListener(this);
         btnPencil.setOnClickListener(this);
-
     }
 
     @Override
@@ -157,7 +160,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             scoreTextView.setText(GameEngine.getInstance().finalScore());
             timeTextView.setText(finalTime);
             finishDialog.show();
-            if (Token.CONTENT!=null) {
+            if (Token.CONTENT != null) {
                 // updating the database with the actual game information
                 service.sentData(GameEngine.getInstance().getScore(), minutes * 60 + seconds, level, GameEngine.getInstance().getHints());
             }
@@ -205,20 +208,15 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
      * @param view - Button Save and Leave from giveup pop up
      */
     public void onLeaveSave(View view) {
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)  ||
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
                 (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
-            ActivityCompat.requestPermissions(this, new String[] {
+            ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
             }, 1234);
             return;
         } else {
-            TextView tv = findViewById(R.id.tv_fileName);
-
-            if (tv.getText().toString().trim().equals(" ") && !tv.getText().toString().isEmpty());
-
-
-
+            SaveGame();
             backToMain();
         }
     }
@@ -245,8 +243,33 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1234) {
-
+            SaveGame();
         }
+    }
+
+    private void SaveGame() {
+        TextView tv = findViewById(R.id.tv_fileName);
+
+        boolean saved = false;
+
+        do {
+            String filename = tv.getText().toString();
+
+            if (filename.trim().equals(" ") && !filename.isEmpty()) {
+                Toast.makeText(this, "Please put a name for the game!",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                SavedGames save = new SavedGames(this);
+
+                saved = save.saveGame(this, filename);
+
+                if (!saved)
+                    Toast.makeText(this, "File name already exists, please enter " +
+                            "another name", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(this, "Game Saved", Toast.LENGTH_SHORT).show();
+            }
+        } while (!saved);
     }
 
     public void onFinish(View view) {

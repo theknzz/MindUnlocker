@@ -3,6 +3,7 @@ package pt.isec.mindunlocker;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(register, RegisterActivity.class);
         setButtonListener(customizedGame, CustomizedGameActivity.class);
         setButtonListener(history, HistoryActivity.class);
+        setButtonListener(load, LoadGameActivity.class);
     }
 
     public void onPickLevel(View v) {
