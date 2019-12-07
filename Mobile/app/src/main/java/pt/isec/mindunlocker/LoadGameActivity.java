@@ -42,19 +42,33 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
 
         File[] files = saves.getAllSavedGames();
 
-        /*GameplayActivity gAAux;
+        if (files != null && files.length > 0) {
+            GameplayActivity gAAux;
 
-        for (File f : files) {
-            mapAux = new HashMap();
+            for (File f : files) {
+                mapAux = new HashMap();
 
-            gAAux = saves.loadGame(f.getName());
+                gAAux = saves.loadGame(f.getName());
 
-            mapAux.put(FILENAME, f.getName());
-            mapAux.put(LEVEL, gAAux.level);
-            mapAux.put(TIME, gAAux.minutes+":"+gAAux.seconds);
-            mapAux.put(HINTS, gAAux);
-            list.add(mapAux);
-        }*/
+                if (gAAux != null) {
+                    mapAux.put(FILENAME, f.getName());
+                    mapAux.put(LEVEL, gAAux.level);
+                    mapAux.put(TIME, gAAux.minutes + ":" + gAAux.seconds);
+                    mapAux.put(HINTS, gAAux.gameEngine.getHints());
+                    list.add(mapAux);
+                }
+            }
+        } else {
+
+        }
+
+        mapAux = new HashMap();
+
+        mapAux.put(FILENAME, "awdawd");
+        mapAux.put(LEVEL, "awdawd");
+        mapAux.put(TIME, "awdawdawd");
+        mapAux.put(HINTS, "aaaaa");
+        list.add(mapAux);
 
         listviewAdapter adapter = new listviewAdapter(this, list);
         lv.setAdapter(adapter);
@@ -87,19 +101,16 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public int getCount() {
-            // TODO Auto-generated method stub
             return list.size();
         }
 
         @Override
         public Object getItem(int position) {
-            // TODO Auto-generated method stub
             return list.get(position);
         }
 
         @Override
         public long getItemId(int position) {
-            // TODO Auto-generated method stub
             return 0;
         }
 
@@ -112,9 +123,6 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            // TODO Auto-generated method stub
-
-            // TODO Auto-generated method stub
             ViewHolder holder;
             LayoutInflater inflater = activity.getLayoutInflater();
 

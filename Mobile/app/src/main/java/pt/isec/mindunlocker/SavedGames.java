@@ -49,7 +49,7 @@ public class SavedGames {
         try {
             String aux = path + filename;
 
-            FileOutputStream fOs = context.openFileOutput(aux, Context.MODE_PRIVATE);
+            FileOutputStream fOs = new FileOutputStream(new File(aux));
             ObjectOutputStream oOs = new ObjectOutputStream(fOs);
 
             oOs.writeObject(gameplayActivity);
@@ -105,10 +105,11 @@ public class SavedGames {
      */
     private boolean checkIfNameExists(String filename) {
         File[] files = getAllSavedGames();
-        for (File f : files) {
-            if (f.getName().compareTo(filename) == 0)
-                return true;
-        }
+        if (files != null && files.length > 0)
+            for (File f : files) {
+                if (f.getName().compareTo(filename) == 0)
+                    return true;
+            }
         return false;
     }
 
@@ -120,7 +121,7 @@ public class SavedGames {
     private void checkFiles() {
         File[] files = getAllSavedGames();
 
-        if (files.length >= MAX_SAVED_GAMES) {
+        if (files != null && files.length >= MAX_SAVED_GAMES) {
             deleteFile(olderFile(files));
         }
     }

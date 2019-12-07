@@ -24,6 +24,8 @@ import pt.isec.mindunlocker.api.insertGame.InsertGame;
 
 
 public class GameplayActivity extends AppCompatActivity implements View.OnClickListener, Serializable {
+    GameEngine gameEngine;
+
     private Random rand = new Random();
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     Button btnGiveUp, btnHint, btnErase, btnPencil;
@@ -54,6 +56,8 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         } else {
             level = 1;
         }
+
+        gameEngine = GameEngine.getInstance();
 
         GameEngine.getInstance().createTable(this, level);
         //printSudoku(solutionTable);
@@ -248,14 +252,14 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void SaveGame() {
-        TextView tv = findViewById(R.id.tv_fileName);
+        TextView tv = giveupDialog.findViewById(R.id.tv_fileName);
 
         boolean saved = false;
 
         do {
             String filename = tv.getText().toString();
 
-            if (filename.trim().equals(" ") && !filename.isEmpty()) {
+            if (filename.trim().equals(" ") || filename.isEmpty()) {
                 Toast.makeText(this, "Please put a name for the game!",
                         Toast.LENGTH_SHORT).show();
             } else {
