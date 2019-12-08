@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.Serializable;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 public class GameEngine implements Serializable {
     private static GameEngine instance;
