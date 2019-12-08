@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/logo" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View style="@style/Divider.Vertical"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="File Name"
+            android:textSize="20sp" />
+
+        <View style="@style/Divider.Vertical"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Level"
+            android:textSize="20sp" />
+
+        <View style="@style/Divider.Vertical"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Time"
+            android:textSize="20sp" />
+
+        <View style="@style/Divider.Vertical"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Hints"
+            android:textSize="20sp" />
+
+        <View style="@style/Divider.Vertical"/>
+
+    </LinearLayout>
+
+    <View style="@style/Divider.Horizontal"/>
+
+    <ListView
+        android:id="@+id/lv_loadGame"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+    </ListView>
+
+
+</LinearLayout>

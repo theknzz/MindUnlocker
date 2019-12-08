@@ -10,15 +10,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import pt.isec.mindunlocker.MainActivity;
-import pt.isec.mindunlocker.R;
-import pt.isec.mindunlocker.Token;
 
 public class LoginActivity extends AppCompatActivity {
     private URL url = null;
@@ -48,11 +44,10 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validateUsername(){
         String usernameInput = eUsername.getEditText().getText().toString().trim();
 
-        if(usernameInput.isEmpty()){
+        if (usernameInput.isEmpty()) {
             eUsername.setError("Username necessário");
             return false;
-        }
-        else {
+        } else {
             eUsername.setError(null);
             return true;
         }
@@ -65,21 +60,24 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validatePassword(){
         String passwordInput = ePassword.getEditText().getText().toString().trim();
 
-        if(passwordInput.isEmpty()){
+        if (passwordInput.isEmpty()) {
             ePassword.setError("Password necessária");
             return false;
-        }
-        else {
+        } else {
             ePassword.setError(null);
             return true;
         }
     }
+    /**
+     * Method for when login button is pressed
+     * @param v - View of the button
+     */
 
     //TODO make javadoc
-    public void login(View v){
-        if(!validateUsername() | !validatePassword()) return;
+    public void login(View v) {
+        if (!validateUsername() | !validatePassword()) return;
         //TODO verificar do servidor/db se existe conta
-        if(!onLogin()) {
+        if (!onLogin()) {
             Toast.makeText(this, "Username ou password errados", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -87,8 +85,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("result", "login");
         intent.putExtra("success", true);
-        intent.putExtra("score", "1024");
-        intent.putExtra("ranking", "#1");
         intent.putExtra("user", eUsername.getEditText().getText().toString());
 
         startActivity(intent);
@@ -107,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 //                debug:
 //                username="henrymfdays@gmail.com";
 //                password="Qwerty123!";
-            String parameters = "grant_type=password&username="+username+"&password="+password;
+            String parameters = "grant_type=password&username=" + username + "&password=" + password;
             url = new URL("https://mindunlocker20191126085502.azurewebsites.net/token");
 
             //create the connection
@@ -144,28 +140,16 @@ public class LoginActivity extends AppCompatActivity {
             //Token.CONTENT = captureTokenFromResponse(response);
             JSONObject dataToken = new JSONObject(sb.toString());
             Token.CONTENT = dataToken.getString("access_token");
-          
+
             // debug
             // pass the token to the main activity in a intent bundle?
 
             isr.close();
             reader.close();
         } catch (IOException | JSONException e) {
-            if (e instanceof FileNotFoundException) {
-                return false;
-            }
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            return false;
         }
         return true;
-    }
-
-    /**
-     * Capture the token inside of json object that the backend api returns
-     * @param response - response to the get request in json object format
-     * @return String - token
-     */
-    private String captureTokenFromResponse(String response) {
-        String[] arr = response.split(",");
-        arr= arr[0].split(":");
-        return arr[1];
     }
 }

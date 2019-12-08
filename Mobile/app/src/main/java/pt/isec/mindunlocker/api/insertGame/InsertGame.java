@@ -20,6 +20,7 @@ public class InsertGame {
      */
     public void sentData(int points, int duration, int difficulty, int hints) {
         String difficultyText = parseToLevel(difficulty);
+
         if (difficultyText==null) return;
         // creating the request body
         InsertGameBody body = new InsertGameBody(points, duration, difficultyText, hints);
