@@ -124,11 +124,11 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * sudokusolver method generates a new solution for a <code>int [][]</code>
+     * sudokuSolver method generates a new solution for a <code>int [][]</code>
      * @param soluction <code>int [][]</code> table to generate a solution
      * @return 
      */
-    public boolean sudokusolver(int[][] soluction) {
+    public boolean sudokuSolver(int[][] soluction) {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 // we search an empty cell
@@ -139,7 +139,7 @@ public class GameEngine implements Serializable {
                             // number ok. it respects sudoku constraints
                             soluction[row][col] = number;
 
-                            if (sudokusolver(soluction)) { // we start backtracking recursively
+                            if (sudokuSolver(soluction)) { // we start backtracking recursively
                                 return true;
                             } else { // if not a solution, we empty the cell and we continue
                                 soluction[row][col] = 0;

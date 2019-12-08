@@ -64,7 +64,7 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
                     soluction[row][col] = gameEngine.getTable().getItem(row, col).getValue();
                 }
             }
-            gameEngine.sudokusolver(soluction);
+            gameEngine.sudokuSolver(soluction);
             gameEngine.createTableWithVars(soluction);
             Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
             startActivity(intent);
