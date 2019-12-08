@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import pt.isec.mindunlocker.GameEngine;
 
+
 public class SudokuGridView extends GridView {
 
     private Context context;

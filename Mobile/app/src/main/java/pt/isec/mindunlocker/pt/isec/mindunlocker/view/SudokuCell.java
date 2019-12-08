@@ -7,17 +7,30 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 
+/**
+ * Class to draw the Cells of the game
+ *
+ * @author João Santos
+ * @author Joaquim Santos
+ */
 public class SudokuCell extends BaseSudokuCell {
 
     private Paint nPaint;
 
     static SudokuCell[][] instance = null;
 
+    /**
+     * @param context
+     */
     public SudokuCell(Context context) {
         super(context);
         nPaint = new Paint();
     }
 
+    /**
+     *
+     * @return <code>Instance</code>
+     */
     public static SudokuCell[][] getInstance(){
         if(instance == null){
             instance = new SudokuCell[9][9];
@@ -25,6 +38,11 @@ public class SudokuCell extends BaseSudokuCell {
         return instance;
     }
 
+    /**
+     * Draws the numbers and the lines of each cell
+     *
+     * @param canvas
+     */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -32,6 +50,11 @@ public class SudokuCell extends BaseSudokuCell {
         drawLines(canvas);
     }
 
+    /**
+     * Draw Number on a specific cell
+     *
+     * @param canvas
+     */
     private void drawNumbers(Canvas canvas){
         nPaint.setColor(Color.BLACK);
         nPaint.setTextSize(60);
@@ -40,6 +63,7 @@ public class SudokuCell extends BaseSudokuCell {
         Rect bounds = new Rect();
 
         nPaint.getTextBounds(String.valueOf(getValue()),0,String.valueOf(getValue()).length(),bounds);
+
 
         if(!isModifiable()){
             nPaint.setTypeface(Typeface.DEFAULT_BOLD);
@@ -62,6 +86,12 @@ public class SudokuCell extends BaseSudokuCell {
     }
 
 
+    /**
+     * Draw the lines of each cell
+     * Draw the support lines for better view
+     *
+     * @param canvas
+     */
     private void drawLines(Canvas canvas){
         nPaint.setColor(Color.BLACK);
         nPaint.setStrokeWidth(2);

@@ -2,7 +2,7 @@ package pt.isec.mindunlocker;
 
 /**
  * File: SudokuGenerator.java
- * Autor: João Páris
+ * @author João Páris
  * Data: 5/12/2019
  * Course: GPS - Gestão de Projeto de Software
  * Desc: Program that generates a complete Sudoku table.

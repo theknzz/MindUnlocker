@@ -4,11 +4,15 @@ import android.util.Log;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
+/**
+ * Class to check Sudoku States.
+ *
+ * @author João Santos
+ * @author Gonçalo Andrade
+ */
 public class SudokuChecker {
     private static SudokuChecker instance;
-
     private SudokuChecker(){}
-
 
     /**
      * Creates instance if needed and returns it

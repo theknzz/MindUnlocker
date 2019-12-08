@@ -10,6 +10,7 @@ import java.io.Serializable;
 import pt.isec.mindunlocker.GameEngine;
 import pt.isec.mindunlocker.SudokuChecker;
 
+
 public class GameTable implements Serializable {
 
     private GameEngine gameEngine = GameEngine.getInstance();
