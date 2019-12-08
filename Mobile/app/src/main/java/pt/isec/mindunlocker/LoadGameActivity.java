@@ -1,7 +1,10 @@
 package pt.isec.mindunlocker;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,10 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
     private ListView lv;
     private SavedGames saves;
 
+    private Context context;
+
+    private File[] files;
+
     private static final String FILENAME = "filename";
     private static final String LEVEL = "level";
     private static final String TIME = "time";
@@ -33,6 +40,8 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loadgame);
 
+        context = this;
+
         lv = findViewById(R.id.lv_loadGame);
 
         ArrayList<HashMap> list = new ArrayList<>();
@@ -40,35 +49,27 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
 
         HashMap mapAux;
 
-        File[] files = saves.getAllSavedGames();
+        files = saves.getAllSavedGames();
 
         if (files != null && files.length > 0) {
-            GameplayActivity gAAux;
+            GameEngine gEAux;
 
             for (File f : files) {
                 mapAux = new HashMap();
 
-                gAAux = saves.loadGame(f.getName());
+                gEAux = saves.loadGame(f.getName());
 
-                if (gAAux != null) {
+                if (gEAux != null) {
                     mapAux.put(FILENAME, f.getName());
-                    mapAux.put(LEVEL, gAAux.level);
-                    mapAux.put(TIME, gAAux.minutes + ":" + gAAux.seconds);
-                    mapAux.put(HINTS, gAAux.gameEngine.getHints());
+                    mapAux.put(LEVEL, gEAux.getLevel());
+                    mapAux.put(TIME, gEAux.getFinalTime());
+                    mapAux.put(HINTS, gEAux.getHints());
                     list.add(mapAux);
                 }
             }
         } else {
 
         }
-
-        mapAux = new HashMap();
-
-        mapAux.put(FILENAME, "awdawd");
-        mapAux.put(LEVEL, "awdawd");
-        mapAux.put(TIME, "awdawdawd");
-        mapAux.put(HINTS, "aaaaa");
-        list.add(mapAux);
 
         listviewAdapter adapter = new listviewAdapter(this, list);
         lv.setAdapter(adapter);
@@ -77,8 +78,9 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String clickedItem = (String) lv.getItemAtPosition(position);
-                Toast.makeText(getBaseContext(), clickedItem, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, GameplayActivity.class);
+                GameEngine.setInstance((GameEngine) saves.loadGame(files[position].getName()));
+                startActivity(intent);
             }
         });
 
@@ -139,10 +141,10 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
             }
 
             HashMap map = list.get(position);
-            holder.txtFirst.setText((String) map.get(FILENAME));
-            holder.txtSecond.setText((String) map.get(LEVEL));
-            holder.txtThird.setText((String) map.get(TIME));
-            holder.txtFourth.setText((String) map.get(HINTS));
+            holder.txtFirst.setText(String.valueOf(map.get(FILENAME)));
+            holder.txtSecond.setText(String.valueOf(map.get(LEVEL)));
+            holder.txtThird.setText(String.valueOf(map.get(TIME)));
+            holder.txtFourth.setText(String.valueOf(map.get(HINTS)));
 
             return convertView;
         }

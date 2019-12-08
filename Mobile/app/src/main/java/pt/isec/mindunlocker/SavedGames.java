@@ -1,10 +1,13 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,46 +23,48 @@ import java.io.ObjectOutputStream;
 
 public class SavedGames {
 
-    private String path;
 
     private Context context;
 
-    private static final String FOLDER = "/Saved_Games/";
+    private static final String FOLDER = "Saved_Games/";
     private static final int MAX_SAVED_GAMES = 5;
 
     public SavedGames(Context context) {
         this.context = context;
-        path = context.getFilesDir().getPath() + FOLDER;
     }
 
     /**
      * Save game
      *
-     * @param gameplayActivity <code>GameplayActivity</code> object to save it
-     * @param filename         <code>String</code> of the file name to give the file
+     * @param gameEngine <code>GameEngine</code> object to save it
+     * @param filename   <code>String</code> of the file name to give the file
      * @return <code>boolean</code> - <code>true</code> if game has been saved and
      * <ocde>false</ocde> if name already exist or was there any other problem saving
      */
-    public boolean saveGame(GameplayActivity gameplayActivity, String filename) {
+    public boolean saveGame(GameEngine gameEngine, String filename) {
 
-        if (checkIfNameExists(filename)) return false;
+        if (checkIfNameExists(filename)) {
+            Toast.makeText(context, "File name already exists, please enter " +
+            "another name", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
         checkFiles();
 
         try {
-            String aux = path + filename;
-
-            FileOutputStream fOs = new FileOutputStream(new File(aux));
+            //Path files = /data/user/0/pt.isec.mindunlocker/files
+            FileOutputStream fOs = context.openFileOutput(filename, Context.MODE_PRIVATE);
             ObjectOutputStream oOs = new ObjectOutputStream(fOs);
 
-            oOs.writeObject(gameplayActivity);
+            oOs.writeObject(gameEngine);
             oOs.flush();
             oOs.close();
             fOs.close();
-            return false;
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(context, "There was a problem saving the game!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "There was a problem saving the game!",
+                    Toast.LENGTH_SHORT).show();
         }
         return false;
     }
@@ -68,27 +73,23 @@ public class SavedGames {
      * Load Game
      *
      * @param filename <code>String</code> with name of the file to load
-     * @return - a object <code>GameplayActivity</code> read from file
+     * @return - a object <code>GameEngine</code> read from file
      */
-    public GameplayActivity loadGame(String filename) {
+    public GameEngine loadGame(String filename) {
 
         if (!checkIfNameExists(filename)) return null;
 
         try {
-            String aux = path + filename;
 
-            FileInputStream fIs = context.openFileInput(aux);
+            FileInputStream fIs = context.openFileInput(filename);
             ObjectInputStream oIs = new ObjectInputStream(fIs);
 
-            GameplayActivity gA = null;
-
-            while (oIs.available() > 0) {
-                gA = (GameplayActivity) oIs.readObject();
-            }
+            GameEngine gE = (GameEngine) oIs.readObject();
 
             oIs.close();
             fIs.close();
-            return gA;
+
+            return gE;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             Toast.makeText(context, "There was a problem with the save game load!", Toast.LENGTH_SHORT).show();
@@ -107,8 +108,9 @@ public class SavedGames {
         File[] files = getAllSavedGames();
         if (files != null && files.length > 0)
             for (File f : files) {
-                if (f.getName().compareTo(filename) == 0)
+                if (f.getName().compareTo(filename) == 0) {
                     return true;
+                }
             }
         return false;
     }
@@ -152,7 +154,7 @@ public class SavedGames {
      * @return <code>File[]</code> - All files that default folder have inside
      */
     public File[] getAllSavedGames() {
-        File directory = new File(FOLDER);
+        File directory = context.getFilesDir();
         return directory.listFiles();
     }
 
@@ -165,7 +167,7 @@ public class SavedGames {
         File f = null;
 
         if (file instanceof String)
-            f = new File(path + (String) file);
+            f = new File((String) file);
         else if (file instanceof File)
             f = (File) file;
 

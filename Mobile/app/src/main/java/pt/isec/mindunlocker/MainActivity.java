@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onPickLevel(View v) {
 
-        Intent intent = new Intent(MainActivity.this, GameplayActivity.class);
+        Intent intent = new Intent(this, GameplayActivity.class);
         Bundle bundle = new Bundle();
 
         Button b = (Button) v;

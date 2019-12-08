@@ -2,6 +2,8 @@ package pt.isec.mindunlocker;
 
 import android.content.Context;
 import pt.isec.mindunlocker.api.insertGame.InsertGame;
+
+import android.os.Handler;
 import android.widget.Toast;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -19,15 +21,21 @@ public class GameEngine implements Serializable {
     private int selectedPosX;
     private int selectedPosY;
 
+    private String finalTime = null;
+
+    private int level = 0;
+    private int minutes, seconds;
+
+
     private boolean custom;
     //Point System:
-    int points = 1000;  // When the game starts the user has 1000 points.
-    int CM = 50;        // Correct Multiplier: For each correct entry the user scores 3 * CM.
-    int EM = 5;         // Error Multiplier: An error costs the user an error-multiplier (EM).
-    int FS;             // Final Score: [FS = LM - (TS * 5)]
-    int LM = 0;         // Level-Multiplier: The level-multiplier is 500, 250 and 100.
-    int TS = 0;         // Time Spent: is the finalTime.
-    int hints = 0;
+    private int points = 1000;  // When the game starts the user has 1000 points.
+    private int CM = 50;        // Correct Multiplier: For each correct entry the user scores 3 * CM.
+    private int EM = 5;         // Error Multiplier: An error costs the user an error-multiplier (EM).
+    private int FS;             // Final Score: [FS = LM - (TS * 5)]
+    private int LM = 0;         // Level-Multiplier: The level-multiplier is 500, 250 and 100.
+    private int TS = 0;         // Time Spent: is the finalTime.
+    private int hints = 0;
 
     public GameEngine() {
         gameTable = new int[9][9];
@@ -51,6 +59,12 @@ public class GameEngine implements Serializable {
             instance = new GameEngine();
         }
         return instance;
+    }
+
+    public static void setInstance(GameEngine gE) {
+        if(instance == null){
+            instance = gE;
+        }
     }
 
     public void copieTable(){
@@ -131,7 +145,7 @@ public class GameEngine implements Serializable {
         CM -= -1;
     }
 
-    public void setTimeSpent(int seconds, int minutes){
+    public void setTimeSpent(){
         TS = seconds;
         if(minutes > 0)
             TS += (minutes*60);
@@ -142,7 +156,7 @@ public class GameEngine implements Serializable {
         hints++;
     }
 
-    public void levelScoreAdded(int level){
+    public void levelScoreAdded(){
         switch(level){
             case 0: LM = 100;break;
             case 1: LM = 250;break;
@@ -163,5 +177,39 @@ public class GameEngine implements Serializable {
 
     public int getHints() {
         return hints;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
+    public String getFinalTime() {
+        return finalTime;
+    }
+
+    public void setFinalTime(int minutes, int seconds) {
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.finalTime = String.format("%d:%02d", minutes, seconds);
     }
 }
