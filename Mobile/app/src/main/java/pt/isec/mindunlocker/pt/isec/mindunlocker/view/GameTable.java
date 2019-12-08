@@ -62,10 +62,17 @@ public class GameTable {
                 return;
             }
             if (isPencil) {
+                // enables the pencil mode
                 selectedCell.setGuess(true);
                 selectedCell.setValue(number);
             } else {
+                // reset the pencil mode
                 selectedCell.setGuess(false);
+                // if table has a wrong cell and the user is not changing that cell ignore the input
+                if (tableHasWrongCell() && !selectedCell.isWrong()) {
+                    Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 SudokuTable[x][y].setValue(number);
                 //clearPos();
                 if (checkGame()) {
@@ -118,6 +125,18 @@ public class GameTable {
             }
         }
         return count;
+    }
+
+    /**
+     * Method the checks every table's cell, to see if the table has any wrong cell
+     * @return if table has a wrong cell? true : false
+     */
+    private boolean tableHasWrongCell() {
+        for (int y = 0; y < 9; y++)
+            for (int x = 0; x < 9; x++)
+                if (SudokuTable[x][y].isWrong())
+                    return true;
+        return false;
     }
 
 }
