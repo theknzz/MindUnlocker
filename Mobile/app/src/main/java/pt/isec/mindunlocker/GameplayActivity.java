@@ -228,8 +228,8 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     }
 
     /**
-     *
-     * @return
+     * Method searches for a cell that doesn't match the solution
+     * @return if has invalid cell ? invalid cell : null
      */
     private SudokuCell tableHasUnmatchedCell() {
         return GameEngine.getInstance().currentGameIsNotMatchingSolution();
