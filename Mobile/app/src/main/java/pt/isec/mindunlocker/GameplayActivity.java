@@ -217,7 +217,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             if (gameEngine.getTable().getItem(x, y).getValue() == 0) {
                 gameEngine.setNumber(gameEngine.getSolutionTable(x, y));
                 gameEngine.setSelectedPosition(x, y);
-                gameEngine.setItem();
+                gameEngine.setItem(this);
                 break;
             } else {
                 x = rand.nextInt(9);
