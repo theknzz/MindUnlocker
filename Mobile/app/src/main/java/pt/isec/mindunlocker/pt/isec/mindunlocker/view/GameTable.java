@@ -58,7 +58,7 @@ public class GameTable implements Serializable {
         return SudokuCell.getInstance()[x][y];
     }
 
-    public void setItem(int x, int y, int number) {
+    public void setItem(int x, int y, int number, Context context) {
             SudokuCell selectedCell = getItem(x, y);
             if (!selectedCell.isModifiable())  {
                 selectedCell.setGuess(false);
@@ -73,7 +73,7 @@ public class GameTable implements Serializable {
                 selectedCell.setGuess(false);
                 // if table has a wrong cell and the user is not changing that cell ignore the input
                 if (tableHasWrongCell() && !selectedCell.isWrong()) {
-//                    Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
                     return;
                 }
                 SudokuCell.getInstance()[x][y].setValue(number);

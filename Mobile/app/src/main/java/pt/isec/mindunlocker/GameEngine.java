@@ -71,7 +71,7 @@ public class GameEngine implements Serializable {
     public void createTable(Context context, int level){
         custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
-        debugPrintSolutionTable();
+//        debugPrintSolutionTable();
         copieTable();
         gameTable = SudokuGenerator.getInstance().removeElements(gameTable, level);
         table = new GameTable(context);
@@ -110,8 +110,8 @@ public class GameEngine implements Serializable {
         return solutionTable[x][y];
     }
 
-    public void setItem() {
-        table.setItem(selectedPosX, selectedPosY,n);
+    public void setItem(Context context) {
+        table.setItem(selectedPosX, selectedPosY,n, context);
     }
 
     public void setItemCustom() {
