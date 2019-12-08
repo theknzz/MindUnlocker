@@ -21,7 +21,11 @@ import java.util.Random;
 
 import pt.isec.mindunlocker.api.insertGame.InsertGame;
 
-
+/**
+ * Class to start game play activity
+ *
+ * @author João Santos
+ */
 public class GameplayActivity extends AppCompatActivity implements View.OnClickListener {
 
     GameEngine gameEngine;
@@ -39,6 +43,11 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     Handler timerHandler = new Handler();
     Runnable timerRunnable = null;
 
+    /**
+     * On Create
+     *
+     * @param savedInstanceState <code>Bundle</code>
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
@@ -93,7 +102,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         scoreTextView = finishDialog.findViewById(R.id.final_score);
         timeTextView = finishDialog.findViewById(R.id.final_time);
 
-        // SetButtons
+        // Set buttons ids
         btn1 = findViewById(R.id.selectNr1);
         btn2 = findViewById(R.id.selectNr2);
         btn3 = findViewById(R.id.selectNr3);
@@ -108,6 +117,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         btnErase = findViewById(R.id.eraseBtn);
         btnPencil = findViewById(R.id.pencilBtn);
 
+        //Set buttons listeners
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         btn3.setOnClickListener(this);
@@ -123,19 +133,32 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         btnPencil.setOnClickListener(this);
     }
 
+    /**
+     *  When the button back is pressed the give up function comes up.
+     *  Prevents the user from leaving without saving the game.
+     */
     @Override
     public void onBackPressed()
     {
-        giveup();
+        giveUp();
     }
 
+    /**
+     *  On Click
+     *  Takes care of the logic of the buttons pressed while the game is being played
+     * @param v <code>View</code> of the game play board
+     */
     @Override
     public void onClick(View v) {
         Button b = (Button) v;
+
+        //Deselect all number buttons and erase buttons (visual)
         deselectAllOthers();
+
+        //Select button
         switch (v.getId()) {
             case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
-                giveup();
+                giveUp();
                 break;
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
@@ -160,7 +183,6 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                 b.setSelected(true);
                 gameEngine.setNumber(Integer.parseInt(b.getText().toString()));
                 Log.i("Info", "selected num: " + b.getText().toString());
-                //manda parar a thread do timer
         }
         if (gameEngine.getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
@@ -178,11 +200,19 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void giveup(){
+    /**
+     * Give up
+     *
+     * Shows give up pop-up. Stops game timer.
+     */
+    private void giveUp(){
         giveupDialog.show();
         timerHandler.removeCallbacks(timerRunnable);
     }
 
+    /**
+     * Deselect all number buttons and erase
+     */
     private void deselectAllOthers() {
         btn1.setSelected(false);
         btn2.setSelected(false);
@@ -197,6 +227,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         //btnPencil.setSelected(true);
     }
 
+    /**
+     * Shows the user a hint
+     */
     public void showHint() {
         int x = rand.nextInt(9);
         int y = rand.nextInt(9);
@@ -215,10 +248,6 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
 
         System.out.println("Hint: X: " + x + " Y: " + y + " Valor: " + gameEngine.getSolutionTable(x, y));
     }
-
-    /*
-     * Functions onClicks - Dialog giveup
-     */
 
     /**
      * @param view - Button Save and Leave from giveup pop up
@@ -252,11 +281,20 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         giveupDialog.dismiss();
     }
 
+    /**
+     * Goes back to main activity
+     */
     private void backToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -266,6 +304,11 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     *  Save Game
+     *
+     * @return
+     */
     private boolean SaveGame() {
         TextView tv = giveupDialog.findViewById(R.id.tv_fileName);
 
@@ -289,7 +332,13 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         return false;
     }
 
+    /**
+     * On Finish
+     *
+     * @param view <code>View</code> of the finish pop-up
+     */
     public void onFinish(View view) {
         backToMain();
     }
+
 }
