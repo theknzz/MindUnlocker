@@ -135,11 +135,11 @@ public class SavedGames {
      * @return <code>File</code> - oldest from Array
      */
     private File olderFile(File[] files) {
-        long time = 0;
+        long time = files[0].lastModified();
         File f = null;
 
         for (File aux : files) {
-            if (aux.lastModified() > time) {
+            if (aux.lastModified() <= time) {
                 time = aux.lastModified();
                 f = aux;
             }
