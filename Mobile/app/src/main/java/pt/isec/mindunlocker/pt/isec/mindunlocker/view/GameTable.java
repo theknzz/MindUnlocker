@@ -8,13 +8,13 @@ import android.widget.Toast;
 import java.io.Serializable;
 
 import pt.isec.mindunlocker.GameEngine;
+import pt.isec.mindunlocker.GameplayActivity;
 import pt.isec.mindunlocker.SudokuChecker;
 
 public class GameTable implements Serializable {
 
-    private Context context;
     private GameEngine gameEngine = GameEngine.getInstance();
-  
+
     private boolean isPencil = false;
 
     public boolean isFinish() {
@@ -24,7 +24,7 @@ public class GameTable implements Serializable {
     private boolean finish = false;
 
     public GameTable(Context context) {
-        //this.context = context;
+//        this.context = context;
 
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
@@ -73,10 +73,10 @@ public class GameTable implements Serializable {
                 selectedCell.setGuess(false);
                 // if table has a wrong cell and the user is not changing that cell ignore the input
                 if (tableHasWrongCell() && !selectedCell.isWrong()) {
-                    Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
                     return;
                 }
-                SudokuTable[x][y].setValue(number);
+                SudokuCell.getInstance()[x][y].setValue(number);
                 //clearPos();
                 if (checkGame()) {
                     GameEngine.getInstance().finalScore();
@@ -137,7 +137,7 @@ public class GameTable implements Serializable {
     private boolean tableHasWrongCell() {
         for (int y = 0; y < 9; y++)
             for (int x = 0; x < 9; x++)
-                if (SudokuTable[x][y].isWrong())
+                if (SudokuCell.getInstance()[x][y].isWrong())
                     return true;
         return false;
     }
