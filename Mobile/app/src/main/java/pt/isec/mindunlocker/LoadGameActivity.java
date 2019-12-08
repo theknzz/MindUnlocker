@@ -79,6 +79,7 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, GameplayActivity.class);
+                intent.putExtra("type","load");
                 GameEngine.setInstance((GameEngine) saves.loadGame(files[position].getName()));
                 startActivity(intent);
             }

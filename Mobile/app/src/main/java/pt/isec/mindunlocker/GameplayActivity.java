@@ -54,7 +54,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             gameEngine.setLevel(1);
         }
 
-        gameEngine.createTable(this, gameEngine.getLevel());
+        if (b.getString("type") == null) {
+            gameEngine.createTable(this, gameEngine.getLevel());
+        }
         //printSudoku(solutionTable);
 
         //Set level
@@ -76,7 +78,8 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         // Set the timer counting
         timerTextView = findViewById(R.id.gameTimer);
         // create object runnable
-        timerRunnable = new TimeThread(timerHandler, timerTextView);
+        timerRunnable = new TimeThread(gameEngine.getMinutes(), gameEngine.getSeconds(),
+                timerHandler, timerTextView);
         timerHandler.postDelayed(timerRunnable, 0);
 
         // Set Dialogs
@@ -125,6 +128,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
                 giveupDialog.show();
+                timerHandler.removeCallbacks(timerRunnable);
                 break;
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();

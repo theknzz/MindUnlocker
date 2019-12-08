@@ -7,12 +7,14 @@ import java.io.Serializable;
 
 public class TimeThread implements Runnable {
 
-    private int seconds = 0;
-    private int minutes = 0;
+    private int seconds;
+    private int minutes;
     private Handler timerHandler = null;
     private TextView timerTextView = null;
 
-    public TimeThread(Handler timerHandler, TextView timerTextView) {
+    public TimeThread(int minutes, int seconds, Handler timerHandler, TextView timerTextView) {
+        this.minutes = minutes;
+        this.seconds = seconds;
         this.timerHandler = timerHandler;
         this.timerTextView = timerTextView;
     }

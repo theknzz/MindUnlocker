@@ -1,14 +1,10 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
-import pt.isec.mindunlocker.api.insertGame.InsertGame;
 
-import android.os.Handler;
-import android.widget.Toast;
 import java.io.Serializable;
-import java.util.Arrays;
+
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
-import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 public class GameEngine implements Serializable {
     private static GameEngine instance;
@@ -24,7 +20,7 @@ public class GameEngine implements Serializable {
     private String finalTime = null;
 
     private int level = 0;
-    private int minutes, seconds;
+    private int minutes=0, seconds=0;
 
 
     private boolean custom;
@@ -62,9 +58,7 @@ public class GameEngine implements Serializable {
     }
 
     public static void setInstance(GameEngine gE) {
-        if(instance == null){
             instance = gE;
-        }
     }
 
     public void copieTable(){
@@ -127,6 +121,67 @@ public class GameEngine implements Serializable {
 
     public void startTimer() {
 
+    }
+
+    /**
+     * sudokusolver method generates a new solution for a <code>int [][]</code>
+     * @param soluction <code>int [][]</code> table to generate a solution
+     * @return 
+     */
+    public boolean sudokusolver(int[][] soluction) {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                // we search an empty cell
+                if (soluction[row][col] == 0) {
+                    // we try possible numbers
+                    for (int number = 1; number <= 9; number++) {
+                        if (checkSudokuSolver(row, col, number, soluction)) {
+                            // number ok. it respects sudoku constraints
+                            soluction[row][col] = number;
+
+                            if (sudokusolver(soluction)) { // we start backtracking recursively
+                                return true;
+                            } else { // if not a solution, we empty the cell and we continue
+                                soluction[row][col] = 0;
+                            }
+                        }
+                    }
+                    return false; // we return false
+                }
+            }
+        }
+        return true; // sudoku solved
+    }
+
+    private boolean checkSudokuSolver(int row, int col, int number, int[][] soluction) {
+        return (checkHorizontalSolver(row, col, number, soluction) &&
+                checkVerticalSolver(row, col, number, soluction)
+                && checkRegionsSolver(row, col, number, soluction));
+    }
+
+    private boolean checkHorizontalSolver(int row, int col, int number, int[][] soluction) {
+        for (int i = 0; i < 9; i++)
+            if (soluction[i][col] == number)
+                return false;
+        return true;
+    }
+
+    private boolean checkVerticalSolver(int row, int col, int number, int[][] soluction) {
+        for (int i = 0; i < 9; i++)
+            if (soluction[row][i] == number)
+                return false;
+        return true;
+    }
+
+    private boolean checkRegionsSolver(int row, int col, int number, int[][] soluction) {
+        int r = row - row % 3;
+        int c = col - col % 3;
+
+        for (int i = r; i < r + 3; i++)
+            for (int j = c; j < c + 3; j++)
+                if (soluction[i][j] == number)
+                    return false;
+        return true;
     }
 
     /**
