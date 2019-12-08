@@ -17,11 +17,11 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     Button btnErase;
 
-    //GameEngine gameEngine;
-
     static final int MIN_CELLS = 17;
 
     int[][] soluction = new int[9][9];
+
+    GameEngine gameEngine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
 
         setContentView(R.layout.creategame);
 
-        //gameEngine = new GameEngine();
-        GameEngine.getInstance().createTableEmpty(this);
+        gameEngine = GameEngine.getInstance();
+        gameEngine.createTableEmpty(this);
 
         btn1 = findViewById(R.id.selectNr1);
         btn2 = findViewById(R.id.selectNr2);
@@ -55,82 +55,27 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         btnErase = findViewById(R.id.btnErase);
     }
 
-    public void onStartGame (View v) {
-        if (GameEngine.getInstance().NFillCells() < MIN_CELLS) {
+    public void onStartGame(View v) {
+        if (gameEngine.NFillCells() < MIN_CELLS) {
             Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
         } else {
             for (int row = 0; row < 9; row++) {
                 for (int col = 0; col < 9; col++) {
-                    soluction[row][col] = GameEngine.getInstance().getTable().getItem(row, col).getValue();
+                    soluction[row][col] = gameEngine.getTable().getItem(row, col).getValue();
                 }
             }
-            sudokusolver();
-            GameEngine.getInstance().createTableWithVars(soluction);
+            gameEngine.sudokusolver(soluction);
+            gameEngine.createTableWithVars(soluction);
             Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
             startActivity(intent);
         }
     }
 
     public void onErase(View v) {
-        Button b = (Button)v;
+        Button b = (Button) v;
         deselectAllOthers();
         b.setSelected(true);
-        GameEngine.getInstance().setNumber(0);
-    }
-
-    private boolean sudokusolver() {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                // we search an empty cell
-                if (soluction[row][col] == 0) {
-                    // we try possible numbers
-                    for (int number = 1; number <= 9; number++) {
-                        if (checkSudokuCustom(row, col, number)) {
-                            // number ok. it respects sudoku constraints
-                            soluction[row][col] = number;
-
-                            if (sudokusolver()) { // we start backtracking recursively
-                                return true;
-                            } else { // if not a solution, we empty the cell and we continue
-                                soluction[row][col] = 0;
-                            }
-                        }
-                    }
-                    return false; // we return false
-                }
-            }
-        }
-        return true; // sudoku solved
-    }
-
-    private boolean checkSudokuCustom(int row, int col, int number) {
-        return (checkHorizontalCustom(row, col, number) && checkVerticalCustom(row, col, number)
-                && checkRegionsCustom(row, col, number));
-    }
-
-    private boolean checkHorizontalCustom(int row, int col, int number) {
-        for (int i = 0; i < 9; i++)
-            if (soluction[i][col] == number)
-                return false;
-        return true;
-    }
-
-    private boolean checkVerticalCustom(int row, int col, int number) {
-        for (int i = 0; i < 9; i++)
-            if (soluction[row][i] == number)
-                return false;
-        return true;
-    }
-
-    private boolean checkRegionsCustom(int row, int col, int number) {
-        int r = row - row % 3;
-        int c = col - col % 3;
-
-        for (int i = r; i < r + 3; i++)
-            for (int j = c; j < c + 3; j++)
-                if (soluction[i][j] == number)
-                    return false;
-        return true;
+        gameEngine.setNumber(0);
     }
 
     @Override
@@ -142,8 +87,8 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         deselectAllOthers();
         b.setSelected(true);
 
-        GameEngine.getInstance().setNumber(num);
-        Log.i("Info","selected num: " + b.getText().toString());
+        gameEngine.setNumber(num);
+        Log.i("Info", "selected num: " + b.getText().toString());
     }
 
     private void deselectAllOthers() {

@@ -11,10 +11,18 @@ public class SudokuCell extends BaseSudokuCell {
 
     private Paint nPaint;
 
+    static SudokuCell[][] instance = null;
+
     public SudokuCell(Context context) {
         super(context);
-
         nPaint = new Paint();
+    }
+
+    public static SudokuCell[][] getInstance(){
+        if(instance == null){
+            instance = new SudokuCell[9][9];
+        }
+        return instance;
     }
 
     @Override

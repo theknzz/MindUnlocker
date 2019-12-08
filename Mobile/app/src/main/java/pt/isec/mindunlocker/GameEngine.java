@@ -1,12 +1,10 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
-import pt.isec.mindunlocker.api.insertGame.InsertGame;
-import android.widget.Toast;
+
 import java.io.Serializable;
-import java.util.Arrays;
+
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
-import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 public class GameEngine implements Serializable {
     private static GameEngine instance;
@@ -19,15 +17,21 @@ public class GameEngine implements Serializable {
     private int selectedPosX;
     private int selectedPosY;
 
+    private String finalTime = null;
+
+    private int level = 0;
+    private int minutes=0, seconds=0;
+
+
     private boolean custom;
     //Point System:
-    int points = 1000;  // When the game starts the user has 1000 points.
-    int CM = 50;        // Correct Multiplier: For each correct entry the user scores 3 * CM.
-    int EM = 5;         // Error Multiplier: An error costs the user an error-multiplier (EM).
-    int FS;             // Final Score: [FS = LM - (TS * 5)]
-    int LM = 0;         // Level-Multiplier: The level-multiplier is 500, 250 and 100.
-    int TS = 0;         // Time Spent: is the finalTime.
-    int hints = 0;
+    private int points = 1000;  // When the game starts the user has 1000 points.
+    private int CM = 50;        // Correct Multiplier: For each correct entry the user scores 3 * CM.
+    private int EM = 5;         // Error Multiplier: An error costs the user an error-multiplier (EM).
+    private int FS;             // Final Score: [FS = LM - (TS * 5)]
+    private int LM = 0;         // Level-Multiplier: The level-multiplier is 500, 250 and 100.
+    private int TS = 0;         // Time Spent: is the finalTime.
+    private int hints = 0;
 
     public GameEngine() {
         gameTable = new int[9][9];
@@ -51,6 +55,10 @@ public class GameEngine implements Serializable {
             instance = new GameEngine();
         }
         return instance;
+    }
+
+    public static void setInstance(GameEngine gE) {
+            instance = gE;
     }
 
     public void copieTable(){
@@ -116,6 +124,67 @@ public class GameEngine implements Serializable {
     }
 
     /**
+     * sudokusolver method generates a new solution for a <code>int [][]</code>
+     * @param soluction <code>int [][]</code> table to generate a solution
+     * @return 
+     */
+    public boolean sudokusolver(int[][] soluction) {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                // we search an empty cell
+                if (soluction[row][col] == 0) {
+                    // we try possible numbers
+                    for (int number = 1; number <= 9; number++) {
+                        if (checkSudokuSolver(row, col, number, soluction)) {
+                            // number ok. it respects sudoku constraints
+                            soluction[row][col] = number;
+
+                            if (sudokusolver(soluction)) { // we start backtracking recursively
+                                return true;
+                            } else { // if not a solution, we empty the cell and we continue
+                                soluction[row][col] = 0;
+                            }
+                        }
+                    }
+                    return false; // we return false
+                }
+            }
+        }
+        return true; // sudoku solved
+    }
+
+    private boolean checkSudokuSolver(int row, int col, int number, int[][] soluction) {
+        return (checkHorizontalSolver(row, col, number, soluction) &&
+                checkVerticalSolver(row, col, number, soluction)
+                && checkRegionsSolver(row, col, number, soluction));
+    }
+
+    private boolean checkHorizontalSolver(int row, int col, int number, int[][] soluction) {
+        for (int i = 0; i < 9; i++)
+            if (soluction[i][col] == number)
+                return false;
+        return true;
+    }
+
+    private boolean checkVerticalSolver(int row, int col, int number, int[][] soluction) {
+        for (int i = 0; i < 9; i++)
+            if (soluction[row][i] == number)
+                return false;
+        return true;
+    }
+
+    private boolean checkRegionsSolver(int row, int col, int number, int[][] soluction) {
+        int r = row - row % 3;
+        int c = col - col % 3;
+
+        for (int i = r; i < r + 3; i++)
+            for (int j = c; j < c + 3; j++)
+                if (soluction[i][j] == number)
+                    return false;
+        return true;
+    }
+
+    /**
      * The functions below are reserved for scoring purposes
      */
     public void correctPlay(){
@@ -131,7 +200,7 @@ public class GameEngine implements Serializable {
         CM -= -1;
     }
 
-    public void setTimeSpent(int seconds, int minutes){
+    public void setTimeSpent(){
         TS = seconds;
         if(minutes > 0)
             TS += (minutes*60);
@@ -142,7 +211,7 @@ public class GameEngine implements Serializable {
         hints++;
     }
 
-    public void levelScoreAdded(int level){
+    public void levelScoreAdded(){
         switch(level){
             case 0: LM = 100;break;
             case 1: LM = 250;break;
@@ -163,5 +232,39 @@ public class GameEngine implements Serializable {
 
     public int getHints() {
         return hints;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
+    public String getFinalTime() {
+        return finalTime;
+    }
+
+    public void setFinalTime(int minutes, int seconds) {
+        this.minutes = minutes;
+        this.seconds = seconds;
+        this.finalTime = String.format("%d:%02d", minutes, seconds);
     }
 }

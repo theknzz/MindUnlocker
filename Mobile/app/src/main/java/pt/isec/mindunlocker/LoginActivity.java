@@ -10,15 +10,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import pt.isec.mindunlocker.MainActivity;
-import pt.isec.mindunlocker.R;
-import pt.isec.mindunlocker.Token;
 
 public class LoginActivity extends AppCompatActivity {
     private URL url = null;
@@ -48,11 +44,10 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validateUsername(){
         String usernameInput = eUsername.getEditText().getText().toString().trim();
 
-        if(usernameInput.isEmpty()){
+        if (usernameInput.isEmpty()) {
             eUsername.setError("Username necessário");
             return false;
-        }
-        else {
+        } else {
             eUsername.setError(null);
             return true;
         }
@@ -65,11 +60,10 @@ public class LoginActivity extends AppCompatActivity {
     private boolean validatePassword(){
         String passwordInput = ePassword.getEditText().getText().toString().trim();
 
-        if(passwordInput.isEmpty()){
+        if (passwordInput.isEmpty()) {
             ePassword.setError("Password necessária");
             return false;
-        }
-        else {
+        } else {
             ePassword.setError(null);
             return true;
         }
@@ -79,10 +73,11 @@ public class LoginActivity extends AppCompatActivity {
      * @param v - View of the button
      */
 
-    public void login(View v){
-        if(!validateUsername() | !validatePassword()) return;
+    //TODO make javadoc
+    public void login(View v) {
+        if (!validateUsername() | !validatePassword()) return;
         //TODO verificar do servidor/db se existe conta
-        if(!onLogin()) {
+        if (!onLogin()) {
             Toast.makeText(this, "Username ou password errados", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -108,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 //                debug:
 //                username="henrymfdays@gmail.com";
 //                password="Qwerty123!";
-            String parameters = "grant_type=password&username="+username+"&password="+password;
+            String parameters = "grant_type=password&username=" + username + "&password=" + password;
             url = new URL("https://mindunlocker20191126085502.azurewebsites.net/token");
 
             //create the connection
@@ -145,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             //Token.CONTENT = captureTokenFromResponse(response);
             JSONObject dataToken = new JSONObject(sb.toString());
             Token.CONTENT = dataToken.getString("access_token");
-          
+
             // debug
             // pass the token to the main activity in a intent bundle?
 

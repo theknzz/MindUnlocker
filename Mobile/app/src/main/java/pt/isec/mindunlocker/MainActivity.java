@@ -3,6 +3,7 @@ package pt.isec.mindunlocker;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -15,8 +16,9 @@ public class MainActivity extends AppCompatActivity {
     private Dialog startGameDialog;
     private LinearLayout header, headerLogin;
     private Button login, register, load, customizedGame, history, logOut;
-    private static boolean firstTime = true; //check if first time in main
     private LeaderboardContainer leaderContainer;
+
+    private static String username/*, score, rank*/;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,34 +34,26 @@ public class MainActivity extends AppCompatActivity {
 
         setListeners();
 
-        if (firstTime) {
-            hideComponents();
-            firstTime = false;
-        } else {
+        hideComponents();
+
+        if (Token.CONTENT != null) {
+
             Bundle response = getIntent().getExtras();
-
-            if (response == null) return;
-
-            if ("login".equals(response.getString("result")))
+            if (response != null && "login".equals(response.getString("result")))
                 loginResult(response);
 
-            if(Token.CONTENT != null){
-                TextView user = findViewById(R.id.user);
-                String [] info = leaderContainer.getUserInfo(String.valueOf(user.getText()));
+            TextView tv_user = findViewById(R.id.user);
+            TextView tv_score = findViewById(R.id.score);
+            TextView tv_ranking = findViewById(R.id.ranking);
 
-                if(info != null){
-                    setUserInfo(info[0], info[1]);
-                }
-            }
+            String [] info = leaderContainer.getUserInfo(String.valueOf(username));
+
+            tv_user.setText(username);
+            tv_score.setText(info[0]);
+            tv_ranking.setText(info[0]);
+
+            showComponents();
         }
-    }
-
-    private void setUserInfo(String rank, String score){
-        TextView tScore = findViewById(R.id.score);
-        TextView ranking = findViewById(R.id.ranking);
-
-        ranking.setText(rank);
-        tScore.setText(score);
     }
 
     private void getViews() {
@@ -80,11 +74,12 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(register, RegisterActivity.class);
         setButtonListener(customizedGame, CustomizedGameActivity.class);
         setButtonListener(history, HistoryActivity.class);
+        setButtonListener(load, LoadGameActivity.class);
     }
 
     public void onPickLevel(View v) {
 
-        Intent intent = new Intent(MainActivity.this, GameplayActivity.class);
+        Intent intent = new Intent(this, GameplayActivity.class);
         Bundle bundle = new Bundle();
 
         Button b = (Button) v;
@@ -125,18 +120,20 @@ public class MainActivity extends AppCompatActivity {
         boolean temp = response.getBoolean("success");
 
         if (temp) {
+            //TODO obter da API valores reais apos login
             TextView user = findViewById(R.id.user);
+            TextView score = findViewById(R.id.score);
+            TextView ranking = findViewById(R.id.ranking);
 
-            user.setText(response.getString("user"));
+            username = response.getString("user");
+            //score = response.getString("score");
+            //rank = response.getString("ranking");
 
-            showComponents();
-        } else
-            hideComponents();
+        }
     }
 
     private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
-        load.setVisibility(View.GONE);
         history.setVisibility(View.GONE);
         logOut.setVisibility(View.GONE);
 
@@ -147,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
-        load.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
         logOut.setVisibility(View.VISIBLE);
 
@@ -162,13 +158,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logOut(View v) {
-        Token.CONTENT = null;
+        Token.CONTENT = username /*= score = rank*/ = null;
 
         hideComponents();
     }
 
     @Override
     public void onBackPressed() {
-
     }
 }
