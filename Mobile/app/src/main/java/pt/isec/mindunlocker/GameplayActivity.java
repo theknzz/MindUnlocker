@@ -54,8 +54,10 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             gameEngine.setLevel(1);
         }
 
-        if (b.getString("type") == null) {
+        if (b == null || b.getString("type") == null) {
             gameEngine.createTable(this, gameEngine.getLevel());
+            gameEngine.setMinutes(0);
+            gameEngine.setSeconds(0);
         }
         //printSudoku(solutionTable);
 
@@ -122,13 +124,18 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    public void onBackPressed()
+    {
+        giveup();
+    }
+
+    @Override
     public void onClick(View v) {
         Button b = (Button) v;
         deselectAllOthers();
         switch (v.getId()) {
             case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
-                giveupDialog.show();
-                timerHandler.removeCallbacks(timerRunnable);
+                giveup();
                 break;
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
@@ -169,6 +176,11 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                         gameEngine.getLevel(), gameEngine.getHints());
             }
         }
+    }
+
+    private void giveup(){
+        giveupDialog.show();
+        timerHandler.removeCallbacks(timerRunnable);
     }
 
     private void deselectAllOthers() {
