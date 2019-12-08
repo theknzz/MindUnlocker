@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import java.util.Random;
 
 import pt.isec.mindunlocker.api.insertGame.InsertGame;
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 
 public class GameplayActivity extends AppCompatActivity implements View.OnClickListener {
@@ -200,6 +202,16 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     public void showHint() {
         int x = rand.nextInt(9);
         int y = rand.nextInt(9);
+        SudokuCell cell = tableHasUnmatchedCell();
+
+        // The current game has an invalid cell
+        if (cell !=null) {
+            cell.setWrong(true);
+//            cell.getnPaint().setColor(Color.RED);
+            cell.invalidate();
+            GameEngine.getInstance().setSelectedPosition(cell);
+            return;
+        }
 
         while (true) {
             if (gameEngine.getTable().getItem(x, y).getValue() == 0) {
@@ -212,12 +224,19 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                 y = rand.nextInt(9);
             }
         }
-
         System.out.println("Hint: X: " + x + " Y: " + y + " Valor: " + gameEngine.getSolutionTable(x, y));
     }
 
+    /**
+     *
+     * @return
+     */
+    private SudokuCell tableHasUnmatchedCell() {
+        return GameEngine.getInstance().currentGameIsNotMatchingSolution();
+    }
+
     /*
-     * Functions onClicks - Dialog giveup
+     * Functions onClicks - Dialog give up
      */
 
     /**

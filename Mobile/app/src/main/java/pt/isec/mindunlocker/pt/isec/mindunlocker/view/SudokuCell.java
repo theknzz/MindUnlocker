@@ -61,7 +61,6 @@ public class SudokuCell extends BaseSudokuCell {
         }
     }
 
-
     private void drawLines(Canvas canvas){
         nPaint.setColor(Color.BLACK);
         nPaint.setStrokeWidth(2);

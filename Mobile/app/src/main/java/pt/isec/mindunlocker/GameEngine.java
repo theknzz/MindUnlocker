@@ -70,10 +70,25 @@ public class GameEngine implements Serializable {
     public void createTable(Context context, int level){
         custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
+        debugPrintSolutionTable();
         copieTable();
         gameTable = SudokuGenerator.getInstance().removeElements(gameTable, level);
         table = new GameTable(context);
         table.setTable(gameTable);
+    }
+
+    /**
+     * Method used to "test" the invalid cell hint
+     */
+    private void debugPrintSolutionTable() {
+        if (solutionTable!=null) {
+            for (int y=0; y < 9; y++) {
+                for (int x = 0; x < 9; x++) {
+                    System.out.print(solutionTable[x][y] + " ");
+                }
+                System.out.println("");
+            }
+        }
     }
 
     public void createTableWithVars(int[][] solutionTable) {
@@ -105,6 +120,15 @@ public class GameEngine implements Serializable {
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
         this.selectedPosY = y;
+    }
+
+    /**
+     * Updates the selected cell to the cell passed in parameter
+     * @param cell
+     */
+    public void setSelectedPosition(SudokuCell cell) {
+        this.selectedPosX = (int) cell.getX();
+        this.selectedPosY = (int) cell.getY();
     }
 
     public void setNumber(int number){
@@ -228,6 +252,22 @@ public class GameEngine implements Serializable {
         FS = points;
         FS += LM - (TS * 5);
         return FS;
+    }
+
+    /**
+     * Method that checks if the current solution is getting built according to the game solution
+     * @return If the current solution has a cell different from the game solution ? Invalid Sudoku Cell : null
+     */
+    public SudokuCell currentGameIsNotMatchingSolution() {
+        for (int y=0; y < 9; y++)
+            for (int x=0; x < 9; x++) {
+                SudokuCell cell = table.getItem(x, y);
+                if (cell.getValue()!=0) {
+                    if (cell.getValue() != solutionTable[x][y])
+                        return cell;
+                }
+            }
+        return null;
     }
 
     public int getHints() {
