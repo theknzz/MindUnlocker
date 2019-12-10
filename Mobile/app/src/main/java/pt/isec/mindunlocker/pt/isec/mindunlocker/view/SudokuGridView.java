@@ -32,7 +32,7 @@ public class SudokuGridView extends GridView {
             if (!GameEngine.getInstance().getCustom()) {
                 GameEngine.getInstance().setItem();
             } else {
-                GameEngine.getInstance().setItemCustom();
+                GameEngine.getInstance().setItemCustom(context);
             }
 
             Log.i("Info","selected pos: " + x + "," + y);
