@@ -26,21 +26,33 @@ public class GameEngine implements Serializable {
 
     private boolean custom;
     //Point System:
-    private int points = 1000;  // When the game starts the user has 1000 points.
-    private int CM = 50;        // Correct Multiplier: For each correct entry the user scores 3 * CM.
-    private int EM = 5;         // Error Multiplier: An error costs the user an error-multiplier (EM).
+    private int points;  // When the game starts the user has 1000 points.
+    private int CM;        // Correct Multiplier: For each correct entry the user scores 3 * CM.
+    private int EM;         // Error Multiplier: An error costs the user an error-multiplier (EM).
     private int FS;             // Final Score: [FS = LM - (TS * 5)]
-    private int LM = 0;         // Level-Multiplier: The level-multiplier is 500, 250 and 100.
-    private int TS = 0;         // Time Spent: is the finalTime.
-    private int hints = 0;
+    private int LM;         // Level-Multiplier: The level-multiplier is 5000, 2500 and 1000.
+    private int TS;         // Time Spent: is the finalTime.
+    private int hints;
 
     public GameEngine() {
         gameTable = new int[9][9];
         solutionTable = new int[9][9];
-
         selectedPosX = -1;
         selectedPosY = -1;
+
         n = 0;
+
+        inicializeVars();
+    }
+
+    private void inicializeVars(){
+
+        points = 1000;
+        CM = 50;
+        EM = 5;
+        LM = 0;
+        TS = 0;
+        hints = 0;
     }
 
     public int getSelectedPosX() {
@@ -69,6 +81,7 @@ public class GameEngine implements Serializable {
     }
 
     public void createTable(Context context, int level){
+        inicializeVars();
         custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
 //        debugPrintSolutionTable();
@@ -93,7 +106,8 @@ public class GameEngine implements Serializable {
     }
 
     public void createTableWithVars(int[][] solutionTable) {
-        this.solutionTable = solutionTable;
+        inicializeVars();
+        solutionTable = solutionTable;
     }
 
     public void createTableEmpty(Context context) {
@@ -114,8 +128,8 @@ public class GameEngine implements Serializable {
         table.setItem(selectedPosX, selectedPosY,n, context);
     }
 
-    public void setItemCustom() {
-        table.setItemCustom(selectedPosX, selectedPosY,n);
+    public void setItemCustom(Context context) {
+        table.setItemCustom(selectedPosX, selectedPosY,n, context);
     }
 
     public void setSelectedPosition(int x, int y) {
@@ -149,11 +163,11 @@ public class GameEngine implements Serializable {
     }
 
     /**
-     * sudokusolver method generates a new solution for a <code>int [][]</code>
+     * sudokuSolver method generates a new solution for a <code>int [][]</code>
      * @param soluction <code>int [][]</code> table to generate a solution
      * @return 
      */
-    public boolean sudokusolver(int[][] soluction) {
+    public boolean sudokuSolver(int[][] soluction) {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 // we search an empty cell
@@ -164,7 +178,7 @@ public class GameEngine implements Serializable {
                             // number ok. it respects sudoku constraints
                             soluction[row][col] = number;
 
-                            if (sudokusolver(soluction)) { // we start backtracking recursively
+                            if (sudokuSolver(soluction)) { // we start backtracking recursively
                                 return true;
                             } else { // if not a solution, we empty the cell and we continue
                                 soluction[row][col] = 0;
@@ -217,13 +231,14 @@ public class GameEngine implements Serializable {
     }
 
     public void incorrectPlay(){
-        points += EM;
+        points -= EM;
         EM *= 2;    //The error-multiplier (EM) starts at 5 and is doubled every time the user makes a mistake.
     }
 
+    /*
     public void decrementCM(){
-        CM -= -1;
-    }
+        CM -= 1;
+    }*/
 
     public void setTimeSpent(){
         TS = seconds;
@@ -232,16 +247,15 @@ public class GameEngine implements Serializable {
     }
 
     public void tookHint(){
-        points -= 500;
+        points -= 50;
         hints++;
     }
 
     public void levelScoreAdded(){
         switch(level){
             case 0: LM = 100;break;
-            case 1: LM = 250;break;
             case 2: LM = 500;break;
-            default: LM = 50;
+            default: LM = 250;
         }
     }
 
@@ -251,7 +265,7 @@ public class GameEngine implements Serializable {
 
     public int getScore() {
         FS = points;
-        FS += LM - (TS * 5);
+        FS += LM - ((TS%30) * 5);
         return FS;
     }
 

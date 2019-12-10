@@ -161,13 +161,12 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             default:
                 b.setSelected(true);
                 gameEngine.setNumber(Integer.parseInt(b.getText().toString()));
-                Log.i("Info", "selected num: " + b.getText().toString());
                 //manda parar a thread do timer
         }
         if (gameEngine.getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
-            gameEngine.setTimeSpent();
             gameEngine.levelScoreAdded();
+            gameEngine.setTimeSpent();
             scoreTextView.setText(gameEngine.finalScore());
             timeTextView.setText(gameEngine.getFinalTime());
             finishDialog.show();
