@@ -2,7 +2,6 @@ package pt.isec.mindunlocker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -56,10 +55,35 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
     }
 
     public void onStartGame(View v) {
-        if (validateStartGame(gameEngine.NFillCells())) {
-            gameEngine.sudokusolver(soluction);
+        if (gameEngine.NFillCells() < MIN_CELLS) {
+            Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
+        } else {
+            int aux = 0;
+
+            for (int row = 0; row < 9; row++) {
+                for (int col = 0; col < 9; col++) {
+                    soluction[row][col] = gameEngine.getTable().getItem(row, col).getValue();
+                    if (soluction[row][col] != 0) {
+                        aux++;
+                    }
+                }
+            }
+
+            int level;
+            if (aux == 51) {
+                level = 0;
+            } else if (aux == 21) {
+                level = 2;
+            } else {
+                level = 1;
+            }
+
+            gameEngine.sudokuSolver(soluction);
+          
             gameEngine.createTableWithVars(soluction);
             Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
+            intent.putExtra("level", level);
+            intent.putExtra("type", "custom");
             startActivity(intent);
         }
         else
@@ -100,7 +124,6 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         b.setSelected(true);
 
         gameEngine.setNumber(num);
-        Log.i("Info", "selected num: " + b.getText().toString());
     }
 
     private void deselectAllOthers() {

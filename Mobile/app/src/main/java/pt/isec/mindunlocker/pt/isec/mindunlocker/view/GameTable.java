@@ -95,14 +95,14 @@ public class GameTable implements Serializable {
             }
     }
 
-    public void setItemCustom(int x, int y, int number) {
+    public void setItemCustom(int x, int y, int number, Context context) {
         if (number == 0)
             SudokuCell.getInstance()[x][y].setValue(number);
         else {
             if (SudokuChecker.getInstance().checkPositionCustom(getTable(), number, x, y))
                 SudokuCell.getInstance()[x][y].setValue(number);
-            //else
-                //Toast.makeText(context, "You can't put " + number + " here", Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(context, "You can't put " + number + " here", Toast.LENGTH_SHORT).show();
         }
     }
 

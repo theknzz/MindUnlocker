@@ -194,8 +194,8 @@ public class SudokuGenerator {
         int i = 0, n;
 
         switch (level){
-            case 0: n = 30;break;
-            case 2: n = 60;break;
+            case 0: n = 30; break;
+            case 2: n = 60; break;
             default: n = 40; // if the level is not 0, 1 or 2 the level is default = 2, ie n = 40;
         }
         //n=1; //Debug

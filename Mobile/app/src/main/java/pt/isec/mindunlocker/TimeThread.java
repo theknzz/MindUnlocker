@@ -26,9 +26,9 @@ public class TimeThread implements Runnable {
             seconds = seconds % 60;
 
             //The correct-multiplier starts at 50 and is decremented (-1) every 30 seconds.
-            if (seconds == 30 || seconds == 0) {
+            /*if (seconds == 30 || seconds == 0) {
                 GameEngine.getInstance().decrementCM();
-            }
+            }*/
 
             timerTextView.setText(String.format("time: %d:%02d", minutes, seconds));
 
