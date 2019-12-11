@@ -55,7 +55,7 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
     }
 
     public void onStartGame(View v) {
-        if (gameEngine.NFillCells() < MIN_CELLS) {
+        if (validateStartGame(gameEngine.NFillCells())) {
             Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
         } else {
             int aux = 0;
@@ -96,11 +96,6 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
     public boolean validateStartGame(int nrFillCells) {
         if (nrFillCells < MIN_CELLS || nrFillCells > 81 || nrFillCells < 0) {
             return false;
-        }
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
-                soluction[row][col] = gameEngine.getTable().getItem(row, col).getValue();
-            }
         }
         return true;
     }

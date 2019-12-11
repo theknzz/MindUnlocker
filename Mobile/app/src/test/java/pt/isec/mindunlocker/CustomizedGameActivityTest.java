@@ -14,9 +14,21 @@ public class CustomizedGameActivityTest {
     }
 
     @Test
-    public void validateStartGameInOptimalState() {
+    public void validateStartGameInInitialState() {
         CustomizedGameActivity activity = new CustomizedGameActivity();
         assertTrue(activity.validateStartGame(17));
+    }
+
+    @Test
+    public void validateStartGameInCorrectState() {
+        CustomizedGameActivity activity = new CustomizedGameActivity();
+        assertTrue(activity.validateStartGame(25));
+    }
+
+    @Test
+    public void validateStartGameInLimitState() {
+        CustomizedGameActivity activity = new CustomizedGameActivity();
+        assertTrue(activity.validateStartGame(81));
     }
 
     @Test

@@ -6,6 +6,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import pt.isec.mindunlocker.GameEngine;
 import pt.isec.mindunlocker.GameplayActivity;
@@ -95,6 +98,15 @@ public class GameTable implements Serializable {
             }
     }
 
+    public void setItemWithNoValidation(int x, int y, int n) {
+        SudokuCell selectedCell = getItem(x, y);
+        if (!selectedCell.isModifiable())  {
+            selectedCell.setGuess(false);
+            return;
+        }
+        selectedCell.setValue(n);
+    }
+
     public void setItemCustom(int x, int y, int number, Context context) {
         if (number == 0)
             SudokuCell.getInstance()[x][y].setValue(number);
@@ -155,4 +167,23 @@ public class GameTable implements Serializable {
         return false;
     }
 
+    public List<Integer> getEditableCell() {
+        SudokuCell cell = null;
+        List<Integer> list = new ArrayList<>();
+        int x, y;
+        do {
+            x = (int) (Math.random() * 9);
+            y = (int) (Math.random() * 9);
+
+            cell = SudokuCell.getInstance()[x][y];
+
+        } while (!cell.isModifiable());
+        list.add(x);
+        list.add(y);
+        return list;
+    }
+
+    public int getValueIn(int x, int y) {
+        return SudokuCell.getInstance()[x][y].getValue();
+    }
 }
