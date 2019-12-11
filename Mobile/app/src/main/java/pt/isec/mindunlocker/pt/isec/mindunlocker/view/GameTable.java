@@ -142,4 +142,7 @@ public class GameTable implements Serializable {
         return false;
     }
 
+    public int getValueIn(int x, int y) {
+        return SudokuCell.getInstance()[x][y].getValue();
+    }
 }

@@ -1,6 +1,7 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.Serializable;
 
@@ -131,6 +132,23 @@ public class GameEngine implements Serializable {
     public void setItemCustom(Context context) {
         table.setItemCustom(selectedPosX, selectedPosY,n, context);
     }
+
+    /** Gets a Original cell from the table
+     *  Helper Method to unit test TC-10
+     * @return <code>SudokuCell</code> of an original cell (aka bold, aka not modifiable)
+     */
+    public SudokuCell getOriginalCell() {
+        SudokuCell cell = null;
+        do{
+            int x = (int) (Math.random() * 9);
+            int y = (int) (Math.random() * 9);
+
+            cell = SudokuCell.getInstance()[x][y];
+        }while(cell.isModifiable());
+        Log.e("CELL", " " + cell.getValue());
+        return cell;
+    }
+
 
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
@@ -321,5 +339,9 @@ public class GameEngine implements Serializable {
         this.minutes = minutes;
         this.seconds = seconds;
         this.finalTime = String.format("%d:%02d", minutes, seconds);
+    }
+
+    public int getValueIn(int x, int y) {
+        return table.getValueIn(x, y);
     }
 }
