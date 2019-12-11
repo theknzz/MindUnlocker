@@ -16,7 +16,7 @@ public class GameEngine implements Serializable {
     private static GameEngine instance;
     private GameTable table = null;
 
-    public int[][] solutionTable;
+    private int[][] solutionTable;
     private int[][] gameTable;
 
     private int n;
