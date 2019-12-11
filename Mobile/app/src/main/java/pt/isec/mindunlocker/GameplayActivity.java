@@ -227,11 +227,11 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         SudokuCell cell = tableHasUnmatchedCell();
 
         // The current game has an invalid cell
-        if (cell != null) {
+        if (cell !=null) {
             cell.setWrong(true);
 //            cell.getnPaint().setColor(Color.RED);
             cell.invalidate();
-            gameEngine.setSelectedPosition(cell);
+            gameEngine.setSelectedPosition(x, y);
             return;
         }
 
@@ -246,7 +246,6 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                 y = rand.nextInt(9);
             }
         }
-
         System.out.println("Hint: X: " + x + " Y: " + y + " Valor: " + gameEngine.getSolutionTable(x, y));
     }
 
@@ -256,7 +255,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
      * @return if has invalid cell ? invalid cell : null
      */
     private SudokuCell tableHasUnmatchedCell() {
-        return gameEngine.currentGameIsNotMatchingSolution();
+        return GameEngine.getInstance().currentGameIsNotMatchingSolution();
     }
 
     /*

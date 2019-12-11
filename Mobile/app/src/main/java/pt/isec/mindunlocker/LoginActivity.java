@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+
     /**
      * Method for when login button is pressed
      * @param v - View of the button
