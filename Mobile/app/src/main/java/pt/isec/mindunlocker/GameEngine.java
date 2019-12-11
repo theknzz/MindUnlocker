@@ -1,6 +1,7 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.List;
@@ -141,6 +142,25 @@ public class GameEngine implements Serializable {
         table.setItemCustom(selectedPosX, selectedPosY,n, context);
     }
 
+
+    /** Gets a Original cell from the table
+     *  Helper Method to unit test TC-10
+     * @return <code>SudokuCell</code> of an original cell (aka bold, aka not modifiable)
+     */
+    public SudokuCell getOriginalCell() {
+        SudokuCell cell = null;
+        do{
+            int x = (int) (Math.random() * 9);
+            int y = (int) (Math.random() * 9);
+
+            cell = SudokuCell.getInstance()[x][y];
+        }while(cell.isModifiable());
+        Log.e("CELL", " " + cell.getValue());
+        return cell;
+    }
+
+
+
     /**
      * Method that sets the number into the game table if the number is valid according to the sudoku rules
      * @return true: if it sets, false: if it doesn't
@@ -148,6 +168,7 @@ public class GameEngine implements Serializable {
     public boolean setCustomItemIfValid() {
         return table.setCustomItemIfValid(selectedPosX, selectedPosY, n);
     }
+
 
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;

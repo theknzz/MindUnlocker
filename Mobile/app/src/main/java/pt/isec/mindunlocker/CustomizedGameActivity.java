@@ -54,10 +54,28 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         btnErase = findViewById(R.id.btnErase);
     }
 
+    public int setLevel(int aux){
+        int level;
+
+        if(aux > 81 || aux < 17){
+            level = -1;
+        }else if (aux >= 51 && aux <=81) {
+            level = 0;  //Easy
+        } else if (aux <= 40 && aux >= 17) {
+            level = 2;  //Hard
+        } else {
+            level = 1;  //Medium
+        }
+
+        return level;
+    }
+
     public void onStartGame(View v) {
         if (validateStartGame(gameEngine.NFillCells())) {
             Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
         } else {
+
+
             int aux = 0;
 
             for (int row = 0; row < 9; row++) {
@@ -69,6 +87,9 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
                 }
             }
 
+            int level = setLevel(aux);
+
+            /*
             int level;
             if (aux == 51) {
                 level = 0;
@@ -77,11 +98,13 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
             } else {
                 level = 1;
             }
+            */
 
             gameEngine.sudokuSolver(soluction);
           
             gameEngine.createTableWithVars(soluction);
             Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
+            //intent.putExtra("level", level);
             intent.putExtra("level", level);
             intent.putExtra("type", "custom");
             startActivity(intent);
