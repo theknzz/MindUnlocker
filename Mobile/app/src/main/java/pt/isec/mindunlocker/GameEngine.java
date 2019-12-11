@@ -3,6 +3,7 @@ package pt.isec.mindunlocker;
 import android.content.Context;
 
 import java.io.Serializable;
+import java.util.List;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
@@ -91,6 +92,10 @@ public class GameEngine implements Serializable {
         table.setTable(gameTable);
     }
 
+    public List<Integer> getEditableCell() {
+        return table.getEditableCell();
+    }
+
     /**
      * Method used to "test" the invalid cell hint
      */
@@ -128,6 +133,10 @@ public class GameEngine implements Serializable {
         table.setItem(selectedPosX, selectedPosY,n, context);
     }
 
+    public void setItemWithNoValidation(Context context) {
+        table.setItemWithNoValidation(selectedPosX, selectedPosY, n);
+    }
+
     public void setItemCustom(Context context) {
         table.setItemCustom(selectedPosX, selectedPosY,n, context);
     }
@@ -143,15 +152,6 @@ public class GameEngine implements Serializable {
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
         this.selectedPosY = y;
-    }
-
-    /**
-     * Updates the selected cell to the cell passed in parameter
-     * @param cell
-     */
-    public void setSelectedPosition(SudokuCell cell) {
-        this.selectedPosX = (int) cell.getX();
-        this.selectedPosY = (int) cell.getY();
     }
 
     public void setNumber(int number){
@@ -331,7 +331,21 @@ public class GameEngine implements Serializable {
         this.finalTime = String.format("%d:%02d", minutes, seconds);
     }
 
+    /**
+     * Get the selected number
+     * @return selected number
+     */
     public int getN() {
         return n;
+    }
+
+    /**
+     * Get the value in the specified cell coordinates
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return cell's value
+     */
+    public int getValueIn(int x, int y) {
+        return table.getValueIn(x, y);
     }
 }

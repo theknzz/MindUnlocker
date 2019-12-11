@@ -1,8 +1,12 @@
 package pt.isec.mindunlocker;
 
+import android.content.Context;
+
 import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -64,5 +68,57 @@ public class GameEngineTest {
         engine.setSelectedPosition(2,2);
         assertFalse(engine.setCustomItemIfValid());
     }
+
+    @Test
+    public void testNumberPlacement() {
+
+        // get a GameEngine instance
+        GameEngine engine = GameEngine.getInstance();
+        // get an application context
+        Context context = ApplicationProvider.getApplicationContext();
+
+        // create a test table with easy difficulty
+        engine.createTable(context, 0);
+        // get an editable cell coordinates
+        List<Integer> cellCoords = engine.getEditableCell();
+        engine.setSelectedPosition(cellCoords.get(0), cellCoords.get(1));
+
+        // set the number to be placed has 1
+        engine.setNumber(1);
+        // place the number
+        engine.setItem(context);
+
+        assertEquals(engine.getValueIn(cellCoords.get(0), cellCoords.get(1)), 1);
+    }
+
+    @Test
+    public void testEraseNumber() {
+
+        // get a GameEngine instance
+        GameEngine engine = GameEngine.getInstance();
+        // get an application context
+        Context context = ApplicationProvider.getApplicationContext();
+
+        // create a test table with easy difficulty
+        engine.createTable(context, 0);
+        // get an editable cell coordinates and update the GameEngine with her coordinates
+        List<Integer> cellCoords = engine.getEditableCell();
+        engine.setSelectedPosition(cellCoords.get(0), cellCoords.get(1));
+
+        // fill the cell with a number
+        engine.setNumber(1);
+        // place the number
+        engine.setItemWithNoValidation(context);
+
+        assertEquals(engine.getValueIn(cellCoords.get(0), cellCoords.get(1)), 1);
+
+        // set the number to be placed has 0 (= erase)
+        engine.setNumber(0);
+        // place the number
+        engine.setItemWithNoValidation(context);
+
+        assertEquals(engine.getValueIn(cellCoords.get(0), cellCoords.get(1)), 0);
+    }
+
 
 }
