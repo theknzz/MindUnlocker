@@ -167,6 +167,10 @@ public class GameTable implements Serializable {
         return false;
     }
 
+    /**
+     * Method returns the coordinates of an editable cell
+     * @return List of two integers with the editable cell coordinates
+     */
     public List<Integer> getEditableCell() {
         SudokuCell cell = null;
         List<Integer> list = new ArrayList<>();
@@ -183,7 +187,14 @@ public class GameTable implements Serializable {
         return list;
     }
 
+    /**
+     * Get the value inside the x and y coordinates of a cell
+     * @param x x cell's coordinate
+     * @param y y cell's coordinate
+     * @return cell's value or -1 if coordinates are invalid
+     */
     public int getValueIn(int x, int y) {
+        if (x<0 || x>9) return -1;
         return SudokuCell.getInstance()[x][y].getValue();
     }
 }

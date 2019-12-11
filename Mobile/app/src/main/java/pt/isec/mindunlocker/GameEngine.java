@@ -331,10 +331,20 @@ public class GameEngine implements Serializable {
         this.finalTime = String.format("%d:%02d", minutes, seconds);
     }
 
+    /**
+     * Get the selected number
+     * @return selected number
+     */
     public int getN() {
         return n;
     }
 
+    /**
+     * Get the value in the specified cell coordinates
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return cell's value
+     */
     public int getValueIn(int x, int y) {
         return table.getValueIn(x, y);
     }
