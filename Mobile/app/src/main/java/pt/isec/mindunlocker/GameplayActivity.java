@@ -50,16 +50,26 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
 
         //GetExtras
         Bundle b = getIntent().getExtras();
-        if (b != null) {
-            gameEngine.setLevel(b.getInt("level"));
-        } else {
-            gameEngine.setLevel(1);
-        }
 
-        if (b == null || b.getString("type") == null) {
+        if (b == null) {
+            gameEngine.setLevel(1);
+
             gameEngine.createTable(this, gameEngine.getLevel());
             gameEngine.setMinutes(0);
             gameEngine.setSeconds(0);
+        } else if (b.getString("type") != null) {
+            if (b.getString("type").equals("custom")) {
+
+                gameEngine.setLevel(b.getInt("level"));
+            } else if (b.getString("type").equals("load")) {
+                gameEngine.createTableLoad(this);
+            } else if (b.getString("type").equals("newgame")) {
+                gameEngine.setLevel(b.getInt("level"));
+
+                gameEngine.createTable(this, gameEngine.getLevel());
+                gameEngine.setMinutes(0);
+                gameEngine.setSeconds(0);
+            }
         }
         //printSudoku(solutionTable);
 
@@ -135,23 +145,23 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         Button b = (Button) v;
         deselectAllOthers();
         switch (v.getId()) {
-                //button give up
+            //button give up
             case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
                 giveup();
                 break;
-                //button hints
+            //button hints
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
                 GameEngine.getInstance().tookHint();
                 v.invalidate();
                 break;
-                //button erase
+            //button erase
             case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 b.setSelected(true);
                 btnPencil.setSelected(false);
                 GameEngine.getInstance().setNumber(0);
                 break;
-                //button pencil
+            //button pencil
             case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 if (b.isSelected()) {
                     b.setSelected(false);

@@ -10,6 +10,9 @@ import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 public class GameEngine implements Serializable {
+
+    private static final long serialVersionUID = 1000000000L;
+
     private static GameEngine instance;
     private GameTable table = null;
 
@@ -147,7 +150,7 @@ public class GameEngine implements Serializable {
      */
     public void createTableWithVars(int[][] solutionTable) {
         initializeVars();
-        solutionTable = solutionTable;
+        this.solutionTable = solutionTable;
     }
 
     /**
@@ -160,6 +163,14 @@ public class GameEngine implements Serializable {
         table = new GameTable(context);
     }
 
+    /**
+     * Create a new table (view) with values in <var>gameTable</var>
+     * @param context <code>Context</code>
+     */
+    public void createTableLoad(Context context) {
+        table = new GameTable(context);
+        table.setTable(gameTable);
+    }
     /**
      * Get a table
      * @return <code>GameTable</code>

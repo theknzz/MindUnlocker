@@ -92,7 +92,8 @@ public class SavedGames {
             return gE;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-            Toast.makeText(context, "There was a problem with the save game load!", Toast.LENGTH_SHORT).show();
+            Log.d("aaaa", ""+e.getMessage());
+            Toast.makeText(context, "There was a problem with the load game!", Toast.LENGTH_SHORT).show();
         }
         return null;
     }
