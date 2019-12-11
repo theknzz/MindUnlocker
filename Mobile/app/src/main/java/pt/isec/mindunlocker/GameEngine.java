@@ -118,6 +118,14 @@ public class GameEngine implements Serializable {
         table.setItemCustom(selectedPosX, selectedPosY,n);
     }
 
+    /**
+     * Method that sets the number into the game table if the number is valid according to the sudoku rules
+     * @return true: if it sets, false: if it doesn't
+     */
+    public boolean setCustomItemIfValid() {
+        return table.setCustomItemIfValid(selectedPosX, selectedPosY, n);
+    }
+
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
         this.selectedPosY = y;
@@ -307,5 +315,9 @@ public class GameEngine implements Serializable {
         this.minutes = minutes;
         this.seconds = seconds;
         this.finalTime = String.format("%d:%02d", minutes, seconds);
+    }
+
+    public int getN() {
+        return n;
     }
 }
