@@ -18,6 +18,11 @@ public class SudokuCell extends BaseSudokuCell {
         nPaint = new Paint();
     }
 
+
+    /**
+     * Get or create a instance from himself
+     * @return <code>SudokuCell[][]</code>
+     */
     public static SudokuCell[][] getInstance(){
         if(instance == null){
             instance = new SudokuCell[9][9];
@@ -32,6 +37,10 @@ public class SudokuCell extends BaseSudokuCell {
         drawLines(canvas);
     }
 
+    /**
+     * Draw a number in the cell to be visible
+     * @param canvas <code>Canvas</code> object belongs view
+     */
     private void drawNumbers(Canvas canvas){
         nPaint.setColor(Color.BLACK);
         nPaint.setTextSize(60);
@@ -45,15 +54,20 @@ public class SudokuCell extends BaseSudokuCell {
             nPaint.setTypeface(Typeface.DEFAULT_BOLD);
         }
 
+        //check is value is wrong
         if (isWrong()) {
+            //if wrong paints the cell red
             this.setBackgroundColor(Color.RED);
         } else if(isGuess()){
+            //if guess selected prints the cell blue
             nPaint.setColor(Color.BLUE);
             nPaint.setTextSize(40);
         }else{
+            //if not wrong prints the cell white
             this.setBackgroundColor(Color.WHITE);
         }
 
+        //get cell number
         if(getValue() != 0){
             canvas.drawText(String.valueOf(getValue()),
                     (getWidth() - bounds.width())/2,
@@ -61,6 +75,10 @@ public class SudokuCell extends BaseSudokuCell {
         }
     }
 
+    /**
+     * Draw all table lines
+     * @param canvas <code>Canvas</code> object belongs view
+     */
     private void drawLines(Canvas canvas){
         nPaint.setColor(Color.BLACK);
         nPaint.setStrokeWidth(2);
@@ -68,7 +86,7 @@ public class SudokuCell extends BaseSudokuCell {
 
         canvas.drawRect(0,0, getWidth(), getHeight(), nPaint);
 
-        //Desenho de linhas auxiliares
+        //auxiliary line drawing
         nPaint.setColor(Color.BLACK);
         nPaint.setStrokeWidth(10);
         nPaint.setStyle(Paint.Style.STROKE);

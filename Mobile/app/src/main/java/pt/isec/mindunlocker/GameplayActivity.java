@@ -45,10 +45,10 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
 
-        //gameEngine = new GameEngine();
-
+        //Create or return object gameEngine
         gameEngine = GameEngine.getInstance();
 
+        //GetExtras
         Bundle b = getIntent().getExtras();
         if (b != null) {
             gameEngine.setLevel(b.getInt("level"));
@@ -126,8 +126,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         giveup();
     }
 
@@ -136,19 +135,23 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         Button b = (Button) v;
         deselectAllOthers();
         switch (v.getId()) {
+                //button give up
             case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
                 giveup();
                 break;
+                //button hints
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
                 GameEngine.getInstance().tookHint();
                 v.invalidate();
                 break;
+                //button erase
             case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 b.setSelected(true);
                 btnPencil.setSelected(false);
                 GameEngine.getInstance().setNumber(0);
                 break;
+                //button pencil
             case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 if (b.isSelected()) {
                     b.setSelected(false);
@@ -163,6 +166,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                 gameEngine.setNumber(Integer.parseInt(b.getText().toString()));
                 //manda parar a thread do timer
         }
+        //if table is complete and correct
         if (gameEngine.getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
             gameEngine.levelScoreAdded();
@@ -179,11 +183,17 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void giveup(){
+    /**
+     * Give up the game
+     */
+    private void giveup() {
         giveupDialog.show();
         timerHandler.removeCallbacks(timerRunnable);
     }
 
+    /**
+     * Unselect buttons
+     */
     private void deselectAllOthers() {
         btn1.setSelected(false);
         btn2.setSelected(false);
@@ -198,6 +208,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         //btnPencil.setSelected(true);
     }
 
+    /**
+     * Show a new hint in table
+     */
     public void showHint() {
         int x = rand.nextInt(9);
         int y = rand.nextInt(9);
@@ -208,7 +221,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             cell.setWrong(true);
 //            cell.getnPaint().setColor(Color.RED);
             cell.invalidate();
-            GameEngine.getInstance().setSelectedPosition(x, y);
+            gameEngine.setSelectedPosition(x, y);
             return;
         }
 
@@ -228,6 +241,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
 
     /**
      * Method searches for a cell that doesn't match the solution
+     *
      * @return if has invalid cell ? invalid cell : null
      */
     private SudokuCell tableHasUnmatchedCell() {
@@ -270,6 +284,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         giveupDialog.dismiss();
     }
 
+    /**
+     * Return to Main Menu / Screen
+     */
     private void backToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -284,6 +301,11 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+    /**
+     * @return <code>boolean</code> <code>true</code> if game has been saved, <code>false</code> if
+     * no
+     */
     private boolean SaveGame() {
         TextView tv = giveupDialog.findViewById(R.id.tv_fileName);
 

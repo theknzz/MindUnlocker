@@ -12,7 +12,7 @@ public class SudokuChecker {
 
     /**
      * Creates instance if needed and returns it
-     * @return
+     * @return <code>SudokuChecker</code> instance
      */
     public static SudokuChecker getInstance(){
         if( instance == null ){
@@ -21,19 +21,22 @@ public class SudokuChecker {
         return instance;
     }
 
+
     /**
-     *
-     * @param sudokuTable
-     * @return
+     * Check if table is complete and correct
+     * @param sudokuTable <code>SudokuCell[][]</code>
+     * @return <code>boolean</code> <code>true</code> if table is complete and valid,
+     * <code>false</code> if not
      */
     public boolean checkSudoku( SudokuCell[][] sudokuTable){
         return (checkHorizontal(sudokuTable) || checkVertical(sudokuTable) || checkRegions(sudokuTable));
     }
 
     /**
-     *
+     * Check all table rows are completes and valid
      * @param sudokuTable
-     * @return
+     * @return <code>boolean</code> <code>true</code> if every row in the table are valid and
+     * complete (without 0), <code>false</code> if not
      */
     private boolean checkHorizontal(SudokuCell[][] sudokuTable) {
         for( int y = 0 ; y < 9 ; y++ ){
@@ -52,9 +55,10 @@ public class SudokuChecker {
     }
 
     /**
-     *
+     * Check all table columns are completes and valid
      * @param sudokuTable
-     * @return
+     * @return <code>boolean</code> <code>true</code> if every column in the table are valid and
+     * complete (without 0), <code>false</code> if not
      */
     private boolean checkVertical(SudokuCell[][] sudokuTable) {
         for( int x = 0 ; x < 9 ; x++ ){
@@ -73,9 +77,10 @@ public class SudokuChecker {
     }
 
     /**
-     *
+     * Check all table squares are completes and valid
      * @param sudokuTable
-     * @return
+     * @return <code>boolean</code> <code>true</code> if every square in the table are valid and
+     * complete (without 0), <code>false</code> if not
      */
     private boolean checkRegions(SudokuCell[][] sudokuTable) {
         for( int xRegion = 0; xRegion < 3; xRegion++ ){
@@ -89,11 +94,12 @@ public class SudokuChecker {
     }
 
     /**
-     *
-     * @param sudokuTable
-     * @param xRegion
-     * @param yRegion
-     * @return
+     * Check table Square passed by argument
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param xRegion <code>int</code> X of square
+     * @param yRegion <code>int</code> Y of square
+     * @return <code>boolean</code> <code>true</code> if the square send is valid and
+     * complete (without 0), <code>false</code> if not
      */
     private boolean checkRegion(SudokuCell[][] sudokuTable , int xRegion , int yRegion){
         for( int posX = xRegion * 3; posX < xRegion * 3 + 3 ; posX++ ){
@@ -111,12 +117,14 @@ public class SudokuChecker {
     }
 
     /**
-     *
-     * @param sudokuTable
-     * @param num
-     * @param x
-     * @param y
-     * @return
+     * Check if <var>num</var> is possible placed in <var>x</var> and <var>y</var> position
+     * without conflicts table
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param num <code>int</code> number to check
+     * @param x <var>int</var> x index
+     * @param y <var>int</var> y index
+     * @return  <code>booelan</code> <code>true</code> if table valid,
+     * <code>false</code> if table is invalid
      */
     public boolean checkSudokuPlay(SudokuCell[][] sudokuTable, int num, int x, int y) {
         return (checkHorizontalPlay(sudokuTable,num,x,y) || checkVerticalPlay(sudokuTable,num,x,y) || checkRegionPlay(sudokuTable,num,x,y));
@@ -124,12 +132,13 @@ public class SudokuChecker {
     }
 
     /**
-     *
-     * @param sudokuTable
-     * @param num
-     * @param x
-     * @param y
-     * @return
+     * Check <code>Table</code> passed by argument if exist conflicts with number in the regions
+     * 3 X 3
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param num <code>int</code> number to check
+     * @param x <var>int</var> x index
+     * @param y <var>int</var> y index
+     * @return <code>boolean</code> <code>true</code> if exist conflicts in row
      */
     private boolean checkRegionPlay(SudokuCell[][] sudokuTable, int num, int x, int y) {
         int bx, by;
@@ -146,12 +155,12 @@ public class SudokuChecker {
     }
 
     /**
-     *
-     * @param sudokuTable
-     * @param num
-     * @param x
-     * @param y
-     * @return
+     * Check <code>Table</code> passed by argument if exist conflicts with number horizontally
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param num <code>int</code> number to check
+     * @param x <var>int</var> x index
+     * @param y <var>int</var> y index
+     * @return <code>boolean</code> <code>true</code> if exist conflicts in row
      */
     private boolean checkHorizontalPlay(SudokuCell[][] sudokuTable, int num, int x, int y) {
         for( int k = 0 ; k < 9 ; k++ ){
@@ -164,12 +173,12 @@ public class SudokuChecker {
     }
 
     /**
-     *
-     * @param sudokuTable
-     * @param num
-     * @param x
-     * @param y
-     * @return
+     * Check <code>Table</code> passed by argument if exist conflicts with number vertically
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param num <code>int</code> number to check
+     * @param x <var>int</var> x index
+     * @param y <var>int</var> y index
+     * @return <code>boolean</code> <code>true</code> if exist conflicts in column
      */
     private boolean checkVerticalPlay(SudokuCell[][] sudokuTable, int num, int x,int y) {
         for( int k = 0 ; k < 9 ; k++ ){
@@ -182,11 +191,12 @@ public class SudokuChecker {
     }
 
     /**
-     *
-     * @param sudokuTable
-     * @param number
-     * @param row
-     * @param col
+     * Check if <var>number</var> is possible placed in <var>row</var> and <var>col</var> position
+     * without conflicts table
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param number <code>int</code> number to check
+     * @param row <var>int</var> x index
+     * @param col <var>int</var> y index
      * @return
      */
     public boolean checkPositionCustom(SudokuCell[][] sudokuTable, int number, int row,int col) {
@@ -194,11 +204,11 @@ public class SudokuChecker {
                 && checkRegionsCustom(row, col, number, sudokuTable));
     }
 
-    /***
-     *
-     * @param col
-     * @param number
-     * @param sudokuTable
+    /**
+     * Check <code>Table</code> passed by argument if exist conflicts with number horizontally
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param number <code>int</code> number to check
+     * @param col <var>int</var> x index
      * @return
      */
     private boolean checkHorizontalCustom(int col, int number, SudokuCell[][] sudokuTable) {
@@ -209,10 +219,10 @@ public class SudokuChecker {
     }
 
     /**
-     *
-     * @param row
-     * @param number
-     * @param sudokuTable
+     * Check <code>Table</code> passed by argument if exist conflicts with number vertically
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param number <code>int</code> number to check
+     * @param row <var>int</var> row index
      * @return
      */
     private boolean checkVerticalCustom(int row, int number, SudokuCell[][] sudokuTable) {
@@ -223,11 +233,12 @@ public class SudokuChecker {
     }
 
     /**
-     *
-     * @param row
-     * @param col
-     * @param number
-     * @param sudokuTable
+     * Check <code>Table</code> passed by argument if exist conflicts with number in the regions
+     * 3 X 3
+     * @param sudokuTable <code>SudokuCell[][]</code> table
+     * @param row <code>int</code> number to check
+     * @param row <var>int</var> row index
+     * @param col <var>int</var> col index
      * @return
      */
     private boolean checkRegionsCustom(int row, int col, int number, SudokuCell[][] sudokuTable) {

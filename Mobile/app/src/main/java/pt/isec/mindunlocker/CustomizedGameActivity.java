@@ -54,6 +54,10 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         btnErase = findViewById(R.id.btnErase);
     }
 
+    /**
+     * @param aux <code>int</code> number of cells filled 
+     * @return <code>int</code> level (0 - 2)
+     */
     public int setLevel(int aux){
         int level;
 
@@ -70,11 +74,16 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         return level;
     }
 
+    /**
+     * Verify, read and call the <code>GameplayActivity</code> to start game with values
+     * the user entered
+     * @param v <code>View</code> Button to Start the game
+     */
     public void onStartGame(View v) {
-        if (validateStartGame(gameEngine.NFillCells())) {
-            Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
+        if (gameEngine.NFillCells() < MIN_CELLS) {
+            Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS
+                    + ")", Toast.LENGTH_SHORT).show();
         } else {
-
 
             int aux = 0;
 
@@ -89,17 +98,6 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
 
             int level = setLevel(aux);
 
-            /*
-            int level;
-            if (aux == 51) {
-                level = 0;
-            } else if (aux == 21) {
-                level = 2;
-            } else {
-                level = 1;
-            }
-            */
-
             gameEngine.sudokuSolver(soluction);
           
             gameEngine.createTableWithVars(soluction);
@@ -110,6 +108,7 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
             startActivity(intent);
         }
     }
+
 
     /**
      * Method that validates if the state of game can generate a new game
@@ -122,7 +121,11 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         }
         return true;
     }
-
+          
+    /**
+     * Clear cell selected, using 0
+     * @param v <code>View</code> button Erase
+     */
     public void onErase(View v) {
         Button b = (Button) v;
         deselectAllOthers();
@@ -142,6 +145,9 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         gameEngine.setNumber(num);
     }
 
+    /**
+     * Unselect buttons
+     */
     private void deselectAllOthers() {
         btn1.setSelected(false);
         btn2.setSelected(false);

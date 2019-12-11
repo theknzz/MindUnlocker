@@ -51,6 +51,7 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
 
         files = saves.getAllSavedGames();
 
+        // if exist games saved
         if (files != null && files.length > 0) {
             GameEngine gEAux;
 
@@ -67,8 +68,6 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
                     list.add(mapAux);
                 }
             }
-        } else {
-
         }
 
         listviewAdapter adapter = new listviewAdapter(this, list);
@@ -92,6 +91,9 @@ public class LoadGameActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * Class Adapter to do list of saved games
+     */
     class listviewAdapter extends BaseAdapter {
         public ArrayList<HashMap> list;
         Activity activity;
