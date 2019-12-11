@@ -106,6 +106,19 @@ public class GameTable implements Serializable {
         }
     }
 
+    public boolean setCustomItemIfValid(int x, int y, int number) {
+        if (number == 0) {
+            SudokuCell.getInstance()[x][y].setValue(number);
+            return true;
+        } else {
+            if (SudokuChecker.getInstance().checkPositionCustom(getTable(), number, x, y)) {
+                SudokuCell.getInstance()[x][y].setValue(number);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setPencilMode(boolean val) {
         isPencil = val;
     }

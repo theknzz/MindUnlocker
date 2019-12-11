@@ -79,12 +79,32 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
             }
 
             gameEngine.sudokuSolver(soluction);
+          
             gameEngine.createTableWithVars(soluction);
             Intent intent = new Intent(getApplicationContext(), GameplayActivity.class);
             intent.putExtra("level", level);
             intent.putExtra("type", "custom");
             startActivity(intent);
         }
+        else
+            Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Method that validates if the state of game can generate a new game
+     * @param nrFillCells - nr of cells
+     * @return true: if has more or at least 16 cells, false: if it hasn't
+     */
+    public boolean validateStartGame(int nrFillCells) {
+        if (nrFillCells < MIN_CELLS || nrFillCells > 81 || nrFillCells < 0) {
+            return false;
+        }
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                soluction[row][col] = gameEngine.getTable().getItem(row, col).getValue();
+            }
+        }
+        return true;
     }
 
     public void onErase(View v) {
@@ -117,5 +137,9 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
         btn8.setSelected(false);
         btn9.setSelected(false);
         btnErase.setSelected(false);
+    }
+
+    public static int getMinCells() {
+        return MIN_CELLS;
     }
 }
