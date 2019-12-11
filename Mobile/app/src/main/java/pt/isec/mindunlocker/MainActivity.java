@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import pt.isec.mindunlocker.leaderboard.LeaderboardContainer;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             TextView tv_score = findViewById(R.id.score);
             TextView tv_ranking = findViewById(R.id.ranking);
 
-            String [] info = leaderContainer.getUserInfo(String.valueOf(username));
+            String[] info = leaderContainer.getUserInfo(String.valueOf(username));
 
             tv_user.setText(username);
             tv_score.setText(info[0]);
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * When any button is clicked
+     *
      * @param v <code>View</code> Button clicked
      */
     public void onPickLevel(View v) {
@@ -94,33 +96,34 @@ public class MainActivity extends AppCompatActivity {
 
         Button b = (Button) v;
         switch (b.getId()) {
-                //button easy
+            //button easy
             case R.id.btn_easylevel:
                 //Toast.makeText(this,"Starting an easy game",Toast.LENGTH_LONG).show();
                 bundle.putInt("level", 0);
                 intent.putExtras(bundle);
-                startActivity(intent);
                 break;
-                //button medium
+            //button medium
             case R.id.btn_mediumlevel:
                 //Toast.makeText(this,"Starting a medium game",Toast.LENGTH_LONG).show();
                 bundle.putInt("level", 1);
                 intent.putExtras(bundle);
-                startActivity(intent);
                 break;
-                //button hard
+            //button hard
             case R.id.btn_hardlevel:
                 //Toast.makeText(this,"Starting hard game",Toast.LENGTH_LONG).show();
                 bundle.putInt("level", 2);
                 intent.putExtras(bundle);
-                startActivity(intent);
                 break;
+            default:
+                startGameDialog.cancel();
         }
-        startGameDialog.cancel();
+        intent.putExtra("type", "newgame");
+        startActivity(intent);
     }
 
     /**
      * When click in "Generate New Game" button
+     *
      * @param v <code>View</code> button "Generate New Game"
      */
     public void onGameStart(View v) {
@@ -130,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Set buttons listeners
-     * @param button <code>Button</code>
+     *
+     * @param button   <code>Button</code>
      * @param activity <code>Class</code>
      */
     private void setButtonListener(Button button, final Class activity) {
@@ -139,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Result from Login
+     *
      * @param response
      */
     private void loginResult(Bundle response) {
@@ -185,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Change activity to class passed by argument
+     *
      * @param activity <code>Class</code> activity
      */
     private void changeActivity(Class activity) {
@@ -194,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Log out
+     *
      * @param v <code>View</code> Button logout
      */
     public void logOut(View v) {

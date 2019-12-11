@@ -12,7 +12,7 @@ import pt.isec.mindunlocker.SudokuChecker;
 
 public class GameTable implements Serializable {
 
-    private GameEngine gameEngine = GameEngine.getInstance();
+    private static final long serialVersionUID = 1000000000L;
 
     private boolean isPencil = false;
 
