@@ -21,6 +21,9 @@ android {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
     }
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -35,4 +38,5 @@ dependencies {
     implementation 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.1.0'
     implementation 'de.codecrafters.tableview:tableview:2.8.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.19'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
