@@ -1,18 +1,12 @@
-package pt.isec.mindunlocker.pt.isec.mindunlocker.view;
+package pt.isec.mindunlocker;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Test;
 
-import java.lang.reflect.Method;
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
-import pt.isec.mindunlocker.CustomizedGameActivity;
-import pt.isec.mindunlocker.GameplayActivity;
-import pt.isec.mindunlocker.MainActivity;
-import pt.isec.mindunlocker.SudokuChecker;
-import pt.isec.mindunlocker.SudokuGenerator;
-
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 public class SudokuCheckerTest{
     private int[][] solutionTable;
@@ -26,7 +20,7 @@ public class SudokuCheckerTest{
 
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
-                SudokuCell.getInstance()[x][y] = new SudokuCell();
+                SudokuCell.getInstance()[x][y] = new SudokuCell(ApplicationProvider.getApplicationContext());
             }
         }
 
@@ -39,8 +33,27 @@ public class SudokuCheckerTest{
             }
         }
 
-        SudokuCell.getInstance()[0][0].setValue(5);
+        int xPos = 0, yPos = 0;
 
-        assertEquals(false, SudokuChecker.getInstance().checkSudokuPlay(SudokuCell.getInstance(), 5, 0,0));
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 9; y++) {
+                if(gameTable[x][y] == 0){
+                    xPos = x;
+                    yPos = y;
+                    break;
+                }
+            }
+        }
+
+        System.out.println(xPos + " " + yPos);
+
+        for (int x = 0; x < 9; x++) {
+            System.out.println();
+            for (int y = 0; y < 9; y++) {
+                System.out.print(gameTable[x][y] + " ");
+            }
+        }
+
+        assertTrue(SudokuChecker.getInstance().checkSudokuPlay(SudokuCell.getInstance(), 5, xPos,yPos));
     }
 }
