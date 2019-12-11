@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.Serializable;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 public class GameEngine implements Serializable {
     private static GameEngine instance;
@@ -38,7 +39,6 @@ public class GameEngine implements Serializable {
         solutionTable = new int[9][9];
         selectedPosX = -1;
         selectedPosY = -1;
-
         n = 0;
 
         inicializeVars();
@@ -89,6 +89,20 @@ public class GameEngine implements Serializable {
         table.setTable(gameTable);
     }
 
+    /**
+     * Method used to "test" the invalid cell hint
+     */
+    private void debugPrintSolutionTable() {
+        if (solutionTable!=null) {
+            for (int y=0; y < 9; y++) {
+                for (int x = 0; x < 9; x++) {
+                    System.out.print(solutionTable[x][y] + " ");
+                }
+                System.out.println("");
+            }
+        }
+    }
+
     public void createTableWithVars(int[][] solutionTable) {
         inicializeVars();
         solutionTable = solutionTable;
@@ -108,8 +122,8 @@ public class GameEngine implements Serializable {
         return solutionTable[x][y];
     }
 
-    public void setItem() {
-        table.setItem(selectedPosX, selectedPosY,n);
+    public void setItem(Context context) {
+        table.setItem(selectedPosX, selectedPosY,n, context);
     }
 
     public void setItemCustom(Context context) {
@@ -119,6 +133,15 @@ public class GameEngine implements Serializable {
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
         this.selectedPosY = y;
+    }
+
+    /**
+     * Updates the selected cell to the cell passed in parameter
+     * @param cell
+     */
+    public void setSelectedPosition(SudokuCell cell) {
+        this.selectedPosX = (int) cell.getX();
+        this.selectedPosY = (int) cell.getY();
     }
 
     public void setNumber(int number){
@@ -140,7 +163,7 @@ public class GameEngine implements Serializable {
     /**
      * sudokuSolver method generates a new solution for a <code>int [][]</code>
      * @param soluction <code>int [][]</code> table to generate a solution
-     * @return 
+     * @return <code>boolean</code> <code>true</code> if exist solution <code>false</code> if not
      */
     public boolean sudokuSolver(int[][] soluction) {
         for (int row = 0; row < 9; row++) {
@@ -167,6 +190,14 @@ public class GameEngine implements Serializable {
         return true; // sudoku solved
     }
 
+    /**
+     * Check <code>Table</code> passed by argument if exist conflicts with number
+     * @param row <var>int</var> row index
+     * @param col <var>int</var> column index
+     * @param number <var>int</var> number
+     * @param soluction <var>int [][]</var> table
+     * @return
+     */
     private boolean checkSudokuSolver(int row, int col, int number, int[][] soluction) {
         return (checkHorizontalSolver(row, col, number, soluction) &&
                 checkVerticalSolver(row, col, number, soluction)
@@ -242,6 +273,22 @@ public class GameEngine implements Serializable {
         FS = points;
         FS += LM - ((TS%30) * 5);
         return FS;
+    }
+
+    /**
+     * Method that checks if the current solution is getting built according to the game solution
+     * @return If the current solution has a cell different from the game solution ? Invalid Sudoku Cell : null
+     */
+    public SudokuCell currentGameIsNotMatchingSolution() {
+        for (int y=0; y < 9; y++)
+            for (int x=0; x < 9; x++) {
+                SudokuCell cell = table.getItem(x, y);
+                if (cell.getValue()!=0) {
+                    if (cell.getValue() != solutionTable[x][y])
+                        return cell;
+                }
+            }
+        return null;
     }
 
     public int getHints() {

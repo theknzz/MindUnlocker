@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -20,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import java.util.Random;
 
 import pt.isec.mindunlocker.api.insertGame.InsertGame;
+import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
 
 
 public class GameplayActivity extends AppCompatActivity implements View.OnClickListener {
@@ -43,10 +45,10 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameplay);
 
-        //gameEngine = new GameEngine();
-
+        //Create or return object gameEngine
         gameEngine = GameEngine.getInstance();
 
+        //GetExtras
         Bundle b = getIntent().getExtras();
         if (b != null) {
             gameEngine.setLevel(b.getInt("level"));
@@ -124,8 +126,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         giveup();
     }
 
@@ -177,11 +178,17 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void giveup(){
+    /**
+     * Give up the game
+     */
+    private void giveup() {
         giveupDialog.show();
         timerHandler.removeCallbacks(timerRunnable);
     }
 
+    /**
+     * Unselect buttons
+     */
     private void deselectAllOthers() {
         btn1.setSelected(false);
         btn2.setSelected(false);
@@ -196,15 +203,28 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         //btnPencil.setSelected(true);
     }
 
+    /**
+     * Show a new hint in table
+     */
     public void showHint() {
         int x = rand.nextInt(9);
         int y = rand.nextInt(9);
+        SudokuCell cell = tableHasUnmatchedCell();
+
+        // The current game has an invalid cell
+        if (cell != null) {
+            cell.setWrong(true);
+//            cell.getnPaint().setColor(Color.RED);
+            cell.invalidate();
+            gameEngine.setSelectedPosition(cell);
+            return;
+        }
 
         while (true) {
             if (gameEngine.getTable().getItem(x, y).getValue() == 0) {
                 gameEngine.setNumber(gameEngine.getSolutionTable(x, y));
                 gameEngine.setSelectedPosition(x, y);
-                gameEngine.setItem();
+                gameEngine.setItem(this);
                 break;
             } else {
                 x = rand.nextInt(9);
@@ -215,8 +235,17 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         System.out.println("Hint: X: " + x + " Y: " + y + " Valor: " + gameEngine.getSolutionTable(x, y));
     }
 
+    /**
+     * Method searches for a cell that doesn't match the solution
+     *
+     * @return if has invalid cell ? invalid cell : null
+     */
+    private SudokuCell tableHasUnmatchedCell() {
+        return gameEngine.currentGameIsNotMatchingSolution();
+    }
+
     /*
-     * Functions onClicks - Dialog giveup
+     * Functions onClicks - Dialog give up
      */
 
     /**
@@ -251,6 +280,9 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         giveupDialog.dismiss();
     }
 
+    /**
+     * Return to Main Menu / Screen
+     */
     private void backToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -265,6 +297,11 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+    /**
+     * @return <code>boolean</code> <code>true</code> if game has been saved, <code>false</code> if
+     * no
+     */
     private boolean SaveGame() {
         TextView tv = giveupDialog.findViewById(R.id.tv_fileName);
 

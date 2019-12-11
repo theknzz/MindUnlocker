@@ -13,7 +13,7 @@ import pt.isec.mindunlocker.SudokuChecker;
 public class GameTable implements Serializable {
 
     private GameEngine gameEngine = GameEngine.getInstance();
-    //private Context context;
+
     private boolean isPencil = false;
 
     public boolean isFinish() {
@@ -32,6 +32,10 @@ public class GameTable implements Serializable {
         }
     }
 
+    /**
+     * Set Table with values passed by
+     * @param table
+     */
     public void setTable(int[][] table) {
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
@@ -57,12 +61,24 @@ public class GameTable implements Serializable {
         return SudokuCell.getInstance()[x][y];
     }
 
-    public void setItem(int x, int y, int number) {
+    public void setItem(int x, int y, int number, Context context) {
             SudokuCell selectedCell = getItem(x, y);
+            if (!selectedCell.isModifiable())  {
+                selectedCell.setGuess(false);
+                return;
+            }
             if (isPencil) {
+                // enables the pencil mode
                 selectedCell.setGuess(true);
                 selectedCell.setValue(number);
             } else {
+                // reset the pencil mode
+                selectedCell.setGuess(false);
+                // if table has a wrong cell and the user is not changing that cell ignore the input
+                if (tableHasWrongCell() && !selectedCell.isWrong()) {
+                    Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 SudokuCell.getInstance()[x][y].setValue(number);
                 //clearPos();
                 if (checkGame()) {
@@ -115,6 +131,18 @@ public class GameTable implements Serializable {
             }
         }
         return count;
+    }
+
+    /**
+     * Method the checks every table's cell, to see if the table has any wrong cell
+     * @return if table has a wrong cell? true : false
+     */
+    private boolean tableHasWrongCell() {
+        for (int y = 0; y < 9; y++)
+            for (int x = 0; x < 9; x++)
+                if (SudokuCell.getInstance()[x][y].isWrong())
+                    return true;
+        return false;
     }
 
 }
