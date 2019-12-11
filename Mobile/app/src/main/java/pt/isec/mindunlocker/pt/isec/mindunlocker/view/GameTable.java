@@ -6,8 +6,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 import pt.isec.mindunlocker.GameEngine;
+import pt.isec.mindunlocker.GameplayActivity;
 import pt.isec.mindunlocker.SudokuChecker;
 
 public class GameTable implements Serializable {
@@ -19,7 +23,7 @@ public class GameTable implements Serializable {
     private boolean finish = false;
 
     public GameTable(Context context) {
-        //this.context = context;
+//        this.context = context;
 
         for (int x = 0; x < 9; x++) {
             for (int y = 0; y < 9; y++) {
@@ -91,10 +95,12 @@ public class GameTable implements Serializable {
     public void setItem(int x, int y, int number, Context context) {
             SudokuCell selectedCell = getItem(x, y);
             //verify if the cell can be changed
+
             if (!selectedCell.isModifiable())  {
                 selectedCell.setGuess(false);
                 return;
             }
+
             //verify if pencil is selected
             if (isPencil) {
                 // enables the pencil mode
@@ -108,6 +114,7 @@ public class GameTable implements Serializable {
                     Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
                     return;
                 }
+
                 //Set number in the cell
                 SudokuCell.getInstance()[x][y].setValue(number);
                 //check if game is complete and correct
@@ -129,6 +136,21 @@ public class GameTable implements Serializable {
     }
 
     /**
+     * Set <var>n</var> in cell <var>x</var> and <var>y</var> position
+     * @param x <code>int</code> position horizontal
+     * @param y <code>int</code> position vertical
+     * @param n <code>int</code> number to set
+     */
+    public void setItemWithNoValidation(int x, int y, int n) {
+        SudokuCell selectedCell = getItem(x, y);
+        if (!selectedCell.isModifiable())  {
+            selectedCell.setGuess(false);
+            return;
+        }
+        selectedCell.setValue(n);
+    }
+
+    /**
      * Set <var>number</var> in <var>x</var>, <var>y</var> position in the table, but before verify
      * if number can be placed in the position
      * @param x <code>int</code> position horizontal
@@ -147,6 +169,25 @@ public class GameTable implements Serializable {
         }
     }
 
+    /**
+     * Set Custom Item if valid
+     * @param x <code>int</code> position horizontal
+     * @param y <code>int</code> position vertical
+     * @param number <code>int</code> number to set
+     * @return <code>boolean</code> <code>true</code> if the value has been set
+     */
+    public boolean setCustomItemIfValid(int x, int y, int number) {
+        if (number == 0) {
+            SudokuCell.getInstance()[x][y].setValue(number);
+            return true;
+        } else {
+            if (SudokuChecker.getInstance().checkPositionCustom(getTable(), number, x, y)) {
+                SudokuCell.getInstance()[x][y].setValue(number);
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Set <var>isPencil</var>
@@ -198,4 +239,34 @@ public class GameTable implements Serializable {
         return false;
     }
 
+    /**
+     * Method returns the coordinates of an editable cell
+     * @return List of two integers with the editable cell coordinates
+     */
+    public List<Integer> getEditableCell() {
+        SudokuCell cell = null;
+        List<Integer> list = new ArrayList<>();
+        int x, y;
+        do {
+            x = (int) (Math.random() * 9);
+            y = (int) (Math.random() * 9);
+
+            cell = SudokuCell.getInstance()[x][y];
+
+        } while (!cell.isModifiable());
+        list.add(x);
+        list.add(y);
+        return list;
+    }
+
+    /**
+     * Get the value inside the x and y coordinates of a cell
+     * @param x x cell's coordinate
+     * @param y y cell's coordinate
+     * @return cell's value or -1 if coordinates are invalid
+     */
+    public int getValueIn(int x, int y) {
+        if (x<0 || x>9) return -1;
+        return SudokuCell.getInstance()[x][y].getValue();
+    }
 }

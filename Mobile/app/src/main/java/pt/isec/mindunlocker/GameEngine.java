@@ -1,8 +1,10 @@
 package pt.isec.mindunlocker;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.Serializable;
+import java.util.List;
 
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.GameTable;
 import pt.isec.mindunlocker.pt.isec.mindunlocker.view.SudokuCell;
@@ -110,10 +112,19 @@ public class GameEngine implements Serializable {
         initializeVars();
         custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
+//        debugPrintSolutionTable();
         copieTable();
         gameTable = SudokuGenerator.getInstance().removeElements(gameTable, level);
         table = new GameTable(context);
         table.setTable(gameTable);
+    }
+
+    /**
+     * Get a list with editable cells
+     * @return <code>List<Integer></code> editable cells list
+     */
+    public List<Integer> getEditableCell() {
+        return table.getEditableCell();
     }
 
     /**
@@ -176,11 +187,42 @@ public class GameEngine implements Serializable {
     }
 
     /**
+     * Test Function - set item wihtout validation
+     */
+    public void setItemWithNoValidation(Context context) {
+        table.setItemWithNoValidation(selectedPosX, selectedPosY, n);
+    }
+
+    /**
      * Set number in <var>selectedPosX</var> and <var>selectedPosY</var> from table
      * @param context <code>Context</code>
      */
     public void setItemCustom(Context context) {
         table.setItemCustom(selectedPosX, selectedPosY,n, context);
+    }
+
+    /** Gets a Original cell from the table
+     *  Helper Method to unit test TC-10
+     * @return <code>SudokuCell</code> of an original cell (aka bold, aka not modifiable)
+     */
+    public SudokuCell getOriginalCell() {
+        SudokuCell cell = null;
+        do{
+            int x = (int) (Math.random() * 9);
+            int y = (int) (Math.random() * 9);
+
+            cell = SudokuCell.getInstance()[x][y];
+        }while(cell.isModifiable());
+        Log.e("CELL", " " + cell.getValue());
+        return cell;
+    }
+
+    /**
+     * Method that sets the number into the game table if the number is valid according to the sudoku rules
+     * @return true: if it sets, false: if it doesn't
+     */
+    public boolean setCustomItemIfValid() {
+        return table.setCustomItemIfValid(selectedPosX, selectedPosY, n);
     }
 
     /**
@@ -472,5 +514,23 @@ public class GameEngine implements Serializable {
         this.minutes = minutes;
         this.seconds = seconds;
         this.finalTime = String.format("%d:%02d", minutes, seconds);
+    }
+
+    /**
+     * Get the selected number
+     * @return selected number
+     */
+    public int getN() {
+        return n;
+    }
+
+    /**
+     * Get the value in the specified cell coordinates
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return cell's value
+     */
+    public int getValueIn(int x, int y) {
+        return table.getValueIn(x, y);
     }
 }
