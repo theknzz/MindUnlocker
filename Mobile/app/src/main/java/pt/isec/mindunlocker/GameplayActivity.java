@@ -208,7 +208,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
             cell.setWrong(true);
 //            cell.getnPaint().setColor(Color.RED);
             cell.invalidate();
-            GameEngine.getInstance().setSelectedPosition(cell);
+            GameEngine.getInstance().setSelectedPosition(x, y);
             return;
         }
 
