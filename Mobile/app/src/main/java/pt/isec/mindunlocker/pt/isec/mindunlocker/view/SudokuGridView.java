@@ -46,6 +46,9 @@ public class SudokuGridView extends GridView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
+    /**
+     * Class Adapter
+     */
     class SudokuGridViewAdapter extends BaseAdapter {
 
         private Context context;

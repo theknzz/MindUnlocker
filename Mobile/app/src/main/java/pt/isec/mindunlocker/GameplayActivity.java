@@ -135,19 +135,23 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
         Button b = (Button) v;
         deselectAllOthers();
         switch (v.getId()) {
+                //button give up
             case R.id.giveUpBtn: /*Toast.makeText(this,"Exit",Toast.LENGTH_SHORT).show();*/
                 giveup();
                 break;
+                //button hints
             case R.id.hintBtn:/* Toast.makeText(this,"Showing Hint",Toast.LENGTH_SHORT).show();*/
                 showHint();
                 GameEngine.getInstance().tookHint();
                 v.invalidate();
                 break;
+                //button erase
             case R.id.eraseBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 b.setSelected(true);
                 btnPencil.setSelected(false);
                 GameEngine.getInstance().setNumber(0);
                 break;
+                //button pencil
             case R.id.pencilBtn:/* Toast.makeText(this,"Delete: ON",Toast.LENGTH_SHORT).show();*/
                 if (b.isSelected()) {
                     b.setSelected(false);
@@ -162,6 +166,7 @@ public class GameplayActivity extends AppCompatActivity implements View.OnClickL
                 gameEngine.setNumber(Integer.parseInt(b.getText().toString()));
                 //manda parar a thread do timer
         }
+        //if table is complete and correct
         if (gameEngine.getTable().isFinish()) {
             timerHandler.removeCallbacks(timerRunnable);
             gameEngine.levelScoreAdded();

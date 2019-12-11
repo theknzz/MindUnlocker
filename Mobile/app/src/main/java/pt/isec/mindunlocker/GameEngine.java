@@ -41,11 +41,13 @@ public class GameEngine implements Serializable {
         selectedPosY = -1;
         n = 0;
 
-        inicializeVars();
+        initializeVars();
     }
 
-    private void inicializeVars(){
-
+    /**
+     * Initialize all points variables
+     */
+    private void initializeVars(){
         points = 1000;
         CM = 50;
         EM = 5;
@@ -54,14 +56,26 @@ public class GameEngine implements Serializable {
         hints = 0;
     }
 
+    /**
+     * Get x position of selected cell
+     * @return <code>int</code> position x from cell selected
+     */
     public int getSelectedPosX() {
         return selectedPosX;
     }
 
+    /**
+     * Get y position of selected cell
+     * @return <code>int</code> position x from cell selected
+     */
     public int getSelectedPosY() {
         return selectedPosY;
     }
 
+    /**
+     * Get or create a instance from himself
+     * @return <code>GameEngine</code>
+     */
     public static GameEngine getInstance() {
         if(instance == null){
             instance = new GameEngine();
@@ -69,18 +83,31 @@ public class GameEngine implements Serializable {
         return instance;
     }
 
+    /**
+     * Set a new instance from himself
+     * @param gE <code>GameEngine</code>
+     */
     public static void setInstance(GameEngine gE) {
             instance = gE;
     }
 
+    /**
+     * Copy a <var>solutionTable</var> to <var>gameTable</var>
+     */
     public void copieTable(){
         for(int i = 0; i < 9; i++)
             for(int j = 0; j < 9; j++)
                  gameTable[i][j] = solutionTable[i][j];
     }
 
+    /**
+     * Create a new Table with full numbers put in <var>solutionTable</var>, remove
+     * some cells depending of the level
+     * @param context <code>Context</code> of the Activity
+     * @param level <code>int</code> level to set
+     */
     public void createTable(Context context, int level){
-        inicializeVars();
+        initializeVars();
         custom = false;
         solutionTable = SudokuGenerator.getInstance().generateTable();
         copieTable();
@@ -103,33 +130,64 @@ public class GameEngine implements Serializable {
         }
     }
 
+    /**
+     * Create a new table with value already inserted and needs a solution table only
+     * @param solutionTable <code>int [][]</code> solution table
+     */
     public void createTableWithVars(int[][] solutionTable) {
-        inicializeVars();
+        initializeVars();
         solutionTable = solutionTable;
     }
 
+    /**
+     * Create a new table without values and soluction, just create a view table
+     * @param context <code>Context</code>
+     */
     public void createTableEmpty(Context context) {
         custom = true;
         copieTable();
         table = new GameTable(context);
     }
 
+    /**
+     * Get a table
+     * @return <code>GameTable</code>
+     */
     public GameTable getTable() {
         return table;
     }
 
+    /**
+     * Get a value from solution table
+     * @param x <code>int</code> position horizontal
+     * @param y <code>int</code> position vertical
+     * @return <code>int</code> value
+     */
     public int getSolutionTable(int x, int y) {
         return solutionTable[x][y];
     }
 
+    /**
+     * Set number in <var>selectedPosX</var> and <var>selectedPosY</var> from table
+     * @param context <code>Context</code>
+     */
     public void setItem(Context context) {
         table.setItem(selectedPosX, selectedPosY,n, context);
     }
 
+    /**
+     * Set number in <var>selectedPosX</var> and <var>selectedPosY</var> from table
+     * @param context <code>Context</code>
+     */
     public void setItemCustom(Context context) {
         table.setItemCustom(selectedPosX, selectedPosY,n, context);
     }
 
+    /**
+     * Set value in <var>selectedPosX</var> and <var>selectedPosY</var>
+     * @param x <code>int</code> position horizontal
+     * @param y <code>int</code> position vertical
+     */
     public void setSelectedPosition(int x, int y) {
         this.selectedPosX = x;
         this.selectedPosY = y;
@@ -137,27 +195,35 @@ public class GameEngine implements Serializable {
 
     /**
      * Updates the selected cell to the cell passed in parameter
-     * @param cell
+     * @param cell <code>SudokuCell</code>
      */
     public void setSelectedPosition(SudokuCell cell) {
         this.selectedPosX = (int) cell.getX();
         this.selectedPosY = (int) cell.getY();
     }
 
+    /**
+     * Set number
+     * @param number <code>int</code> number to set <var>n</var>
+     */
     public void setNumber(int number){
         n=number;
     }
 
+    /**
+     * Count number of the cells filled
+     * @return <code>int</code>
+     */
     public int NFillCells() {
         return table.fillCells();
     }
 
+    /**
+     * Get Custom
+     * @return <code>boolean</code> <var>custom</var>
+     */
     public boolean getCustom() {
         return custom;
-    }
-
-    public void startTimer() {
-
     }
 
     /**
@@ -196,7 +262,8 @@ public class GameEngine implements Serializable {
      * @param col <var>int</var> column index
      * @param number <var>int</var> number
      * @param soluction <var>int [][]</var> table
-     * @return
+     * @return <code>booelan</code> <code>true</code> if table valid,
+     * <code>false</code> if table is invalid
      */
     private boolean checkSudokuSolver(int row, int col, int number, int[][] soluction) {
         return (checkHorizontalSolver(row, col, number, soluction) &&
@@ -204,6 +271,14 @@ public class GameEngine implements Serializable {
                 && checkRegionsSolver(row, col, number, soluction));
     }
 
+    /**
+     * Check <code>Table</code> passed by argument if exist conflicts with number horizontally
+     * @param row <var>int</var> row index
+     * @param col <var>int</var> column index
+     * @param number <var>int</var> number
+     * @param soluction <var>int [][]</var> table
+     * @return <code>boolean</code> <code>true</code> if exist conflicts in row
+     */
     private boolean checkHorizontalSolver(int row, int col, int number, int[][] soluction) {
         for (int i = 0; i < 9; i++)
             if (soluction[i][col] == number)
@@ -211,6 +286,14 @@ public class GameEngine implements Serializable {
         return true;
     }
 
+    /**
+     * Check <code>Table</code> passed by argument if exist conflicts with number vertically
+     * @param row <var>int</var> row index
+     * @param col <var>int</var> column index
+     * @param number <var>int</var> number
+     * @param soluction <var>int [][]</var> table
+     * @return <code>boolean</code> <code>true</code> if exist conflicts in column
+     */
     private boolean checkVerticalSolver(int row, int col, int number, int[][] soluction) {
         for (int i = 0; i < 9; i++)
             if (soluction[row][i] == number)
@@ -218,6 +301,15 @@ public class GameEngine implements Serializable {
         return true;
     }
 
+    /**
+     * Check <code>Table</code> passed by argument if exist conflicts with number in the regions
+     * 3 X 3
+     * @param row <var>int</var> row index
+     * @param col <var>int</var> column index
+     * @param number <var>int</var> number
+     * @param soluction <var>int [][]</var> table
+     * @return <code>boolean</code> <code>true</code> if exist conflicts in squads 3 X 3
+     */
     private boolean checkRegionsSolver(int row, int col, int number, int[][] soluction) {
         int r = row - row % 3;
         int c = col - col % 3;
@@ -236,6 +328,9 @@ public class GameEngine implements Serializable {
         points += CM;
     }
 
+    /**
+     * Incorrect play made
+     */
     public void incorrectPlay(){
         points -= EM;
         EM *= 2;    //The error-multiplier (EM) starts at 5 and is doubled every time the user makes a mistake.
@@ -246,17 +341,26 @@ public class GameEngine implements Serializable {
         CM -= 1;
     }*/
 
+    /**
+     * Convert time in seconds = <var>TS</var>
+     */
     public void setTimeSpent(){
         TS = seconds;
         if(minutes > 0)
             TS += (minutes*60);
     }
 
+    /**
+     * Counter of hints and decrement point when it used
+     */
     public void tookHint(){
         points -= 50;
         hints++;
     }
 
+    /**
+     * Decide depending level how many points game will give when the game is finished
+     */
     public void levelScoreAdded(){
         switch(level){
             case 0: LM = 100;break;
@@ -265,6 +369,10 @@ public class GameEngine implements Serializable {
         }
     }
 
+    /**
+     * Get final time, showing a <code>String</code>
+     * @return <code>String</code> Final score
+     */
     public String finalScore(){
         return " " + getScore() + " points";
     }
@@ -291,38 +399,75 @@ public class GameEngine implements Serializable {
         return null;
     }
 
+    /**
+     * Get number of Hints requested
+     * @return <code>int</code> <var>hints</var>
+     */
     public int getHints() {
         return hints;
     }
 
+    /**
+     * Get number of level (0 - 2)
+     * @return <code>int</code> <var>level</var>
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * Get current minutes
+     * @return <code>int</code> <var>minutes</var>
+     */
     public int getMinutes() {
         return minutes;
     }
 
+    /**
+     * Get current seconds
+     * @return <code>int</code> <var>seconds</var>
+     */
     public int getSeconds() {
         return seconds;
     }
 
+    /**
+     * Set level (0 - 2)
+     * @param level <code>int</code>
+     */
     public void setLevel(int level) {
         this.level = level;
     }
 
+    /**
+     * Set Minutes
+     * @param minutes <code>minutes</code>
+     */
     public void setMinutes(int minutes) {
         this.minutes = minutes;
     }
 
+    /**
+     * Set Seconds
+     * @param seconds <code>seconds</code>
+     */
     public void setSeconds(int seconds) {
         this.seconds = seconds;
     }
 
+    /**
+     * Get a String showing a final time
+     * @return <code>String</code> <var>finalTime</var>
+     */
     public String getFinalTime() {
         return finalTime;
     }
 
+    /**
+     * Set a String with final time
+     * @param minutes <code>int</code> <var>minutes</var>
+     * @param seconds <code>int</code> <var>seconds</var>
+     */
     public void setFinalTime(int minutes, int seconds) {
         this.minutes = minutes;
         this.seconds = seconds;

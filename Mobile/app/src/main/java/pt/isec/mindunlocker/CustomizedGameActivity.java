@@ -76,7 +76,7 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
             }
 
             int level;
-            if (aux == 51) {
+            if (aux > 51) {
                 level = 0;
             } else if (aux == 21) {
                 level = 2;

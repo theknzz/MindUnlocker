@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Load every buttons
+     */
     private void getViews() {
         header = findViewById(R.id.header);
         headerLogin = findViewById(R.id.headerLogin);
@@ -69,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         leaderContainer = new LeaderboardContainer(findViewById(R.id.leadercontainer), this);
     }
 
+    /**
+     * Set buttons on listeners so they can listen when them are called
+     */
     private void setListeners() {
         setButtonListener(login, LoginActivity.class);
         setButtonListener(register, RegisterActivity.class);
@@ -77,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         setButtonListener(load, LoadGameActivity.class);
     }
 
+    /**
+     * When any button is clicked
+     * @param v <code>View</code> Button clicked
+     */
     public void onPickLevel(View v) {
 
         Intent intent = new Intent(this, GameplayActivity.class);
@@ -84,18 +94,21 @@ public class MainActivity extends AppCompatActivity {
 
         Button b = (Button) v;
         switch (b.getId()) {
+                //button easy
             case R.id.btn_easylevel:
                 //Toast.makeText(this,"Starting an easy game",Toast.LENGTH_LONG).show();
                 bundle.putInt("level", 0);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
+                //button medium
             case R.id.btn_mediumlevel:
                 //Toast.makeText(this,"Starting a medium game",Toast.LENGTH_LONG).show();
                 bundle.putInt("level", 1);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
+                //button hard
             case R.id.btn_hardlevel:
                 //Toast.makeText(this,"Starting hard game",Toast.LENGTH_LONG).show();
                 bundle.putInt("level", 2);
@@ -103,19 +116,31 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
         }
-
         startGameDialog.cancel();
     }
 
+    /**
+     * When click in "Generate New Game" button
+     * @param v <code>View</code> button "Generate New Game"
+     */
     public void onGameStart(View v) {
         startGameDialog.setContentView(R.layout.popup_start);
         startGameDialog.show();
     }
 
+    /**
+     * Set buttons listeners
+     * @param button <code>Button</code>
+     * @param activity <code>Class</code>
+     */
     private void setButtonListener(Button button, final Class activity) {
         button.setOnClickListener(v -> changeActivity(activity)); //mudar para java 8 nos modulos se der erro
     }
 
+    /**
+     * Result from Login
+     * @param response
+     */
     private void loginResult(Bundle response) {
         boolean temp = response.getBoolean("success");
 
@@ -132,6 +157,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Hide Buttons and Visible anothers when user is not logged
+     */
     private void hideComponents() {
         headerLogin.setVisibility(View.GONE);
         history.setVisibility(View.GONE);
@@ -142,6 +170,9 @@ public class MainActivity extends AppCompatActivity {
         register.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Hide Buttons and Visible anothers when user is logged
+     */
     private void showComponents() {
         headerLogin.setVisibility(View.VISIBLE);
         history.setVisibility(View.VISIBLE);
@@ -152,11 +183,19 @@ public class MainActivity extends AppCompatActivity {
         register.setVisibility(View.GONE);
     }
 
+    /**
+     * Change activity to class passed by argument
+     * @param activity <code>Class</code> activity
+     */
     private void changeActivity(Class activity) {
         Intent intent = new Intent(this, activity);
         startActivity(intent);
     }
 
+    /**
+     * Log out
+     * @param v <code>View</code> Button logout
+     */
     public void logOut(View v) {
         Token.CONTENT = username /*= score = rank*/ = null;
 
