@@ -86,8 +86,6 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
             intent.putExtra("type", "custom");
             startActivity(intent);
         }
-        else
-            Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
     }
 
     /**
