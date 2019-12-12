@@ -55,7 +55,7 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
     }
 
     public void onStartGame(View v) {
-        if (validateStartGame(gameEngine.NFillCells())) {
+        if (!validateStartGame(gameEngine.NFillCells())) {
             Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
         } else {
             int aux = 0;
