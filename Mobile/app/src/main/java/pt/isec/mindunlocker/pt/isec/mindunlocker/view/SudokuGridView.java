@@ -36,7 +36,7 @@ public class SudokuGridView extends GridView {
                     Toast.makeText(context, "You can't put " + GameEngine.getInstance().getN() + " here", Toast.LENGTH_SHORT).show();
             }
 
-            Log.i("Info","selected pos: " + x + "," + y);
+            //Log.i("Info","selected pos: " + x + "," + y);
             //Toast toast = Toast.makeText(context, "Selected item- x: " + x + " y: " + y, Toast.LENGTH_LONG);
             //toast.show();
         });
@@ -47,6 +47,9 @@ public class SudokuGridView extends GridView {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
+    /**
+     * Class Adapter
+     */
     class SudokuGridViewAdapter extends BaseAdapter {
 
         private Context context;
