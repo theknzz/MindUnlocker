@@ -32,7 +32,7 @@ public class SudokuGridView extends GridView {
             if (!GameEngine.getInstance().getCustom()) {
                 GameEngine.getInstance().setItem(context);
             } else {
-                if (GameEngine.getInstance().setCustomItemIfValid())
+                if (!GameEngine.getInstance().setCustomItemIfValid())
                     Toast.makeText(context, "You can't put " + GameEngine.getInstance().getN() + " here", Toast.LENGTH_SHORT).show();
             }
 
