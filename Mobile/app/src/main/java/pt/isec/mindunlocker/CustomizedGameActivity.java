@@ -80,9 +80,8 @@ public class CustomizedGameActivity extends AppCompatActivity implements View.On
      * @param v <code>View</code> Button to Start the game
      */
     public void onStartGame(View v) {
-        if (gameEngine.NFillCells() < MIN_CELLS) {
-            Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS
-                    + ")", Toast.LENGTH_SHORT).show();
+        if (!validateStartGame(gameEngine.NFillCells())) {
+            Toast.makeText(getApplicationContext(), "Insert more numbers (min = " + MIN_CELLS + ")", Toast.LENGTH_SHORT).show();
         } else {
 
             int aux = 0;
