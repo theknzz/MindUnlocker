@@ -35,6 +35,7 @@ public class GameTable implements Serializable {
 
     /**
      * Get <var>isFinish</var>
+     *
      * @return <code>boolean</code> <var>finish</var>
      */
     public boolean isFinish() {
@@ -43,6 +44,7 @@ public class GameTable implements Serializable {
 
     /**
      * Set Table with values passed by
+     *
      * @param table
      */
     public void setTable(int[][] table) {
@@ -58,6 +60,7 @@ public class GameTable implements Serializable {
 
     /**
      * Return instance from <code>SudokuCell</code>
+     *
      * @return <code>SudokuCell[][]</code>
      */
     public SudokuCell[][] getTable() {
@@ -66,6 +69,7 @@ public class GameTable implements Serializable {
 
     /**
      * Get a cell (view) from the table
+     *
      * @param x <code>int</code> position horizontal
      * @param y <code>int</code> position vertical
      * @return <code>SudokuCell</code>, cell in <var>x</var>, <var>y</var> in the table
@@ -76,6 +80,7 @@ public class GameTable implements Serializable {
 
     /**
      * Get a cell (view) from the table
+     *
      * @param position <code>int</code> number of the position of the cell, counting continues
      * @return <code>SudokuCell</code>, cell in <var>x</var>, <var>y</var> in the table
      */
@@ -87,63 +92,76 @@ public class GameTable implements Serializable {
 
     /**
      * Set <var>number</var> in <var>x</var>, <var>y</var> position in the table
-     * @param x <code>int</code> position horizontal
-     * @param y <code>int</code> position vertical
-     * @param number <code>int</code> number to set
+     *
+     * @param x       <code>int</code> position horizontal
+     * @param y       <code>int</code> position vertical
+     * @param number  <code>int</code> number to set
      * @param context <code>Context</code> context of the activity
      */
     public void setItem(int x, int y, int number, Context context) {
-            SudokuCell selectedCell = getItem(x, y);
-            //verify if the cell can be changed
+        SudokuCell selectedCell = getItem(x, y);
+        //verify if the cell can be changed
 
-            if (!selectedCell.isModifiable())  {
-                selectedCell.setGuess(false);
+        if (!selectedCell.isModifiable()) {
+            selectedCell.setGuess(false);
+            return;
+        }
+
+        //verify if pencil is selected
+        if (isPencil) {
+            // enables the pencil mode
+            selectedCell.setGuess(true);
+            selectedCell.setValue(number);
+        } else {
+            // reset the pencil mode
+            selectedCell.setGuess(false);
+            // if table has a wrong cell and the user is not changing that cell ignore the input
+            if (tableHasWrongCell() && !selectedCell.isWrong()) {
+                Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            //verify if pencil is selected
-            if (isPencil) {
-                // enables the pencil mode
-                selectedCell.setGuess(true);
-                selectedCell.setValue(number);
+            //Set number in the cell
+            SudokuCell.getInstance()[x][y].setValue(number);
+            GameEngine.getInstance().setValue(x, y, number);
+            //check if game is complete and correct
+            if (checkGame()) {
+                GameEngine.getInstance().finalScore();
+                finish = true;
+            } else if (number != 0) {
+                selectedCell.setWrong(false);
+                if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
+                    GameEngine.getInstance().incorrectPlay();
+                    selectedCell.setWrong(true);
+                    //Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                // reset the pencil mode
-                selectedCell.setGuess(false);
-                // if table has a wrong cell and the user is not changing that cell ignore the input
-                if (tableHasWrongCell() && !selectedCell.isWrong()) {
-                    Toast.makeText(context, "You may change the wrong cell first!", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                //Set number in the cell
-                SudokuCell.getInstance()[x][y].setValue(number);
-                //check if game is complete and correct
-                if (checkGame()) {
-                    GameEngine.getInstance().finalScore();
-                    finish = true;
-                    } else if (number != 0) {
-                        selectedCell.setWrong(false);
-                        if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
-                            GameEngine.getInstance().incorrectPlay();
-                            selectedCell.setWrong(true);
-                            //Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        selectedCell.setWrong(false);
-                        GameEngine.getInstance().correctPlay();
-                }
+                selectedCell.setWrong(false);
+                GameEngine.getInstance().correctPlay();
             }
+        }
+    }
+
+    /**
+     * Set full table
+     * @param tableAux <code>int[][]</code> table
+     */
+    public void setTableLoad(int[][] tableAux) {
+        for (int x = 0; x < 9; x++)
+            for (int y = 0; y < 9; y++)
+                SudokuCell.getInstance()[x][y].setValue(tableAux[x][y]);
     }
 
     /**
      * Set <var>n</var> in cell <var>x</var> and <var>y</var> position
+     *
      * @param x <code>int</code> position horizontal
      * @param y <code>int</code> position vertical
      * @param n <code>int</code> number to set
      */
     public void setItemWithNoValidation(int x, int y, int n) {
         SudokuCell selectedCell = getItem(x, y);
-        if (!selectedCell.isModifiable())  {
+        if (!selectedCell.isModifiable()) {
             selectedCell.setGuess(false);
             return;
         }
@@ -153,9 +171,10 @@ public class GameTable implements Serializable {
     /**
      * Set <var>number</var> in <var>x</var>, <var>y</var> position in the table, but before verify
      * if number can be placed in the position
-     * @param x <code>int</code> position horizontal
-     * @param y <code>int</code> position vertical
-     * @param number <code>int</code> number to set
+     *
+     * @param x       <code>int</code> position horizontal
+     * @param y       <code>int</code> position vertical
+     * @param number  <code>int</code> number to set
      * @param context <code>Context</code> context of the activity
      */
     public void setItemCustom(int x, int y, int number, Context context) {
@@ -171,8 +190,9 @@ public class GameTable implements Serializable {
 
     /**
      * Set Custom Item if valid
-     * @param x <code>int</code> position horizontal
-     * @param y <code>int</code> position vertical
+     *
+     * @param x      <code>int</code> position horizontal
+     * @param y      <code>int</code> position vertical
      * @param number <code>int</code> number to set
      * @return <code>boolean</code> <code>true</code> if the value has been set
      */
@@ -191,6 +211,7 @@ public class GameTable implements Serializable {
 
     /**
      * Set <var>isPencil</var>
+     *
      * @param val <code>boolean</code>
      */
     public void setPencilMode(boolean val) {
@@ -199,6 +220,7 @@ public class GameTable implements Serializable {
 
     /**
      * Check the entire table to make sure it is complete and valid.
+     *
      * @return <code>boolean</code> <code>true</code> if table is complete and correct
      * <code>false</code> if table isn't complete or if exist a
      * number in wrong position
@@ -213,6 +235,7 @@ public class GameTable implements Serializable {
 
     /**
      * Count and return number of the cells with numbers
+     *
      * @return <code>int</code> number of the filled cells (with numbers different from 0)
      */
     public int fillCells() {
@@ -229,6 +252,7 @@ public class GameTable implements Serializable {
 
     /**
      * Method the checks every table's cell, to see if the table has any wrong cell
+     *
      * @return if table has a wrong cell? true : false
      */
     private boolean tableHasWrongCell() {
@@ -241,6 +265,7 @@ public class GameTable implements Serializable {
 
     /**
      * Method returns the coordinates of an editable cell
+     *
      * @return List of two integers with the editable cell coordinates
      */
     public List<Integer> getEditableCell() {
@@ -261,12 +286,13 @@ public class GameTable implements Serializable {
 
     /**
      * Get the value inside the x and y coordinates of a cell
+     *
      * @param x x cell's coordinate
      * @param y y cell's coordinate
      * @return cell's value or -1 if coordinates are invalid
      */
     public int getValueIn(int x, int y) {
-        if (x<0 || x>9) return -1;
+        if (x < 0 || x > 9) return -1;
         return SudokuCell.getInstance()[x][y].getValue();
     }
 }

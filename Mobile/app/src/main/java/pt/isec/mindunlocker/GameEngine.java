@@ -18,6 +18,7 @@ public class GameEngine implements Serializable {
 
     private int[][] solutionTable;
     private int[][] gameTable;
+    private int[][] gameTableVar;
 
     private int n;
     private int selectedPosX;
@@ -41,6 +42,7 @@ public class GameEngine implements Serializable {
 
     public GameEngine() {
         gameTable = new int[9][9];
+        gameTableVar = new int[9][9];
         solutionTable = new int[9][9];
         selectedPosX = -1;
         selectedPosY = -1;
@@ -170,7 +172,9 @@ public class GameEngine implements Serializable {
     public void createTableLoad(Context context) {
         table = new GameTable(context);
         table.setTable(gameTable);
+        table.setTableLoad(gameTableVar);
     }
+
     /**
      * Get a table
      * @return <code>GameTable</code>
@@ -543,5 +547,9 @@ public class GameEngine implements Serializable {
      */
     public int getValueIn(int x, int y) {
         return table.getValueIn(x, y);
+    }
+
+    public void setValue(int x, int y, int number) {
+        gameTableVar[x][y] = number;
     }
 }
