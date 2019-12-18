@@ -153,9 +153,6 @@ public class GameTable implements Serializable {
                         selectedCell.setWrong(false);
                         GameEngine.getInstance().correctPlay();
                 }
-            } else {
-                selectedCell.setWrong(false);
-                GameEngine.getInstance().correctPlay();
             }
         }
     }
