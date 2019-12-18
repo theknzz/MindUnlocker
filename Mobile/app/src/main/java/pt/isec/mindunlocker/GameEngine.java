@@ -44,9 +44,6 @@ public class GameEngine implements Serializable {
         gameTable = new int[9][9];
         gameTableVar = new int[9][9];
         solutionTable = new int[9][9];
-        selectedPosX = -1;
-        selectedPosY = -1;
-        n = 0;
 
         initializeVars();
     }
@@ -55,6 +52,10 @@ public class GameEngine implements Serializable {
      * Initialize all points variables
      */
     private void initializeVars(){
+        selectedPosX = -1;
+        selectedPosY = -1;
+        n = 0;
+
         points = 1000;
         CM = 50;
         EM = 5;
