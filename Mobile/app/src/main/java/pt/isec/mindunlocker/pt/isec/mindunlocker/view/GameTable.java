@@ -121,19 +121,37 @@ public class GameTable implements Serializable {
                 return;
             }
 
-            //Set number in the cell
-            SudokuCell.getInstance()[x][y].setValue(number);
-            GameEngine.getInstance().setValue(x, y, number);
-            //check if game is complete and correct
-            if (checkGame()) {
-                GameEngine.getInstance().finalScore();
-                finish = true;
-            } else if (number != 0) {
-                selectedCell.setWrong(false);
-                if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
-                    GameEngine.getInstance().incorrectPlay();
-                    selectedCell.setWrong(true);
-                    //Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+            //verify if pencil is selected
+            if (isPencil) {
+                // enables the pencil mode
+                selectedCell.setGuess(true);
+                selectedCell.setValue(number);
+            } else {
+                // reset the pencil mode
+                selectedCell.setGuess(false);
+                // if table has a wrong cell and the user is not changing that cell ignore the input
+                if (tableHasWrongCell() && !selectedCell.isWrong()) {
+                    Toast.makeText(context, "You have change the wrong cell first!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                //Set number in the cell
+                SudokuCell.getInstance()[x][y].setValue(number);
+                GameEngine.getInstance().setValue(x, y, number);
+                //check if game is complete and correct
+                if (checkGame()) {
+                    GameEngine.getInstance().finalScore();
+                    finish = true;
+                    } else if (number != 0) {
+                        selectedCell.setWrong(false);
+                        if (SudokuChecker.getInstance().checkSudokuPlay(getTable(), number, x, y)) {
+                            GameEngine.getInstance().incorrectPlay();
+                            selectedCell.setWrong(true);
+                            //Toast.makeText(context, "Conflict!", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        selectedCell.setWrong(false);
+                        GameEngine.getInstance().correctPlay();
                 }
             } else {
                 selectedCell.setWrong(false);
